@@ -1,0 +1,189 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<jsp:include page="../layout/header.jsp"/>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script type="text/javascript">document.title="마이페이지_주문내역";</script>
+<link rel="stylesheet" type="text/css" href="http://localhost/jsp_prj/common/css/main_v20211012.css"/>
+
+<!-- Favicon-->
+<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<!--jQuery CDN-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<!-- font -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@500&display=swap" rel="stylesheet">
+<!-- Bootstrap icons-->
+<link
+   href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
+   rel="stylesheet" />
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</head>
+<style>
+	#numBox{ 
+		width: 40px; 
+		border: solid #eff1f5;
+    	border-width: 0 1px;
+    	vertical-align: top;
+    	font-family: tahoma, helvetica, "\B098\B214\ACE0\B515", "Nanum Gothic", "\B098\B214\C2A4\D018\C5B4", "Nanum Square", "Apple SD Gothic Neo", "Malgun Gothic", "\B9D1\C740\ACE0\B515", dotum, "\B3CB\C6C0", sans-serif;
+    	color: #333333;
+    	font-size: 12px;
+    	font-weight: bold;
+    	line-height: 34px;
+    	text-align: center;
+    }
+	#plus{ 
+		border:none; 
+		background:#f1f2f4; 
+		width: 40px; 
+		height:40px;
+	}
+	#minus{ 
+		border:none; 
+		background:#f1f2f4; 
+		width: 40px; 
+		height:40px;
+	}
+	#imgSize{ 
+		text-align: center; 
+		max-width:100%; 
+		height:auto;  
+	}
+	#h2Size{ 
+		text-align: center; 
+		margin: 30px 0; 
+		color: #D09869; 
+		font-weight: bold; 
+		font-family: 'Sunflower', sans-serif; 
+	}
+	#cartBtn{ 
+		width:45%; 
+		height:56px; 
+		background:#D09869; 
+		color:#FFFFFF; 
+		border-color:#FFFFFF; 
+		font-size:15px;
+	}
+
+	#numPrice{ 
+		float: right; 
+		margin: 8px 15px 0 0; 
+	}
+	#detailDiv{
+		border-top:1px solid #D09869; 
+		text-align: center;
+	}
+	#btnDiv{
+		vertical-align:middle; 
+		border-top:1px solid #DDD; 
+		margin-top:20%;
+	}
+	#totalPriceDiv{
+		border-top:1px solid #D09869;
+		border-bottom:1px solid #D09869; 
+		padding-top:5%;
+	}
+	#totalPriceText{
+		font-size:1rem; 
+		margin-left:15px;
+	}
+	#totalPrice{
+		font-size:1.5rem; 
+		font-weight:bold; 
+		margin-bottom:0; 
+		float: right; 
+		padding-bottom:10px; 
+		margin: -10px 15px 8px 10px;
+	}
+</style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">document.title="상품상세";</script>
+<script>
+$(function(){
+	
+	$("#plus").click(function() {
+		var num = $("#numBox").val();
+		var plusNum = Number(num) + 1;
+
+		if (plusNum >= 20) {
+			$("#numBox").val(num);
+		} else {
+			$("#numBox").val(plusNum);
+		}
+	});
+
+	$("#minus").click(function() {
+		var num = $("#numBox").val();
+		var minusNum = Number(num) - 1;
+
+		if (minusNum <= 0) {
+			$("#numBox").val(num);
+		} else {
+			$("#numBox").val(minusNum);
+		}
+	});
+});
+
+function moveCart(){
+	location.href="http://localhost/shopping_mall_prj/board/cart_list.jsp"
+}
+</script>
+<body>
+<div class="container px-4 px-lg-5 mt-5">
+	<form id="frm">
+	<div class="row" style="padding: 3%;">
+		<div class="col-md-6" style="text-align: center;">
+			<img src="http://placehold.it/400" id="imgSize">
+		</div>
+		<div class="col-md-6">
+		<div>
+			<h2>1조네 해남 호박 고구마 3kg</h2>
+			
+			<h6>무료배송</h6>
+			
+			<div id="btnDiv">
+				<button type="button" id="plus">+</button>
+				<input type="number" id="numBox" min="1" max="20" value="1"
+					readonly="readonly"/>
+				<button type="button" id="minus">-</button>
+				<span id="numPrice">8900원</span>
+			</div>
+			
+			<div id="totalPriceDiv">
+				<span id="totalPriceText">총 상품 금액</span>
+				<span id="totalPrice">3XXXX원</span>
+			</div>
+			
+			<div style="padding-top: 5%; text-align: center; max-width:100%;">
+				<button type="button" class="btn btn-default btn-lg" id="cartBtn">장바구니 넣기</button>
+				<button type="button" class="btn btn-default btn-lg" id="cartBtn" onclick="moveCart()">장바구니 이동</button>
+			</div>
+			</div>
+		</div>
+	</div>
+	</form>
+	<div class="py-5" id="detailDiv">
+		<img src="http://placehold.it/500" id="imgSize">
+		<p>
+		<p>※고구마는 중량으로 구분하여 모양과 크기가 다를 수 있습니다.</p>
+		<p>※위 사이즈 표는 꿀고구마 사이즈 입니다.</p>
+	</div>
+	<div class="py-5" id="detailDiv">
+		<h2 id="h2Size">상품구성</h2>
+		<img src="http://placehold.it/500X100" id="imgSize">
+		<h2 id="h2Size">배송안내</h2>
+		<img src="http://placehold.it/500X100" id="imgSize">
+	</div>
+</div>
+
+<jsp:include page="../layout/footer.jsp"/>
+</body>
+</html>
