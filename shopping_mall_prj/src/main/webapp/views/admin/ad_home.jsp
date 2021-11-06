@@ -47,26 +47,26 @@
 	<div class="tab-pane h-100" id="home_account">
 		<div class="container home_account_form">
 			<div class="mb-5"><h3>관리자 비밀번호 변경</h3></div>
-			<form action="#" method="post" id="passUpdateFrm">
+			<form action="ad_pass_updateProc.jsp" method="post">
 				<div class="form-group row justify-content-md-center">
 					<label class="col-md-4 col-form-label">현재 비밀번호</label>
 					<div class="col-md-6">
-						<input type="password" id="nowPass" class="form-control">
+						<input type="password" name="nowPass" class="form-control" required>
 					</div>
 				</div>
 				<div class="form-group row justify-content-md-center">
 					<label class="col-md-4 col-form-label">새 비밀번호</label>
 					<div class="col-md-6">
-						<input type="password" class="form-control">
+						<input type="password" name="newPass" class="form-control" required>
 					</div>
 				</div>
 				<div class="form-group row justify-content-md-center">
 					<label class="col-md-4 col-form-label">비밀번호 확인</label>
 					<div class="col-md-6">
-						<input type="password" class="form-control">
+						<input type="password" name="newPassCheck" class="form-control" required>
 					</div>
 				</div>
-				<input type="button" id="passUpdate" class="btn btn-dark col-md-2 offset-md-8" value="변경"/>
+				<button class="btn btn-dark col-md-2 offset-md-8">변경</button>
 			</form>
 		</div>
 	</div>
