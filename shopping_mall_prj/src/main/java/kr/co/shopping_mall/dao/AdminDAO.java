@@ -7,7 +7,7 @@ import kr.co.shopping_mall.model.AdminVO;
 
 public class AdminDAO {
 	
-	public String selectLogin(AdminVO aVO) throws DataAccessException{
+	public String checkAccount(String inputId,String inputPw) throws DataAccessException{
 		String admin_id=""; 
 		//1. Spring COntainer 积己
 		GetJdbcTemplate gjt = GetJdbcTemplate.getInstance();
@@ -15,7 +15,7 @@ public class AdminDAO {
 		JdbcTemplate jt = gjt.getJdbcTemplate();
 		//3. 孽府巩荐青
 		String selectLogin="select admin_id from admin where admin_id=? and admin_pw=?";
-		admin_id = jt.queryForObject(selectLogin, new Object[] {aVO.getAdmin_id(),aVO.getAdmin_pw()},  String.class);
+		admin_id = jt.queryForObject(selectLogin, new Object[] {inputId,inputPw},  String.class);
 		//4. Spring COntainer 摧扁
 		gjt.closeAc();
 		
