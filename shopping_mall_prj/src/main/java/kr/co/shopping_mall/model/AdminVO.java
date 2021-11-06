@@ -2,13 +2,23 @@ package kr.co.shopping_mall.model;
 
 public class AdminVO {
 	
+	private String admin_id;
 	private String admin_pw;
-
+	
 	public AdminVO() {
 	}
 
-	public AdminVO(String admin_pw) {
+	public AdminVO(String admin_id, String admin_pw) {
+		this.admin_id = admin_id;
 		this.admin_pw = admin_pw;
+	}
+
+	public String getAdmin_id() {
+		return admin_id;
+	}
+
+	public void setAdmin_id(String admin_id) {
+		this.admin_id = admin_id;
 	}
 
 	public String getAdmin_pw() {
