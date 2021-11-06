@@ -37,32 +37,29 @@
 } 
 
 </style>
-<script type="text/javascript">
-
-</script>
 </head>
 <body>
 	<div class="container">
 		<div class="mb-5" align="center">
 			<h1><strong>관리자 로그인</strong></h1>
 		</div>
-		<form action="adminLoginProc.jsp" method="post">
+		<form action="ad_login_proc.jsp" method="post" id="frm">
 			<!-- ID입력 -->
 			<div class="input-group input-group-lg mb-3">
 				<div class="input-group-prepend">
 					<span class="input-group-text w-100">ID</span>
 				</div>
-				<input type="text" name="admin_id" class="form-control" placeholder="Input ID" required>
+				<input type="text" name="admin_id" class="form-control" placeholder="아이디" required>
 			</div>
 			<!-- PW입력 -->
 			<div class="input-group input-group-lg mb-4">
 				<div class="input-group-prepend">
 					<span class="input-group-text w-100">PW</span>
 				</div>
-				<input type="password" name="admin_pw" class="form-control" placeholder="Input Password" required>
+				<input type="password" name="admin_pw" class="form-control" placeholder="비밀번호" required>
 			</div>
 			<!-- 로그인 버튼 -->
-			<button type="button" class="btn btn-dark btn-lg btn-block">로그인</button>
+			<button class="btn btn-dark btn-lg btn-block">로그인</button>
 		</form>
 	</div>
 </body>
