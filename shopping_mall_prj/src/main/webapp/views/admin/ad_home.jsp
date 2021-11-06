@@ -47,11 +47,11 @@
 	<div class="tab-pane h-100" id="home_account">
 		<div class="container home_account_form">
 			<div class="mb-5"><h3>관리자 비밀번호 변경</h3></div>
-			<form action="#" method="post">
+			<form action="#" method="post" id="passUpdateFrm">
 				<div class="form-group row justify-content-md-center">
 					<label class="col-md-4 col-form-label">현재 비밀번호</label>
 					<div class="col-md-6">
-						<input type="password" class="form-control">
+						<input type="password" id="nowPass" class="form-control">
 					</div>
 				</div>
 				<div class="form-group row justify-content-md-center">
@@ -66,7 +66,7 @@
 						<input type="password" class="form-control">
 					</div>
 				</div>
-				<input type="button" class="btn btn-dark col-md-2 offset-md-8" value="변경"/>
+				<input type="button" id="passUpdate" class="btn btn-dark col-md-2 offset-md-8" value="변경"/>
 			</form>
 		</div>
 	</div>
