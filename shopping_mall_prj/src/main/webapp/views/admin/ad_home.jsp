@@ -57,13 +57,14 @@
 				<div class="form-group row justify-content-md-center">
 					<label class="col-md-4 col-form-label">새 비밀번호</label>
 					<div class="col-md-6">
-						<input type="password" name="newPass" class="form-control" required>
+						<input type="password" name="newPass" id="newPass" class="form-control" required>
 					</div>
 				</div>
 				<div class="form-group row justify-content-md-center">
 					<label class="col-md-4 col-form-label">비밀번호 확인</label>
 					<div class="col-md-6">
-						<input type="password" name="newPassCheck" class="form-control" required>
+						<input type="password" name="newPassCheck" id="newPassCheck" class="form-control" required>
+						<font name="passCheck" size="2"></font> 
 					</div>
 				</div>
 				<button class="btn btn-dark col-md-2 offset-md-8">변경</button>
