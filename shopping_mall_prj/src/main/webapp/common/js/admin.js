@@ -32,15 +32,17 @@ $(function() {
 	});
 
 	//비밀번호변경폼 새비밀번호 일치 확인
-	$('#newPassCheck').keyup(function() {
+	$("#newPassCheck,#newPass").keyup(function() {
 		if ($('#newPassCheck').val() != $('#newPass').val()) {
 			$('font[name=passCheck]').text('');
 			$('font[name=passCheck]').attr('color','red');
 			$('font[name=passCheck]').html("새로운 비밀번호가 일치하지 않습니다");
+			$('#adPassUpdateBtn').attr("disabled","disabled");
 		} else {
 			$('font[name=passCheck]').text('');
 			$('font[name=passCheck]').attr('color','blue');
 			$('font[name=passCheck]').html("새로운 비밀번호가 일치합니다");
+			$('#adPassUpdateBtn').removeAttr("disabled");
 		}
 	});
 }); //ready
