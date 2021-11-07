@@ -67,7 +67,7 @@
 						<font name="passCheck" size="2"></font> 
 					</div>
 				</div>
-				<button class="btn btn-dark col-md-2 offset-md-8">변경</button>
+				<button id="adPassUpdateBtn" class="btn btn-dark col-md-2 offset-md-8">변경</button>
 			</form>
 		</div>
 	</div>
