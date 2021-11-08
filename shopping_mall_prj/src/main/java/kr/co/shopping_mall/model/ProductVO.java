@@ -88,4 +88,5 @@ public class ProductVO {
 	public void setInput_date(String input_date) {
 		this.input_date = input_date;
 	}
+	
 }

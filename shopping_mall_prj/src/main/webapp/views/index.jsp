@@ -10,7 +10,7 @@
 <meta name="author" content="" />
 <title>1조네 농산물</title>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
 <!-- Bootstrap icons-->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
@@ -19,7 +19,6 @@
 <link href="http://localhost/shopping_mall_prj/common/css/index.css" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@500&display=swap" rel="stylesheet">
 <style>
-	.py-5{ padding:none; }
 	#title{ text-align: center; 
 			margin: 30px 0; color: #D09869; 
 			font-weight: bold; 
