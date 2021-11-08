@@ -26,7 +26,7 @@
    integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
    crossorigin="anonymous"></script>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
     <!-- font -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -34,25 +34,23 @@
     <!-- Bootstrap icons-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
     <!-- Core theme CSS (includes Bootstrap)-->
-    <link href="css/styles.css" rel="stylesheet" />
     <style>
 
 	</style>
     <!-- Bootstrap core JS-->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme JS-->
-    <script src="js/scripts.js"></script>
 <style type="text/css">
 	*{margin: 0;padding: 0;box-sizing: border-box}
 	body{background-color: #f7f7f7;}
-	div>div:nth-child(1){text-align:center;}
 	h1{text-align:center; color:#D09869; margin:30px 0;font-weight: bold; font-family: 'Sunflower', sans-serif;}
 	h6{text-align:left; color: #888; margin:10px 10px; font-weight:bold;}
+	#user_id{width:60%;}
 	ul{width:470px;}
-	ul>li{list-style: none}
+	li{list-style: none}
 	a{text-decoration: none;}
 	.clearfix::after{content: "";display: block;clear: both;}
-	.container {
+	.container1 {
 		width: 500px;
 		margin : 0 auto;
 		position: absolute;
@@ -60,6 +58,8 @@
 	    left: 50%; 
 	    transform: translate(-50%, -50%); 
 	} 
+	.container2 {margin-bottom: 25px !important;}
+	.container3 {margin-bottom: 24px !important;}
 	#joinForm{width: 460px;margin: 0 auto;}
 	ul.join_box{border: 1px solid #ddd;background-color: #fff;}
 	.checkBox,.checkBox>ul{position: relative;}
@@ -67,12 +67,69 @@
 	.checkBox>ul>li:first-child{width: 85%;padding: 15px;font-weight: 600;color: #888;}
 	.checkBox>ul>li:nth-child(2){position: absolute; top: 50%; right: 30px;margin-top: -12px;} 
 	.checkBox div{overflow:scroll; width: 96%;height: 90px; margin: 0 2%;background-color: #f7f7f7;color: #888; border: none;} 
-	.mb-5 {margin-bottom: 30px !important;}
-	.btn-block{background:#D09869; color:#FFFFFF; height:56px; border-color :#D09869 ;margin-bottom:50px; font-size:15px;}
-	.btn-block:hover{color:#FFFFFF;}
+	.btn1{background:#D09869; color:#FFFFFF; height:56px; border-color :#D09869 ;margin-bottom:50px; font-size:15px;}
+	.btn1:hover{color:#FFFFFF;}
 </style>
 
 <script type="text/javascript">
+$(function(){
+	$("#dupId").click(function(){
+		//새 창의 크기
+		cw=500;
+		ch=600;
+		//스크린의 크기
+		sw=screen.availWidth;
+		sh=screen.availHeight;
+		//열 창의 포지션
+		px=(sw-cw)/2;
+		py=(sh-ch)/2;
+		window.open("id_dup.jsp","dup","left="+px+", top="+py+", width="+cw+", height="+ch);
+	});//click
+	$("#user_pw2").focusout(function(){
+		pwValidator($(this).val()); 
+	});//focusout
+	$("#user_tel").focusout(function(){
+		telValidator($(this).val()); 
+	});//focusout 
+	$("#btn1").click(function(){
+		if($("#user_id").val()==""){
+			alert("아이디 필수 입력");
+			$("#user_id").focus();
+			return;
+		}//end if
+		if($("#user_pw1").val()==""){
+			alert("비밀번호 필수 입력");
+			$("#user_pw1").focus();
+			return;
+		}//end if
+		if($("#user_pw2").val()==""){
+			alert("아이디 필수 입력");
+			$("#user_pw2").focus();
+			return;
+		}//end if
+		if($("#user_name").val()==""){
+			alert("이름 필수 입력");
+			$("#user_name").focus();
+			return;
+		}//end if
+		if($("#user_tel").val()==""){
+			alert("전화번호 필수 입력");
+			$("#user_tel").focusin();
+			return;
+		}//end if
+		if($("#user_email").val()==""){
+			alert("이메일 필수 입력");
+			$("#user_email").focus();
+			return;
+		}//end if
+		if($("#user_addr").val()==""){
+			alert("주소 필수 입력");
+			$("#user_addr").focus();
+			return;
+		}//end if
+	   $("#frm").submit();
+	});//click
+});//ready
 function selectAll(selectAll)  {
 	  const checkboxes 
 	       = document.getElementsByName('chk');
@@ -80,36 +137,62 @@ function selectAll(selectAll)  {
 	  checkboxes.forEach((checkbox) => {
 	    checkbox.checked = selectAll.checked;
 	  })
-	}
+	}//selectAll
+function pwValidator(args) {
+	var flag=false;
+    const msg = '비밀번호가 일치하지 않습니다.';
+    if($("#user_pw1").val()!=$("#user_pw2").val()){
+	      alert(msg);
+	      $('#user_pw1').focus();
+	      $('#user_pw2').val('');
+	      return;
+	    }//end if
+    
+	}//pwValidator
+function telValidator(args) {
+	var flag=false;
+    const msg = '유효하지 않는 전화번호입니다.';
+    // IE 브라우저에서는 당연히 var msg로 변경
+    
+    if (/^[0-9]{2,3}[0-9]{3,4}[0-9]{4}/.test(args)) {
+        flag= true;
+    }
+    if(flag==false){
+    	alert(msg);
+    	$("#user_tel").val('');
+    }
+	
+}//telValidator 
 </script>
 </head>
 <body>
-    <div class="container">
-      <div class="mb-5">
+    <div class="container container1">
+      <div class="mb-5 container2">
          <h1>1조네 농산물</h1>
          <h6>회원정보를 입력해주세요</h6>
       </div>
-      <form name="frm" action="loginForm.jsp" method="post">
-         <div class="input-group input-group-lg mb-3">
-            <input type="text" name="user_id" class="form-control" placeholder="아이디" required>
+      <form name="frm" action="join_proc.jsp" method="post">
+         <div class="input-group input-group-lg mb-3 container3">
+            <input type="text" name="user_id" id="user_id" class="form-control" required readonly="readonly" placeholder="아이디">
+            <input type="button" class="form-control" value="중복확인" id="dupId">
          </div>
          <div class="input-group input-group-lg mb-4">
-            <input type="password" name="user_pw" class="form-control" placeholder="비밀번호" required>
+            <input type="password" name="user_pw" class="form-control" value="11" id="user_pw1" placeholder="비밀번호">
          </div>
          <div class="input-group input-group-lg mb-4">
-            <input type="password" name="user_pw" class="form-control" placeholder="비밀번호 확인" required>
+            <input type="password" name="user_pw" class="form-control" value="11" id="user_pw2" placeholder="비밀번호 확인">
          </div>
          <div class="input-group input-group-lg mb-4">
-            <input type="text" name="user_name" class="form-control" placeholder="이름" required>
+            <input type="text" name="user_name" class="form-control" value="이현경" id="user_name" placeholder="이름">
          </div>
          <div class="input-group input-group-lg mb-4">
-            <input type="text" name="user_tel" class="form-control" placeholder="휴대폰 번호" required>
+            <input type="text" name="user_tel" class="form-control"  id="user_tel" placeholder="전화번호 ( '-' 제외 하고 입력)">
          </div>
          <div class="input-group input-group-lg mb-4">
-            <input type="email" name="user_email" class="form-control" placeholder="이메일" required>
+            <input type="email" name="user_email" class="form-control" value="l@naver.com" id="user_email" placeholder="이메일">
          </div>
          <div class="input-group input-group-lg mb-4">
-            <input type="text" name="user_addr" class="form-control" placeholder="주소" required>
+            <input type="text" name="user_addr" class="form-control"  value="서울" id="user_addr" placeholder="주소">
          </div>
          <div class="input-group input-group-lg mb-4">
             <ul class="join_box">
@@ -127,7 +210,7 @@ function selectAll(selectAll)  {
                     <ul class="clearfix">
                         <li>이용약관 동의(필수)</li>
                         <li class="checkBtn">
-                            <input type="checkbox" name="chk"> 
+                            <input type="checkbox" name="chk" required> 
                         </li>
                     </ul>
                     <div>여러분을 환영합니다.
@@ -169,7 +252,7 @@ function selectAll(selectAll)  {
                 </li>
             </ul>
          </div>
-         <button class="btn btn-default btn-lg btn-block">동의하고 가입하기</button>
+         <button class="btn btn-default btn-lg btn-block btn1" id="btn1">동의하고 가입하기</button>
 </form>
 </div>
 </body>
