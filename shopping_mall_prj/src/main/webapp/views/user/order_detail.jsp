@@ -113,7 +113,7 @@
 	        </table>
         </div>
         <p style="text-align:center">
-		  <button class="btn btn-default btn-lg btn1" id="btn" >돌아가기</button>
+		  <button class="btn btn-default btn-lg btn1">돌아가기</button>
 		</p>
 	</div>
         </form>
