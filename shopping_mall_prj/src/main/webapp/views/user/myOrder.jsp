@@ -2,6 +2,16 @@
     pageEncoding="UTF-8"
     info="마이페이지_주문내역"%>
 <jsp:include page="../layout/header.jsp"/>
+<%
+if(session.getAttribute("user_name")==null){ %>
+	<script>
+	alert("로그인이 필요한 페이지입니다.");
+	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
+	</script>
+<%} 
+
+//
+%>
 <!DOCTYPE html>
 <html>
 <head>

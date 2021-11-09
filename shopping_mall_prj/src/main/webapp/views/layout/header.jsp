@@ -3,13 +3,36 @@
     pageEncoding="UTF-8"%>
     
 <script type="text/javascript">
+function moveLogin(){
+	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
+}
 
+function moveLogout(){
+	location.href="http://localhost/shopping_mall_prj/views/user/logoout_proc.jsp";
+}
+
+function moveMy(){
+	location.href="http://localhost/shopping_mall_prj/views/user/myOrder.jsp";
+}
+
+function moveCart(){
+	location.href="http://localhost/shopping_mall_prj/views/board/cart_list.jsp";
+}
 </script>
 	<h1
 		style="text-align: center; font-size:2.5rem; margin: 30px 0; color: #D09869; font-weight: bold; font-family: 'Sunflower', sans-serif;">
 		<a href="http://localhost/shopping_mall_prj/views/index.jsp" style="text-decoration:none; color:#D09869;">1조네 농산물</a></h1>
+	<% if(session.getAttribute("user_name")==null){ %>
 	<input type="button" class="btn" value="로그인"
-		style="position: absolute; top: 10px; right: 30px;">
+		style="position: absolute; top: 10px; right: 30px;" onclick="moveLogin()">
+	<%}else{ %>
+	<input type="button" class="btn" value="로그아웃"
+		style="position: absolute; top: 10px; right: 205px;" onclick="moveLogout()">
+	<input type="button" class="btn" value="마이페이지"
+		style="position: absolute; top: 10px; right: 110px;" onclick="moveMy()">
+	<input type="button" class="btn" value="장바구니"
+		style="position: absolute; top: 10px; right: 30px;" onclick="moveCart()">
+	<%} %>
 	<!-- Navigation-->
 	<nav class="navbar navbar-expand-lg navbar-light bg-light">
 		<div class="container px-4 px-lg-5">
@@ -38,11 +61,11 @@
 						</span>
 					</div>
 					<!-- /input-group -->
-					<button class="btn btn-outline-dark" type="submit"
+					<!-- <button class="btn btn-outline-dark" type="submit"
 						style="width: 176px">
 						<i class="bi-cart-fill me-1"></i> Cart <span
 							class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-					</button>
+					</button> -->
 				</form>
 			</div>
 		</div>

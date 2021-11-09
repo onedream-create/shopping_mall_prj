@@ -167,7 +167,8 @@ function addCart(){
 	<form id="frm">
 	<div class="row" style="padding: 3%;">
 		<div class="col-md-6" style="text-align: center;">
-			<img src="http://placehold.it/400" id="imgSize">
+			<img src="http://localhost/shopping_mall_prj/common/uploadImg/pro_img/<%= pv.getPro_img() %>" id="imgSize">
+			<!-- <img src="http://placehold.it/400" id="imgSize"> -->
 		</div>
 		<div class="col-md-6">
 		<div>
@@ -198,8 +199,8 @@ function addCart(){
 	</div>
 	</form>
 	<div class="py-5" id="detailDiv">
-		<img src="http://placehold.it/500" id="imgSize">
-		<p>
+		<!-- <img src="http://placehold.it/500" id="imgSize"> -->
+		<%= pv.getPro_detail() %>
 		<p>※고구마는 중량으로 구분하여 모양과 크기가 다를 수 있습니다.</p>
 		<p>※위 사이즈 표는 꿀고구마 사이즈 입니다.</p>
 	</div>
