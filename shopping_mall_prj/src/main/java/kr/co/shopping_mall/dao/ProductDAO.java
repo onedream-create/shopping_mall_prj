@@ -73,7 +73,7 @@ public class ProductDAO {
 		}//mapRow
 	}//SelectPro	
 	
-	//페이징을 위한 전체 데이터 레코드 수를 얻는 메소드
+	//페이징을 위한 전체 데이터 레코드 수를 얻는 메소드(카테고리별)
 	public String countPro(int category_cd) throws SQLException{
 		String cnt=null;
 		
@@ -97,7 +97,28 @@ public class ProductDAO {
 		gjt.closeAc();
 		
 		return cnt;
-	}//selectDeptEmp	
+	}//countPro	
+	
+	//페이징을 위한 전체 데이터 레코드 수를 얻는 메소드(검색)
+	public String countSearchPro(String searchValue) throws SQLException{
+		String cnt=null;
+		
+		//1. Spring Container 얻기
+		GetJdbcTemplate gjt=GetJdbcTemplate.getInstance();
+		//2. JdbcTemplate 얻기
+		JdbcTemplate jt=gjt.getJdbcTemplate();
+		//3. 쿼리문 실행
+		String count=null;
+		
+		
+		count="select count(pro_cd) from product where pro_name like '%' || ? || '%'";
+		cnt=jt.queryForObject(count, new Object[] {String.valueOf(searchValue)},String.class);
+		
+		//4. Spring Container 닫기
+		gjt.closeAc();
+		
+		return cnt;
+	}//countPro	
 	
 	
 	//검색한 값을 포함한 데이터 정렬
@@ -109,14 +130,30 @@ public class ProductDAO {
 		//2. JdbcTemplate 얻기
 		JdbcTemplate jt=gjt.getJdbcTemplate();
 		//3. 쿼리문 실행
-		String selectSearch="select * from product where pro_name like '%"+searchValue+"%'";
-		list=jt.query(selectSearch, new SelectPro());
+		String selectSearch="select * from product where pro_name like '%' || ? || '%'";
+		list=jt.query(selectSearch, new Object[] {String.valueOf(searchValue)},new SelectPro());
 		//4. Spring Container 닫기
 		gjt.closeAc();
 
 		return list;
 	}//selectSearchPro
 	
-	
+	//pro_cd에 해당하는 상품상세정보조회
+	public ProductVO selectPro(String pro_cd) throws SQLException{
+		ProductVO pv=null;
+		
+		//1. Spring Container 얻기
+		GetJdbcTemplate gjt=GetJdbcTemplate.getInstance();
+		//2. JdbcTemplate 얻기
+		JdbcTemplate jt=gjt.getJdbcTemplate();
+		//3. 쿼리문 실행
+		String selectDetail="select * from product where pro_cd=?";
+		pv=jt.queryForObject(selectDetail, new Object[] { String.valueOf(pro_cd) }, new SelectPro());
+				
+		//4. Spring Container 닫기
+		gjt.closeAc();
+
+		return pv;
+	}//selectPro
 	
 }//class

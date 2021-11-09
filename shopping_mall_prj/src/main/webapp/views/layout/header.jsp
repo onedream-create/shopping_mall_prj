@@ -3,11 +3,7 @@
     pageEncoding="UTF-8"%>
     
 <script type="text/javascript">
-$(function(){
-	$("#btn").click(function(){
-		$("#frm").submit();
-	});//click
-});//ready
+
 </script>
 	<h1
 		style="text-align: center; font-size:2.5rem; margin: 30px 0; color: #D09869; font-weight: bold; font-family: 'Sunflower', sans-serif;">
@@ -37,7 +33,7 @@ $(function(){
 						<input type="text" class="form-control" name="searchValue"
 							style="border-radius: 0.25rem; width: 200px; height: 38px; margin-right: 5px; line-height: 62px;">
 						<span class="input-group-btn">
-							<button class="btn btn-default" type="button" id="btn"
+							<button class="btn btn-default" type="submit" id="btn"
 								style="border-radius: 0.25rem; border: 1px solid #212529; color: #000000; margin-right: 20px;">검색</button>
 						</span>
 					</div>
