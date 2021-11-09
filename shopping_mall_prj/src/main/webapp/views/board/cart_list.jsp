@@ -1,6 +1,10 @@
+<%@page import="kr.co.shopping_mall.model.ProductVO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.text.DecimalFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     info="장바구니"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,10 +29,15 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <%
 	request.setCharacterEncoding("UTF-8");
-	//1. 유효 사용자 인증 필요
-	//2. 이 페이지에 직접 방문하면 null이 설정하는 문제
-	session.setAttribute("user_id", request.getParameter("user_id"));
-	session.setAttribute("user_pw", request.getParameter("user_pw"));
+	ArrayList<ProductVO> cart=null;
+	
+	Object obj=session.getAttribute("cart");
+	
+	if(obj==null){//세션정보가 없으면 배열을 생성
+		cart = new ArrayList<ProductVO>();
+	}else{ //세션정보가 있으면 강제로 캐스팅 
+		cart=(ArrayList<ProductVO>)obj;
+	}
 %>
 </head>
 <style>
@@ -77,10 +86,17 @@ function selectAll(selectAll)  {
 	    checkbox.checked = selectAll.checked;
 	  })
 	}
+function fnClear(){
+		location.href="CartClear.jsp";
+	}
+
+function fnGo(){
+	location.href="../index.jsp";
+}
 </script>
 <body>
 <jsp:include page="../layout/header.jsp"/>   
-	<form name="frm" action="buyForm.jsp" method="post">
+	<form name="frm"  method="get">
         <div class="container">
 	        <h2>장바구니</h2>    
 	        <div class="table-responsive">
@@ -99,24 +115,37 @@ function selectAll(selectAll)  {
 		                <th>수량</th>
 		                <th>가격</th>
 		            </tr>
-		            <%for(int i=0; i < 6; i++){ %>
-		            <tr>                
-		                <td><input type="checkbox" name="item"></td>
-		                <td><img src="http://placehold.it/150x150"></td>
-		                <td>호박고구마</td>
-		                <td>1개</td>
-		                <td>1000원</td>
-		            </tr>
-		            <%
-					}//end for
-					%>
-		            <tr>
-		            	<td id="total" colspan="5">총 주문금액 : 30000원</td>
+		            <% 
+		            if(cart.size()==0){
+		            	out.println("<tr>");
+						out.println("<td colspan= '5'>");
+							out.println("장바구니에 담긴 상품이 없습니다.");
+						out.println("</td>");
+					out.println("</tr>");    
+		            } else {
+		    			int totalSum = 0, total = 0;
+		    			DecimalFormat df = new DecimalFormat("###,###,###,##0");
+		    			for(int i = 0; i < cart.size(); i++) {
+		    				ProductVO pVO = cart.get(i);
+		    				out.println("<tr>");
+		    					out.println("<td><input type='checkbox' name='item'></td>");
+		    					out.println("<td>" + pVO.getPro_img() + "</td>");
+		    					out.println("<td>" + pVO.getPro_name() + "</td>");
+		    					out.println("<td>" + pVO.getCnt() + "</td>");
+		    					total = pVO.getPro_price() * pVO.getCnt();
+		    					out.println("<td>" + df.format(total) + "</td>");
+		    				out.println("</tr>");
+		    				totalSum += total;
+		    			}
+		    				out.println("<td id='total' colspan='5'>총 주문금액 :"+df.format(totalSum)+"원</td>");			           		
+		            }
+		    		%>	
+					
 		        </table>
         </div>
         <p>
-		  <button type="button" class="btn btn-default btn-lg btn2">삭제하기</button>
-		  <button class="btn btn-default btn-lg btn2" onclick="history.back()">쇼핑하기</button>
+		  <button class="btn btn-default btn-lg btn2" onclick="fnClear()">삭제하기</button>
+		  <button type="button" class="btn btn-default btn-lg btn2" onclick='fnGo()'>쇼핑하기</button>
 		  <button class="btn btn-default btn-lg btn2 btn3" onclick="location.href='buyForm.jsp'">구매하기</button>
 		</p>
         </div>
