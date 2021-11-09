@@ -123,7 +123,7 @@
 					<div class="col-11">
 						<label class="col-form-label text-center">상품상세설명</label>
 						<textarea id="summernote" name="pro_detail"></textarea>
-						<input type="button" class="btn btn-dark px-4 mt-2 offset-11" value="등록" onclick="addProduct(); return false;" />
+						<input type="button" id="addProductBtn" class="btn btn-dark px-4 mt-2 offset-11" value="등록" onclick="addProduct(); return false;"/>
 					</div>
 				</div>
 			</form>

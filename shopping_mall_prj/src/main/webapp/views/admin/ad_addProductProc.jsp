@@ -1,3 +1,5 @@
+<%@page import="kr.co.shopping_mall.dao.AdminDAO"%>
+<%@page import="kr.co.shopping_mall.model.ProductVO"%>
 <%@page import="java.util.Date"%>
 <%@page import="com.oreilly.servlet.MultipartRequest"%>
 <%@page import="com.oreilly.servlet.multipart.DefaultFileRenamePolicy"%>
@@ -9,11 +11,8 @@
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 
 <%
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-	String folderName = sdf.format(new Date());
 	// 1. upload 폴더 생성이 안되어 있으면 생성
-	String saveDirectory = pageContext.getServletContext().getRealPath("/common/uploadImg/"+folderName);
-	System.out.println(saveDirectory);
+	String saveDirectory = pageContext.getServletContext().getRealPath("/common/uploadImg/pro_img/");
 
 	File saveDir = new File(saveDirectory);
 	if (!saveDir.exists())
@@ -35,20 +34,17 @@
 			, encoding //인코딩 타입
 			, policy); //파일 정책
 	
-	String pro_name = mrequest.getParameter("pro_name");
-	int pro_price = Integer.parseInt(mrequest.getParameter("pro_price"));
-	String category_cd = mrequest.getParameter("category_cd");
-	File uploadFile = mrequest.getFile("pro_img");
-  	//input type="file" 태그의 name속성값을 이용해 파일객체를 생성
-	long uploadFile_length = uploadFile.length();
-	String originalFileName = mrequest.getOriginalFileName("pro_img"); //기존 이름
-	String filesystemName = mrequest.getFilesystemName("pro_img"); //기존
+	ProductVO pVO = new ProductVO();
+	pVO.setPro_name(mrequest.getParameter("pro_name")); //상품명
+	pVO.setPro_price(Integer.parseInt(mrequest.getParameter("pro_price"))); //상품가격
+	pVO.setCategory_cd(Integer.parseInt(mrequest.getParameter("category_cd"))); //상품분류
+	pVO.setPro_img(mrequest.getFilesystemName("pro_img")); //저장된 이름
+	pVO.setPro_detail(mrequest.getParameter("pro_detail")); //상품설명
 	
-	System.out.println("상품명 : "+pro_name);
-	System.out.println("상품가격 : "+pro_price);
-	System.out.println("상품카테고리 : "+category_cd);
-	System.out.println("첨부된파일명 : "+uploadFile.getName());
-	System.out.println("기존이름 : "+originalFileName);
-	System.out.println("저장된이름 : "+filesystemName);
-	System.out.println("저장된파일크기 : "+uploadFile_length);
+	//mrequest.getFile("pro_img"); //input type="file" 태그의 name속성값을 이용해 파일객체를 생성
+	//mrequest.getFile("pro_img").uploadFile.length(); //파일크기
+	//mrequest.getOriginalFileName("pro_img"); //기존 이름
+	
+	AdminDAO aDAO = new AdminDAO();
+	aDAO.addProduct(pVO);
 %>
