@@ -35,22 +35,72 @@ $(function() {
 	$("#newPassCheck,#newPass").keyup(function() {
 		if ($('#newPassCheck').val() != $('#newPass').val()) {
 			$('font[name=passCheck]').text('');
-			$('font[name=passCheck]').attr('color','red');
+			$('font[name=passCheck]').attr('color', 'red');
 			$('font[name=passCheck]').html("새로운 비밀번호가 일치하지 않습니다");
-			$('#adPassUpdateBtn').attr("disabled","disabled");
+			$('#adPassUpdateBtn').attr("disabled", "disabled");
 		} else {
 			$('font[name=passCheck]').text('');
-			$('font[name=passCheck]').attr('color','blue');
+			$('font[name=passCheck]').attr('color', 'blue');
 			$('font[name=passCheck]').html("새로운 비밀번호가 일치합니다");
 			$('#adPassUpdateBtn').removeAttr("disabled");
 		}
 	});
+	
+	$("input[name='pro_img']").on("change", function(e) {
+	
+		let fileInput = $("input[name='pro_img']");
+		let fileList = fileInput[0].files;
+		let fileObj = fileList[0];
+	
+		if(!imgFileCheck(fileObj.name, fileObj.size)){
+			$("input[name='pro_img']").val("");
+			return false;
+		} else {
+			imgPreview(this);
+		}
+	});
 }); //ready
 
-function fileUpload(fis) {
-	var reader = new FileReader();
+
+let regex = new RegExp("(.*?)\.(jpg|png)$");
+let maxSize = 1048576; //1MB	
+	
+function imgFileCheck(fileName, fileSize){
+if(fileSize >= maxSize){
+	alert("[1MB]이하의 파일만 선택해주세요");
+		return false;
+	}	  
+	if(!regex.test(fileName)){
+		alert(".jpg 또는 .png 형식의 이미지 파일만 선택해주세요");
+		return false;
+	}
+	return true;		
+}
+
+function imgPreview(fis) {
+	let reader = new FileReader();
 	reader.onload = function(e) {
 		$('#loadImg').attr('src', e.target.result);
 	}
 	reader.readAsDataURL(fis.files[0]);
+}
+
+function addProduct() {
+	let formData = new FormData($("#addProductForm")[0]);
+
+	$.ajax({
+		cache: false,
+		url: "ad_addProductProc.jsp",
+		processData: false,
+		contentType: false,
+		type: 'POST',
+		data: formData,
+		success: function() {
+			alert("등록 성공");
+		}, // success 
+
+		error: function(xhr, status) {
+			alert("등록 실패");
+		}
+	}); // $.ajax
 }
