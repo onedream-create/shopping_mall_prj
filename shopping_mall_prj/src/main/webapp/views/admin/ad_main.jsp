@@ -34,9 +34,10 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- /datepicker -->	
 
-<!-- summernote -->
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+<!-- summernote 부트스트랩4와 충돌때문에 직접 다운 -->
+<script src="http://localhost/shopping_mall_prj/common/js/summernote-lite.js"></script>
+<script src="http://localhost/shopping_mall_prj/common/js/summernote-ko-KR.js"></script>
+<link rel="stylesheet" href="http://localhost/shopping_mall_prj/common/css/summernote-lite.css">
 <!-- /summernote -->
 
 <script src="http://localhost/shopping_mall_prj/common/js/admin.js"></script>
