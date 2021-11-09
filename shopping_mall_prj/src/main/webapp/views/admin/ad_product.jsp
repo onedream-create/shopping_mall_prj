@@ -121,7 +121,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-5 mt-3"><img src="" id="loadImg" style="width: 300px;height:200px;"/></div>
+					<div class="col-5 mt-3"><img id="loadImg" style="width: 300px;height:200px;"/></div>
 				</div>
 				<div class="row mt-3 justify-content-center">
 					<div class="col-11">
