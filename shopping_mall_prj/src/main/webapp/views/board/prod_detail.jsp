@@ -1,6 +1,16 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="kr.co.shopping_mall.model.ProductVO"%>
+<%@page import="java.util.List"%>
+<%@page import="kr.co.shopping_mall.dao.ProductDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <jsp:include page="../layout/header.jsp"/>
+<%
+ProductDAO pd=new ProductDAO();
+String pro_cd=request.getParameter("pro_cd");
+ProductVO pv=pd.selectPro(pro_cd);
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -116,6 +126,7 @@ $(function(){
 		} else {
 			$("#numBox").val(plusNum);
 		}
+		
 	});
 
 	$("#minus").click(function() {
@@ -127,11 +138,21 @@ $(function(){
 		} else {
 			$("#numBox").val(minusNum);
 		}
+		
+		
 	});
 });
 
+
 function moveCart(){
-	location.href="http://localhost/shopping_mall_prj/board/cart_list.jsp"
+	location.href="http://localhost/shopping_mall_prj/views/board/cart_list.jsp"
+	/* location.href="http://localhost/shopping_mall_prj/views/board/test.jsp" */
+}
+
+function addCart(){
+	if(confirm("장바구니에 담으시겠습니까?")){
+		location.href="http://localhost/shopping_mall_prj/views/board/cart_proc.jsp?pro_cd=<%=pro_cd%>&cnt=" + document.getElementById("numBox").value;
+	}//end if
 }
 </script>
 <body>
@@ -143,7 +164,7 @@ function moveCart(){
 		</div>
 		<div class="col-md-6">
 		<div>
-			<h2>1조네 해남 호박 고구마 3kg</h2>
+			<h2><%= pv.getPro_name() %></h2>
 			
 			<h6>무료배송</h6>
 			
@@ -152,7 +173,8 @@ function moveCart(){
 				<input type="number" id="numBox" min="1" max="20" value="1"
 					readonly="readonly"/>
 				<button type="button" id="minus">-</button>
-				<span id="numPrice">8900원</span>
+				<%-- <span id="numPrice"><%= pv.getPro_price() %>원</span> --%>
+				<input type="text" id="numPrice" value="<%= pv.getPro_price()%>"/>
 			</div>
 			
 			<div id="totalPriceDiv">
@@ -161,7 +183,7 @@ function moveCart(){
 			</div>
 			
 			<div style="padding-top: 5%; text-align: center; max-width:100%;">
-				<button type="button" class="btn btn-default btn-lg" id="cartBtn">장바구니 넣기</button>
+				<button type="button" class="btn btn-default btn-lg" id="cartBtn" onclick="addCart()">장바구니 넣기</button>
 				<button type="button" class="btn btn-default btn-lg" id="cartBtn" onclick="moveCart()">장바구니 이동</button>
 			</div>
 			</div>

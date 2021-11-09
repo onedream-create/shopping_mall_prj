@@ -35,6 +35,10 @@ String category_cd=request.getParameter("category_cd");
 	font-family: 'Sunflower', sans-serif; 
 	margin-top:50px; 
 }
+#pro{
+	text-decoration: none;
+	color:#000;
+}
 </style>
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -44,9 +48,16 @@ String category_cd=request.getParameter("category_cd");
 <%
 ProductDAO pd=new ProductDAO();
 String tempPage=request.getParameter("page");
-String category_cd=request.getParameter("category_cd");
-int cnt=Integer.parseInt(pd.countPro(Integer.parseInt(category_cd)));//전체 데이터 개수
-/* pageContext.setAttribute("proCnt", cnt); */
+int cnt=0;
+String category_cd=null;
+String searchValue=null;
+if(request.getParameter("category_cd") != null){
+	category_cd=request.getParameter("category_cd");
+	cnt=Integer.parseInt(pd.countPro(Integer.parseInt(category_cd)));//전체 데이터 개수
+}else{
+	searchValue=request.getParameter("searchValue");
+	cnt=Integer.parseInt(pd.countSearchPro(searchValue));
+}//end else
 
 int cPage;//현재 페이지
 
@@ -77,7 +88,12 @@ if(cPage>totalPages){
 int start=(cPage-1)*len;
 
 //각 페이지의 시작점으로 len개의 데이터 가져오기
-List<ProductVO> list=pd.selectPro(Integer.parseInt(category_cd), start, len);
+List<ProductVO> list=null;
+if(request.getParameter("category_cd") != null){
+	list=pd.selectPro(Integer.parseInt(category_cd), start, len);
+}else{
+	list=pd.selectSearchPro(searchValue);
+}//end else
 pageContext.setAttribute("proData", list);
 
 int pageLength=3;
@@ -114,7 +130,8 @@ if(endPage>totalPages){
 			<c:forEach var="pro" items="${ proData }">
 			<c:set var="i" value="${ i+1 }"/>
 			<div class="col mb-5">
-				<div class="card h-100">
+			<a href="http://localhost/shopping_mall_prj/views/board/prod_detail.jsp?pro_cd=${ pro.pro_cd }" id="pro">
+				<div class="card h-100" id="pro">
 					<!-- Product image-->
 					<img class="card-img-top"
 						src="http://placehold.it/550X500" alt="..." />
@@ -124,10 +141,11 @@ if(endPage>totalPages){
 							<!-- Product name-->
 							<h5 class="fw-bolder"><c:out value="${ pro.pro_name }"/></h5>
 							<!-- Product price-->
-							<c:out value="${ pro.pro_price }"/>
+							<c:out value="${ pro.pro_price }"/>원
 						</div>
 					</div>
 				</div>
+			</a>
 			</div>
 			</c:forEach>
 			</c:if>

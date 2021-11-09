@@ -1,5 +1,9 @@
+<%@page import="kr.co.shopping_mall.model.ProductVO"%>
+<%@page import="java.util.List"%>
+<%@page import="kr.co.shopping_mall.dao.ProductDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,6 +28,10 @@
 			font-weight: bold; 
 			font-family:'Sunflower', sans-serif; 
 			}
+#pro{
+	text-decoration: none;
+	color:#000;
+}
 </style>
 <!-- Bootstrap core JS-->
 <script
@@ -32,6 +40,11 @@
 <!-- <script src="js/scripts.js"></script> -->
 </head>
 <body>
+<%
+ProductDAO pd=new ProductDAO();
+List<ProductVO> list=pd.selectPro(0, 0, 20);
+pageContext.setAttribute("proData", list);
+%>
 <jsp:include page="layout/header.jsp"/>
 		<div id="carouselExampleIndicators" class="carousel slide"
 			data-bs-ride="carousel">
@@ -74,8 +87,9 @@
 	<h2 id="title">전체상품</h2>
 	<div class="container px-4 px-lg-5 mt-5">
 		<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-			<%for(int i=0; i < 20; i++){ %>
+			<c:forEach var="pro" items="${ proData }">
 			<div class="col mb-5">
+			<a href="http://localhost/shopping_mall_prj/views/board/prod_detail.jsp?pro_cd=${ pro.pro_cd }" id="pro">
 				<div class="card h-100">
 					<!-- Product image-->
 					<img class="card-img-top"
@@ -84,16 +98,16 @@
 					<div class="card-body p-4">
 						<div class="text-center">
 							<!-- Product name-->
-							<h5 class="fw-bolder">상품명</h5>
+							<h5 class="fw-bolder"><c:out value="${ pro.pro_name }"/></h5>
 							<!-- Product price-->
-							#,###원
+							<c:out value="${ pro.pro_price }"/>원
 						</div>
 					</div>
 				</div>
+				</a>
 			</div>
-			<%
-			}//end for
-			%>
+			</c:forEach>
+			
 		</div>
 	</div>
 </section>
