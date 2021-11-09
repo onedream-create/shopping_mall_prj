@@ -45,7 +45,13 @@ $(function() {
 		callbacks : { 
             onImageUpload : function(files, editor, welEditable) {
            	 		uploadSummernoteImageFile(files[0], this);
-            }
+            },
+			onMediaDelete : function(target){
+				let answer = confirm("이미지를 삭제하시겠습니까?");
+				if(answer){
+					deleteSummernoteImageFile(target[0].src);
+				}
+			}
         }
 	});
 
@@ -91,10 +97,23 @@ function uploadSummernoteImageFile(file,el) {
 			enctype : 'multipart/form-data',
 			processData : false,
 			success : function(url) {
-					alert("ajax로 리턴받은 데이터 : " + url);
 					$(el).summernote('editor.insertImage', url); //url = 완전한 url이어야함 ../ 또는 c:// 안됨
 				}
 			});
+}
+
+//썸머노트 이미지 파일 삭제
+function deleteSummernoteImageFile(src){
+	let splitSrc = src.split("/");
+	let fileName = splitSrc[splitSrc.length-1];
+	
+	let fileData = {fileName:fileName};
+	
+	$.ajax({
+		url : "ad_deleteSummernoteImageFile.jsp",
+		data : fileData,
+		type : "post",
+	});
 }
 
 let regex = new RegExp("(.*?)\.(jpg|png)$");
@@ -148,6 +167,16 @@ function addProduct() {
 	}
 	
 	let formData = new FormData($("#addProductForm")[0]);
+	
+	let answer = confirm("상품을 등록하시겠습니까?\n"+
+							"\n상품명 : "+formData.get("pro_name")+
+							"\n상품가격 : "+formData.get("pro_price")+
+							"\n상품분류코드 : "+formData.get("category_cd")	
+							);
+	if(!answer){
+		return false;
+	}
+	
 	$.ajax({
 		cache: false,
 		url: "ad_addProductProc.jsp",
@@ -157,6 +186,9 @@ function addProduct() {
 		data: formData,
 		success: function() {
 			alert("등록 성공");
+			$('#addProductForm')[0].reset();
+			$('#summernote').summernote('reset');
+			$('#loadImg').removeAttr("src");
 		},
 		error: function() {
 			alert("등록 실패");

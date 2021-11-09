@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
+    <c:if test="${empty sessionScope.admin_id}">
+    <c:redirect url="ad_login.jsp"/>
+    </c:if>
 <ul class="nav nav-tabs">
 	<li class="nav-item"><a class="nav-link active" data-toggle="tab"
 		href="#order_dash">대시보드</a></li>
