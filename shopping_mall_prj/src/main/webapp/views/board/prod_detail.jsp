@@ -116,6 +116,8 @@ ProductVO pv=pd.selectPro(pro_cd);
 <title>상품상세</title>
 <script>
 $(function(){
+	var cnt=$("#numBox").val();
+	$("#totalPrice").text(cnt*<%=pv.getPro_price() %>+"원");
 	
 	$("#plus").click(function() {
 		var num = $("#numBox").val();
@@ -127,7 +129,9 @@ $(function(){
 			$("#numBox").val(plusNum);
 		}
 		
-	});
+		cnt=$("#numBox").val();
+		$("#totalPrice").text(cnt*<%=pv.getPro_price() %>+"원");
+	});//click
 
 	$("#minus").click(function() {
 		var num = $("#numBox").val();
@@ -139,9 +143,11 @@ $(function(){
 			$("#numBox").val(minusNum);
 		}
 		
-		
-	});
-});
+		cnt=$("#numBox").val();
+		$("#totalPrice").text(cnt*<%=pv.getPro_price() %>+"원");
+	});//click
+	
+});//ready
 
 
 function moveCart(){
@@ -154,6 +160,7 @@ function addCart(){
 		location.href="http://localhost/shopping_mall_prj/views/board/cart_proc.jsp?pro_cd=<%=pro_cd%>&cnt=" + document.getElementById("numBox").value;
 	}//end if
 }
+
 </script>
 <body>
 <div class="container px-4 px-lg-5 mt-5">
@@ -173,13 +180,13 @@ function addCart(){
 				<input type="number" id="numBox" min="1" max="20" value="1"
 					readonly="readonly"/>
 				<button type="button" id="minus">-</button>
-				<%-- <span id="numPrice"><%= pv.getPro_price() %>원</span> --%>
-				<input type="text" id="numPrice" value="<%= pv.getPro_price()%>"/>
+				<span id="numPrice"><%= pv.getPro_price() %>원</span>
 			</div>
 			
 			<div id="totalPriceDiv">
 				<span id="totalPriceText">총 상품 금액</span>
-				<span id="totalPrice">3XXXX원</span>
+				<span id="totalPrice"></span>
+				<!-- <input type="text" id="totalPrice" value=""/> -->
 			</div>
 			
 			<div style="padding-top: 5%; text-align: center; max-width:100%;">

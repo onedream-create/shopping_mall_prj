@@ -95,6 +95,7 @@ if(request.getParameter("category_cd") != null){
 	list=pd.selectSearchPro(searchValue);
 }//end else
 pageContext.setAttribute("proData", list);
+pageContext.setAttribute("proCnt", cnt);
 
 int pageLength=3;
 int currentBlock=cPage % pageLength ==0?cPage/pageLength : (cPage/pageLength)+1;
@@ -148,10 +149,10 @@ if(endPage>totalPages){
 			</a>
 			</div>
 			</c:forEach>
-			</c:if>
+			<%-- </c:if>
 			<c:if test="${ proCnt eq 0 }">
-				<div>데이터가 존재하지 않습니다.</div>
-			</c:if>
+				<div>해당 상품이 존재하지 않습니다.</div>
+			</c:if> --%>
 
 		</div>
 	</div>
@@ -194,6 +195,10 @@ if(endPage>totalPages){
 			%>
 		</ul>
 	</nav>	
+	</c:if>
+		<c:if test="${ proCnt eq 0 }">
+			<div>해당 상품이 존재하지 않습니다.</div>
+		</c:if>
 </section>
 
 <%@ include file="../layout/footer.jsp"%>
