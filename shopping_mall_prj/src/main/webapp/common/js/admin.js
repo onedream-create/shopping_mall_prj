@@ -27,30 +27,139 @@ $(function() {
 		maxHeight: null,             // 최대 높이
 		focus: false,                  // 에디터 로딩후 포커스를 맞출지 여부
 		lang: "ko-KR",					// 한글 설정
-		placeholder: '최대 2048자까지 쓸 수 있습니다'	//placeholder 설정
-
+		placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
+		toolbar: [
+			    // [groupName, [list of button]]
+			    ['fontname', ['fontname']],
+			    ['fontsize', ['fontsize']],
+			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+			    ['color', ['forecolor','color']],
+			    ['table', ['table']],
+			    ['para', ['ul', 'ol', 'paragraph']],
+			    ['height', ['height']],
+			    ['insert',['picture','link','video']],
+			    ['view', ['fullscreen', 'help']]
+			  ],
+			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+		callbacks : { 
+            onImageUpload : function(files, editor, welEditable) {
+           	 		uploadSummernoteImageFile(files[0], this);
+            }
+        }
 	});
 
 	//비밀번호변경폼 새비밀번호 일치 확인
 	$("#newPassCheck,#newPass").keyup(function() {
 		if ($('#newPassCheck').val() != $('#newPass').val()) {
 			$('font[name=passCheck]').text('');
-			$('font[name=passCheck]').attr('color','red');
+			$('font[name=passCheck]').attr('color', 'red');
 			$('font[name=passCheck]').html("새로운 비밀번호가 일치하지 않습니다");
-			$('#adPassUpdateBtn').attr("disabled","disabled");
+			$('#adPassUpdateBtn').attr("disabled", "disabled");
 		} else {
 			$('font[name=passCheck]').text('');
-			$('font[name=passCheck]').attr('color','blue');
+			$('font[name=passCheck]').attr('color', 'blue');
 			$('font[name=passCheck]').html("새로운 비밀번호가 일치합니다");
 			$('#adPassUpdateBtn').removeAttr("disabled");
 		}
 	});
+	
+	$("input[name='pro_img']").on("change", function(e) {
+	
+		let fileInput = $("input[name='pro_img']");
+		let fileList = fileInput[0].files;
+		let fileObj = fileList[0];
+	
+		if(!imgFileCheck(fileObj.name, fileObj.size)){
+			$("input[name='pro_img']").val("");
+			return false;
+		} else {
+			imgPreview(this);
+		}
+	});
 }); //ready
 
-function fileUpload(fis) {
-	var reader = new FileReader();
+//썸머노트 이미지 파일 업로드
+function uploadSummernoteImageFile(file,el) {
+	let data = new FormData();
+	data.append("file", file);
+		$.ajax({
+			data : data,
+			type : "POST",
+			url : "ad_uploadSummernoteImageFile.jsp",
+			contentType : false,
+			enctype : 'multipart/form-data',
+			processData : false,
+			success : function(url) {
+					alert("ajax로 리턴받은 데이터 : " + url);
+					$(el).summernote('editor.insertImage', url); //url = 완전한 url이어야함 ../ 또는 c:// 안됨
+				}
+			});
+}
+
+let regex = new RegExp("(.*?)\.(jpg|png)$");
+let maxSize = 1048576; //1MB	
+	
+function imgFileCheck(fileName, fileSize){
+if(fileSize >= maxSize){
+	alert("[1MB]이하의 파일만 선택해주세요");
+		return false;
+	}	  
+	if(!regex.test(fileName)){
+		alert(".jpg 또는 .png 형식의 이미지 파일만 선택해주세요");
+		return false;
+	}
+	return true;		
+}
+
+function imgPreview(fis) {
+	let reader = new FileReader();
 	reader.onload = function(e) {
 		$('#loadImg').attr('src', e.target.result);
 	}
 	reader.readAsDataURL(fis.files[0]);
+}
+
+function addProduct() {
+	if($("input[name='pro_name']").val()==""){
+		alert("상품명을 입력하세요");
+		$("input[name='pro_name']").focus();
+		return false;
+	}
+	if($("input[name='pro_price']").val()==""){
+		alert("상품가격을 입력하세요");
+		$("input[name='pro_price']").focus();
+		return false;
+	}
+	if($("input[name='pro_img']").val()==""){
+		alert("상품이미지를 등록하세요");
+		$("input[name='pro_img']").focus();
+		return false;
+	}
+	if($("input[name='category_cd']:radio:checked").length < 1){
+		alert("상품분류를 선택하세요");
+		$("input[name='category_cd']").focus();
+		return false;
+	}
+	if($("#summernote").val()==""){
+		alert("상품설명을 입력하세요");
+		$("#summernote").focus();
+		return false;
+	}
+	
+	let formData = new FormData($("#addProductForm")[0]);
+	$.ajax({
+		cache: false,
+		url: "ad_addProductProc.jsp",
+		processData: false,
+		contentType: false,
+		type: 'POST',
+		data: formData,
+		success: function() {
+			alert("등록 성공");
+		},
+		error: function() {
+			alert("등록 실패");
+		}
+	});
 }
