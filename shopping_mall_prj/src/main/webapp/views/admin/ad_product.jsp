@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
+    <c:if test="${empty sessionScope.admin_id}">
+    <c:redirect url="ad_login.jsp"/>
+    </c:if>
 <ul class="nav nav-tabs">
 	<li class="nav-item"><a class="nav-link active" data-toggle="tab"
 		href="#product_dash">대시보드</a></li>
@@ -117,7 +121,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-5 mt-3"><img src="" id="loadImg" style="width: 300px;height:200px;"/></div>
+					<div class="col-5 mt-3"><img id="loadImg" style="width: 300px;height:200px;"/></div>
 				</div>
 				<div class="row mt-3 justify-content-center">
 					<div class="col-11">
