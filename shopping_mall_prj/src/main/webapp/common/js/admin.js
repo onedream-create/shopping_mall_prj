@@ -70,7 +70,7 @@ $(function() {
 		}
 	});
 	
-	$("input[name='pro_img']").on("change", function(e) {
+	$("input[name='pro_img']").on("change", function() {
 	
 		let fileInput = $("input[name='pro_img']");
 		let fileList = fileInput[0].files;
@@ -92,7 +92,7 @@ function uploadSummernoteImageFile(file,el) {
 		$.ajax({
 			data : data,
 			type : "POST",
-			url : "ad_uploadSummernoteImageFile.jsp",
+			url : "proc/ad_uploadSummernoteImageFile.jsp",
 			contentType : false,
 			enctype : 'multipart/form-data',
 			processData : false,
@@ -110,18 +110,18 @@ function deleteSummernoteImageFile(src){
 	let fileData = {fileName:fileName};
 	
 	$.ajax({
-		url : "ad_deleteSummernoteImageFile.jsp",
+		url : "proc/ad_deleteSummernoteImageFile.jsp",
 		data : fileData,
 		type : "post",
 	});
 }
 
-let regex = new RegExp("(.*?)\.(jpg|png)$");
-let maxSize = 1048576; //1MB	
-	
 function imgFileCheck(fileName, fileSize){
-if(fileSize >= maxSize){
-	alert("[1MB]이하의 파일만 선택해주세요");
+	let regex = new RegExp("(.*?)\.(jpg|png)$");
+	let maxSize = 1048576; //1MB
+		
+	if(fileSize >= maxSize){
+		alert("[1MB]이하의 파일만 선택해주세요");
 		return false;
 	}	  
 	if(!regex.test(fileName)){
@@ -179,7 +179,7 @@ function addProduct() {
 	
 	$.ajax({
 		cache: false,
-		url: "ad_addProductProc.jsp",
+		url: "proc/ad_addProductProc.jsp",
 		processData: false,
 		contentType: false,
 		type: 'POST',

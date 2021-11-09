@@ -14,7 +14,7 @@ String input_pw = DataEncrypt.messageDigest("MD5", request.getParameter("admin_p
 AdminDAO aDAO = new AdminDAO();
 session.setAttribute("admin_id", aDAO.checkAccount(input_id, input_pw));
 %>
-<c:redirect url="ad_main.jsp"/>
+<c:redirect url="../ad_main.jsp"/>
 </c:catch>
 
 <c:if test="${not empty e}">

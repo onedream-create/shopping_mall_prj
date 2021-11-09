@@ -156,24 +156,20 @@
 							<div class="form-group row">
 								<label class="col-auto col-form-label text-center">상품분류</label>
 								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="category_cd"
-										id="pro_category4" value="4"> <label
-										class="form-check-label" for="pro_category4">전체</label>
+									<input class="form-check-input" type="radio" name="category_cd" id="pro_category4" value="4">
+									<label class="form-check-label" for="pro_category4">전체</label>
 								</div>
 								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="category_cd"
-										id="pro_category5" value="1"> <label
-										class="form-check-label" for="pro_category5">농산물</label>
+									<input class="form-check-input" type="radio" name="category_cd" id="pro_category5" value="1">
+									<label class="form-check-label" for="pro_category5">농산물</label>
 								</div>
 								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="category_cd"
-										id="pro_category6" value="2"> <label
-										class="form-check-label" for="pro_category6">수산물</label>
+									<input class="form-check-input" type="radio" name="category_cd" id="pro_category6" value="2">
+									<label class="form-check-label" for="pro_category6">수산물</label>
 								</div>
 								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="category_cd"
-										id="pro_category7" value="3"> <label
-										class="form-check-label" for="pro_category7">축산물</label>
+								<input class="form-check-input" type="radio" name="category_cd" id="pro_category7" value="3">
+								<label class="form-check-label" for="pro_category7">축산물</label>
 								</div>
 								<input type="button" class="btn btn-dark ml-3" value="검색" />
 							</div>

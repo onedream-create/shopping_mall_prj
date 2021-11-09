@@ -43,7 +43,7 @@
 		<div class="mb-5" align="center">
 			<h1><strong>관리자 로그인</strong></h1>
 		</div>
-		<form action="ad_loginProc.jsp" method="post" id="frm">
+		<form action="proc/ad_loginProc.jsp" method="post" id="frm">
 			<!-- ID입력 -->
 			<div class="input-group input-group-lg mb-3">
 				<div class="input-group-prepend">
