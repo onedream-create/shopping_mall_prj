@@ -77,5 +77,19 @@ public class UserDAO {
 		gjt.closeAc();
 		return user_name;
 	}// selectLogin
+	
+	public String checkAccount(String inputId,String inputPw) throws DataAccessException{
+		String user_id=""; 
+		//1. Spring COntainer 생성
+		GetJdbcTemplate gjt = GetJdbcTemplate.getInstance();
+		//2.JdbcTemplate 얻기
+		JdbcTemplate jt = gjt.getJdbcTemplate();
+		//3. 쿼리문수행
+		String selectId="select user_id from users where user_id=? and user_pw=?";
+		user_id = jt.queryForObject(selectId, new Object[] {inputId,inputPw},  String.class);
+		//4. Spring COntainer 닫기
+		gjt.closeAc();
+		return user_id;
+	}
 
 }// class
