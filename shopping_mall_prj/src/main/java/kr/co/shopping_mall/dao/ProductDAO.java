@@ -36,7 +36,8 @@ public class ProductDAO {
 		}else {
 			selectPro.append("	where ROWNUM <= ?+? and P.category_cd=?)		");
 		}//end else
-		selectPro.append("	where RNUM > ?		");
+		selectPro.append("	where RNUM > ?		")
+		.append("	and sell_fl='y'	");
 		
 		//Dynamic query
 		if(category_cd != 0) {
@@ -85,10 +86,10 @@ public class ProductDAO {
 		String count=null;
 		
 		if(category_cd==0) {
-			count="select count(pro_cd) from product";
+			count="select count(pro_cd) from product where sell_fl='y'";
 			cnt=jt.queryForObject(count, String.class);
 		}else {
-			count="select count(pro_cd) from product where category_cd=?";
+			count="select count(pro_cd) from product where sell_fl='y' and category_cd=?";
 			cnt=jt.queryForObject(count, new Object[] {String.valueOf(category_cd)},String.class);
 		}//end else
 		
@@ -111,7 +112,7 @@ public class ProductDAO {
 		String count=null;
 		
 		
-		count="select count(pro_cd) from product where pro_name like '%' || ? || '%'";
+		count="select count(pro_cd) from product where sell_fl='y' and pro_name like '%' || ? || '%'";
 		cnt=jt.queryForObject(count, new Object[] {String.valueOf(searchValue)},String.class);
 		
 		//4. Spring Container 닫기
@@ -122,7 +123,7 @@ public class ProductDAO {
 	
 	
 	//검색한 값을 포함한 데이터 정렬
-	public List<ProductVO> selectSearchPro(String searchValue) throws SQLException{
+	public List<ProductVO> selectSearchPro(String searchValue, int start, int len) throws SQLException{
 		List<ProductVO> list=null;
 		
 		//1. Spring Container 얻기
@@ -130,8 +131,21 @@ public class ProductDAO {
 		//2. JdbcTemplate 얻기
 		JdbcTemplate jt=gjt.getJdbcTemplate();
 		//3. 쿼리문 실행
-		String selectSearch="select * from product where pro_name like '%' || ? || '%'";
-		list=jt.query(selectSearch, new Object[] {String.valueOf(searchValue)},new SelectPro());
+		StringBuilder selectSearch=new StringBuilder();
+		selectSearch.append("	select * 	")
+		.append("	from(select ROWNUM AS RNUM, P.* 	")
+		.append("	from product P	")
+		.append("	where ROWNUM <=?+? and pro_name like '%' || ? || '%')	")
+		.append("	where RNUM > ?");
+		
+		list=jt.query(selectSearch.toString(), 
+				new Object[] {Long.valueOf(start),Long.valueOf(len),searchValue,Long.valueOf(start)},new SelectPro());
+		
+		
+		//"select * from product where sell_fl='y' and pro_name like '%' || ? || '%'";
+		//select * 
+		//from(select ROWNUM AS RNUM, P.* from product P where ROWNUM <=0+2 and pro_name like '%고구%')
+		//where RNUM > 0;
 		//4. Spring Container 닫기
 		gjt.closeAc();
 
