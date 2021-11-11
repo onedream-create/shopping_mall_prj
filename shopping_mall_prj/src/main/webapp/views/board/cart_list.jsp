@@ -1,3 +1,4 @@
+<%@page import="kr.co.shopping_mall.dao.ProductDAO"%>
 <%@page import="kr.co.shopping_mall.model.ProductVO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.text.DecimalFormat"%>
@@ -78,6 +79,13 @@
     .btn3:hover{color:#FFFFFF;}
 </style>
 <script type="text/javascript">
+$(function(){
+	$("#delete").click(function(){
+		if(confirm('삭제하시겠습니까?')){
+			location.href="cartClear.jsp";
+		}
+	});//click
+});//ready
 function selectAll(selectAll)  {
 	  const checkboxes 
 	       = document.getElementsByName('item');
@@ -86,9 +94,6 @@ function selectAll(selectAll)  {
 	    checkbox.checked = selectAll.checked;
 	  })
 	}
-function fnClear(){
-		location.href="CartClear.jsp";
-	}
 
 function fnGo(){
 	location.href="../index.jsp";
@@ -96,7 +101,7 @@ function fnGo(){
 </script>
 <body>
 <jsp:include page="../layout/header.jsp"/>   
-	<form name="frm"  method="get">
+	<form name="frm"  method="post">
         <div class="container">
 	        <h2>장바구니</h2>    
 	        <div class="table-responsive">
@@ -126,13 +131,13 @@ function fnGo(){
 		    			int totalSum = 0, total = 0;
 		    			DecimalFormat df = new DecimalFormat("###,###,###,##0");
 		    			for(int i = 0; i < cart.size(); i++) {
-		    				ProductVO pVO = cart.get(i);
+		    				ProductVO pv = cart.get(i);
 		    				out.println("<tr>");
-		    					out.println("<td><input type='checkbox' name='item'></td>");
-		    					out.println("<td>" + pVO.getPro_img() + "</td>");
-		    					out.println("<td>" + pVO.getPro_name() + "</td>");
-		    					out.println("<td>" + pVO.getCnt() + "</td>");
-		    					total = pVO.getPro_price() * pVO.getCnt();
+		    					out.println("<td><input type='checkbox' name='item' value='"+pv.getPro_cd()+"'></td>");
+		    					out.println("<td><img src='../common/upload/" + pv.getPro_img() + "'></td>");
+		    					out.println("<td>" + pv.getPro_name() + "</td>");
+		    					out.println("<td>" + pv.getCnt() + "</td>");
+		    					total = pv.getPro_price() * pv.getCnt();
 		    					out.println("<td>" + df.format(total) + "</td>");
 		    				out.println("</tr>");
 		    				totalSum += total;
@@ -144,9 +149,9 @@ function fnGo(){
 		        </table>
         </div>
         <p>
-		  <button class="btn btn-default btn-lg btn2" onclick="fnClear()">삭제하기</button>
+		  <button class="btn btn-default btn-lg btn2" id="delete">삭제하기</button>
 		  <button type="button" class="btn btn-default btn-lg btn2" onclick='fnGo()'>쇼핑하기</button>
-		  <button class="btn btn-default btn-lg btn2 btn3" onclick="location.href='buyForm.jsp'">구매하기</button>
+		  <button class="btn btn-default btn-lg btn2 btn3" formaction='buyForm.jsp'>구매하기</button>
 		</p>
         </div>
         </form>

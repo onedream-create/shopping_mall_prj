@@ -1,3 +1,6 @@
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="kr.co.shopping_mall.model.ProductVO"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     info="구매하기"%>
@@ -9,7 +12,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>구매하기</title>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -23,6 +26,17 @@
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<%
+	request.setCharacterEncoding("UTF-8");
+	ArrayList<ProductVO> cart=null;
+	
+	Object obj=session.getAttribute("cart");
+	if(obj==null){//세션정보가 없으면 배열을 생성
+		cart = new ArrayList<ProductVO>();
+	}else{ //세션정보가 있으면 강제로 캐스팅 
+		cart=(ArrayList<ProductVO>)obj;
+	}
+%>
 <style type="text/css">
 	form h2:nth-child(1){margin-top:100px;} 
 	h2{text-align:left; color:#D09869; font-weight: bold; font-family: 'Sunflower', sans-serif; margin:0 0 40px 0;} 
@@ -66,6 +80,38 @@
     } 
 </style>
 <script type="text/javascript">
+$(function(){
+	$("#dv_tel").focusout(function(){
+		telValidator($(this).val()); 
+	});//focusout 
+	$("#buy").click(function(){
+		if($("#dv_name").val()==""){
+			alert("이름을 입력해 주세요.");
+			$("#dv_name").focus();
+			return;
+		}//end if
+		if($("#dv_tel").val()==""){
+			alert("전화번호를 입력해 주세요.");
+			return;
+		}//end if
+		if($("#dv_addr").val()==""){
+			alert("주소를 입력해 주세요.");
+			$("#dv_addr").focus();
+			return;
+		}//end if
+		if($("#dv_memo").val()==""){
+			alert("메모를 입력해 주세요.");
+			$("#dv_memo").focus();
+			return;
+		}//end if
+	
+		if(cart.size()==0){
+			alert("장바구니가 비어 있습니다.");
+			return;
+		}
+	   $("#frm").submit();
+	});//click
+});//ready
 function selectAll(selectAll)  {
 	  const checkboxes 
 	       = document.getElementsByName('item');
@@ -74,11 +120,24 @@ function selectAll(selectAll)  {
 	    checkbox.checked = selectAll.checked;
 	  })
 	}
+function telValidator(args) {
+	var flag=false;
+    const msg = '유효하지 않는 전화번호입니다.';
+    // IE 브라우저에서는 당연히 var msg로 변경
+    
+    if (/^[0-9]{2,3}[0-9]{3,4}[0-9]{4}/.test(args)) {
+        flag= true;
+    }
+    if(flag==false){
+    	alert(msg);
+    	$("#user_tel").val('');
+    }
+}//telValidator 
 </script>
 </head>
 <body>   
 <jsp:include page="../layout/header.jsp"/>
-	<form name="frm" method="post">
+	<form name="frm" method="post" action="buy_proc.jsp">
         <div class="container">
 	        <h2>주문서 작성</h2>         
 	        <div class="table-responsive">
@@ -92,51 +151,57 @@ function selectAll(selectAll)  {
 		              </tr>
 		              <tr>
 		              	<td>받는사람</td>
-		              	<td><input type="text" name="dv_name"></td>
+		              	<td><input type="text" name="dv_name" id="dv_name" value="이현경"></td>
 		              </tr>
 		              <tr>
 		              	<td>휴대전화</td>
-		              	<td><input type="text" name="dv_tel"></td>
+		              	<td><input type="text" name="dv_tel" id="dv_tel" value="01022221111"></td>
 		              </tr>
 		              <tr>
 		              	<td>주소</td>
-		              	<td><input type="text" name="dv_addr"></td>
+		              	<td><input type="text" name="dv_addr" id="dv_addr" value="강남"></td>
 		              </tr>
 		              <tr>
 		              	<td>배송메모</td>
-		              	<td><input type="text" name="dv_memo"></td>
+		              	<td><input type="text" name="dv_memo" id="dv_memo" value="조심히 오세요"></td>
 		              </tr>
 		        </table>
 	        </div>
 	        <div class="table-responsive">
 		 		<table class="table table-borderless" id="tbl-product">
 		            <colgroup>
-		                <col style="width: 10%" />
 		                <col style="width: 55%" />
-		                <col style="width: 10%" />
 		                <col style="width: 15%" />
+		                <col style="width: 20%" />
 		            </colgroup>
 		            <tr>             
-		                <th><input type="checkbox" name="product"  onclick='selectAll(this)'></th>   
 		                <th>상품명</th>
 		                <th>수량</th>
 		                <th>가격</th> 
 		            </tr>
-		            <%for(int i=0;i<3;i++) {%>
-		            <tr>                
-		                <td><input type="checkbox" name="item"></td>
-		                <td style="text-align:left;">호박고구마</td>
-		                <td>1개</td>
-		                <td>10000원</td>
-		            </tr>
-		            <% } %>
-		            <tr>
-		            	<td colspan="5" id="total">총 주문금액 : 30000원</td>
+		           	<%
+		            int totalSum = 0, total = 0;
+		    		DecimalFormat df = new DecimalFormat("###,###,###,###,##0");
+	    			for(int i = 0; i < cart.size(); i++) {
+	    				ProductVO pv = cart.get(i);
+	    				out.println("<tr>");
+	    					out.println("<td>" + pv.getPro_name() + "</td>");
+	    					out.println("<td>" + pv.getCnt() + "</td>");
+	    					total = pv.getPro_price() * pv.getCnt();
+	    					out.println("<td>" + df.format(total) + "</td>");
+	    				out.println("</tr>");
+	    				totalSum += total;
+	    			}
+		    				out.println("<td id='total' colspan='5'>총 주문금액 :"+df.format(totalSum)+"원</td>");			           		
+		            
+		    		%>	
+		            <!-- <tr>
+		            	<td colspan="5" id="total">총 주문금액 : 30000원</td> -->
 		        </table>
 	        </div>
 	        <p>
-			  <button class="btn btn-default btn-lg" onclick="javascript: frm.action='cart_list.jsp';">장바구니</button>
-			  <button class="btn btn-default btn-lg" onclick="javascript: frm.action='buyCompl.jsp';">구매하기</button>
+			  <button class="btn btn-default btn-lg" formaction="cart_list.jsp">장바구니</button>
+			  <button type="submit" class="btn btn-default btn-lg" id="buy" formaction="buy_proc.jsp">구매하기</button>
 			</p>
         </div>
       </form> 

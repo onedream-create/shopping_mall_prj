@@ -1,7 +1,12 @@
+<%@page import="kr.co.shopping_mall.model.ProductVO"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     info="구매완료"
     %>
+<%
+request.setCharacterEncoding("UTF-8"); 
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +15,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>구매완료</title>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -24,12 +29,19 @@
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
+<jsp:useBean id="dVO" class="kr.co.shopping_mall.model.DeliveryVO" scope="page"/>
+<jsp:setProperty property="*" name="dVO"/>
+<%	
+	dVO.setDv_name(dVO.getDv_name());
+	dVO.setDv_tel(dVO.getDv_tel());
+	dVO.getDv_addr();
+	dVO.getDv_memo();
+%>
 <style type="text/css">
-	.container{text-align:center;}
+	.container2{text-align:center; margin-bottom:40px;}
 	h2{margin-top:100px; font-family: 'Sunflower', sans-serif; font-weight: bold; color:#D09869; margin-bottom:40px;}
-	#frm div:first-of-type{margin-bottom:40px;} 
-	#frm .container>div:nth-of-type(2){margin-bottom:50px; font-size:18px;}
+	#div1{margin-bottom:20px;}
+	#div2{margin-bottom:50px; font-size:18px;}
 	#tbl-compl{border:1px solid #DDDDDD; border-color:#D09869; margin-bottom:20px;}
 	colgroup{text-align:left;}
 	tr th{text-align:center;}
@@ -46,10 +58,10 @@
 <body>
 <jsp:include page="../layout/header.jsp"/>
 <form id="frm" name="frm" action="../user/order_detail.jsp" method="post">
-	<div class="container">
+	<div class="container container2">
 		<h2>주문완료</h2>
-		<div>1조네 농산물을 이용해 주셔서 감사합니다.</div>
-		<div>아래 계좌정보로 입금해 주시면<br/>결제 완료처리가 됩니다.</div>
+		<div id="div1">1조네 농산물을 이용해 주셔서 감사합니다.</div>
+		<div id="div2">아래 계좌정보로 입금해 주시면<br/>결제 완료처리가 됩니다.</div>
 		<div class="table-responsive">
 			 <table class="table table-borderless" id="tbl-compl" >
 				 <colgroup>
@@ -66,11 +78,11 @@
 			 	</tr>
 			 	<tr>
 			 		<th>배송정보</th>
-			 		<td>이현경<br/>010-1234-5678<br/>서울시 강남구 역삼동</td>
+			 		<td><%= dVO.getDv_name() %><br/><%= dVO.getDv_tel() %><br/><%= dVO.getDv_addr() %></td>
 			 	</tr>
 			 	<tr>
 			 		<th>배송메모</th>
-			 		<td>배송 전에 미리 연락 바랍니다.</td>
+			 		<td><%= dVO.getDv_memo() %></td>
 			 	</tr>
 		 	</table>
 		 </div>

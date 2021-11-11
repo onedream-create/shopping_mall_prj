@@ -93,37 +93,37 @@ $(function(){
 	});//focusout 
 	$("#btn1").click(function(){
 		if($("#user_id").val()==""){
-			alert("아이디 필수 입력");
+			alert("아이디를 입력해주세요.");
 			$("#user_id").focus();
 			return;
 		}//end if
 		if($("#user_pw1").val()==""){
-			alert("비밀번호 필수 입력");
+			alert("비밀번호를 입력해주세요.");
 			$("#user_pw1").focus();
 			return;
 		}//end if
 		if($("#user_pw2").val()==""){
-			alert("아이디 필수 입력");
+			alert("비밀번호 확인을 입력해주세요.");
 			$("#user_pw2").focus();
 			return;
 		}//end if
 		if($("#user_name").val()==""){
-			alert("이름 필수 입력");
+			alert("이름을 입력해주세요.");
 			$("#user_name").focus();
 			return;
 		}//end if
 		if($("#user_tel").val()==""){
-			alert("전화번호 필수 입력");
+			alert("전화번호를 입력해주세요.");
 			$("#user_tel").focusin();
 			return;
 		}//end if
 		if($("#user_email").val()==""){
-			alert("이메일 필수 입력");
+			alert("이메일을 입력해주세요.");
 			$("#user_email").focus();
 			return;
 		}//end if
 		if($("#user_addr").val()==""){
-			alert("주소 필수 입력");
+			alert("주소를 입력해주세요.");
 			$("#user_addr").focus();
 			return;
 		}//end if
@@ -159,7 +159,7 @@ function telValidator(args) {
     }
     if(flag==false){
     	alert(msg);
-    	$("#user_tel").val('');
+    	$("#dv_tel").val('');
     }
 	
 }//telValidator 
