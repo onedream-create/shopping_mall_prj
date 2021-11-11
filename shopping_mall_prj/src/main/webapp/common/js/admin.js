@@ -29,30 +29,30 @@ $(function() {
 		lang: "ko-KR",					// 한글 설정
 		placeholder: '최대 2048자까지 쓸 수 있습니다',	//placeholder 설정
 		toolbar: [
-			    // [groupName, [list of button]]
-			    ['fontname', ['fontname']],
-			    ['fontsize', ['fontsize']],
-			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-			    ['color', ['forecolor','color']],
-			    ['table', ['table']],
-			    ['para', ['ul', 'ol', 'paragraph']],
-			    ['height', ['height']],
-			    ['insert',['picture','link','video']],
-			    ['view', ['fullscreen', 'help']]
-			  ],
-			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
-			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
-		callbacks : { 
-            onImageUpload : function(files, editor, welEditable) {
-           	 		uploadSummernoteImageFile(files[0], this);
-            },
-			onMediaDelete : function(target){
+			// [groupName, [list of button]]
+			['fontname', ['fontname']],
+			['fontsize', ['fontsize']],
+			['style', ['bold', 'italic', 'underline', 'strikethrough', 'clear']],
+			['color', ['forecolor', 'color']],
+			['table', ['table']],
+			['para', ['ul', 'ol', 'paragraph']],
+			['height', ['height']],
+			['insert', ['picture', 'link', 'video']],
+			['view', ['fullscreen', 'help']]
+		],
+		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', '맑은 고딕', '궁서', '굴림체', '굴림', '돋움체', '바탕체'],
+		fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '22', '24', '28', '30', '36', '50', '72'],
+		callbacks: {
+			onImageUpload: function(files, editor, welEditable) {
+				uploadSummernoteImageFile(files[0], this);
+			},
+			onMediaDelete: function(target) {
 				let answer = confirm("이미지를 삭제하시겠습니까?");
-				if(answer){
+				if (answer) {
 					deleteSummernoteImageFile(target[0].src);
 				}
 			}
-        }
+		}
 	});
 
 	//비밀번호변경폼 새비밀번호 일치 확인
@@ -69,14 +69,14 @@ $(function() {
 			$('#adPassUpdateBtn').removeAttr("disabled");
 		}
 	});
-	
+
 	$("input[name='pro_img']").on("change", function() {
-	
+
 		let fileInput = $("input[name='pro_img']");
 		let fileList = fileInput[0].files;
 		let fileObj = fileList[0];
-	
-		if(!imgFileCheck(fileObj.name, fileObj.size)){
+
+		if (!imgFileCheck(fileObj.name, fileObj.size)) {
 			$("input[name='pro_img']").val("");
 			return false;
 		} else {
@@ -86,49 +86,50 @@ $(function() {
 }); //ready
 
 //썸머노트 이미지 파일 업로드
-function uploadSummernoteImageFile(file,el) {
+function uploadSummernoteImageFile(file, el) {
 	let data = new FormData();
 	data.append("file", file);
-		$.ajax({
-			data : data,
-			type : "POST",
-			url : "proc/ad_uploadSummernoteImageFile.jsp",
-			contentType : false,
-			enctype : 'multipart/form-data',
-			processData : false,
-			success : function(url) {
-					$(el).summernote('editor.insertImage', url); //url = 완전한 url이어야함 ../ 또는 c:// 안됨
-				}
-			});
-}
-
-//썸머노트 이미지 파일 삭제
-function deleteSummernoteImageFile(src){
-	let splitSrc = src.split("/");
-	let fileName = splitSrc[splitSrc.length-1];
-	
-	let fileData = {fileName:fileName};
-	
 	$.ajax({
-		url : "proc/ad_deleteSummernoteImageFile.jsp",
-		data : fileData,
-		type : "post",
+		data: data,
+		type: "POST",
+		url: "proc/ad_uploadSummernoteImageFile.jsp",
+		contentType: false,
+		enctype: 'multipart/form-data',
+		processData: false,
+		success: function(url) {
+			$(el).summernote('editor.insertImage', url); //url = 완전한 url이어야함 ../ 또는 c:// 안됨
+		}
 	});
 }
 
-function imgFileCheck(fileName, fileSize){
+//썸머노트 이미지 파일 삭제
+function deleteSummernoteImageFile(src) {
+	let splitSrc = src.split("/");
+	let fileName = splitSrc[splitSrc.length - 1];
+
+	let fileData = { fileName: fileName };
+
+	$.ajax({
+		url: "proc/ad_deleteSummernoteImageFile.jsp",
+		data: fileData,
+		type: "post",
+	});
+}
+
+//상품등록폼 상품이미지 유효성체크
+function imgFileCheck(fileName, fileSize) {
 	let regex = new RegExp("(.*?)\.(jpg|png)$");
 	let maxSize = 1048576; //1MB
-		
-	if(fileSize >= maxSize){
+
+	if (fileSize >= maxSize) {
 		alert("[1MB]이하의 파일만 선택해주세요");
 		return false;
-	}	  
-	if(!regex.test(fileName)){
+	}
+	if (!regex.test(fileName)) {
 		alert(".jpg 또는 .png 형식의 이미지 파일만 선택해주세요");
 		return false;
 	}
-	return true;		
+	return true;
 }
 
 function imgPreview(fis) {
@@ -139,44 +140,46 @@ function imgPreview(fis) {
 	reader.readAsDataURL(fis.files[0]);
 }
 
+//==========================================================================================================================
+//상품등록
 function addProduct() {
-	if($("input[name='pro_name']").val()==""){
+	if ($("input[name='pro_name']").val() == "") {
 		alert("상품명을 입력하세요");
 		$("input[name='pro_name']").focus();
 		return false;
 	}
-	if($("input[name='pro_price']").val()==""){
+	if ($("input[name='pro_price']").val() == "") {
 		alert("상품가격을 입력하세요");
 		$("input[name='pro_price']").focus();
 		return false;
 	}
-	if($("input[name='pro_img']").val()==""){
+	if ($("input[name='pro_img']").val() == "") {
 		alert("상품이미지를 등록하세요");
 		$("input[name='pro_img']").focus();
 		return false;
 	}
-	if($("input[name='category_cd']:radio:checked").length < 1){
+	if ($("input[name='category_cd']:radio:checked").length < 1) {
 		alert("상품분류를 선택하세요");
 		$("input[name='category_cd']").focus();
 		return false;
 	}
-	if($("#summernote").val()==""){
+	if ($("#summernote").val() == "") {
 		alert("상품설명을 입력하세요");
 		$("#summernote").focus();
 		return false;
 	}
-	
+
 	let formData = new FormData($("#addProductForm")[0]);
-	
-	let answer = confirm("상품을 등록하시겠습니까?\n"+
-							"\n상품명 : "+formData.get("pro_name")+
-							"\n상품가격 : "+formData.get("pro_price")+
-							"\n상품분류코드 : "+formData.get("category_cd")	
-							);
-	if(!answer){
+
+	let answer = confirm("상품을 등록하시겠습니까?\n" +
+		"\n상품명 : " + formData.get("pro_name") +
+		"\n상품가격 : " + formData.get("pro_price") +
+		"\n상품분류코드 : " + formData.get("category_cd")
+	);
+	if (!answer) {
 		return false;
 	}
-	
+
 	$.ajax({
 		cache: false,
 		url: "proc/ad_addProductProc.jsp",
@@ -195,3 +198,91 @@ function addProduct() {
 		}
 	});
 }
+
+//==========================================================================================================================
+//검색조건에 따라 상품갯수카운트
+function productAllSearch() {
+	$("#searchValue").val("");
+	$("#pro_category4").prop("checked", true);
+
+	pagenation();
+}
+
+function pagenation() {
+	let division = $("#pro_division").val();
+	let searchValue = $("#searchValue").val();
+	let category_cd = $("input[name='category_cd1']:radio:checked").val();
+
+	let condition = { "division": division, "searchValue": searchValue, "category_cd": category_cd };
+
+	$.ajax({
+		cache: false,
+		url: "proc/pro_pagenation.jsp",
+		type: 'get',
+		data: condition,
+		success: function(data) {
+			//페이징버튼 그려줄 태그의 선택자
+			let paging = $("#productSearchPageNumber");
+			
+			paging.empty();
+			
+			//1,2,3 페이지 생성
+			for (let i = 1; i <= data; i++) {
+				paging.append('<li class=\"page-item\"><a class=\"page-link\" href=\"\">' + i + '</a></li>');
+			}
+			paging.find('li:first-child').addClass('active');
+			productSearch(1); //바로 첫번째 페이지 그려줌
+			
+			//상품 페이지 1,2,3...클릭시 active효과주고 검색
+			paging.find('li').click(function(e) {
+				e.preventDefault();
+				paging.find('li').removeClass('active');
+				$(this).addClass('active');
+				let index = $(this).text();
+				productSearch(index);
+			});
+		},
+		error: function() {
+			alert("실패");
+		}
+
+	});
+}
+
+//==========================================================================================================================
+//상품검색
+function productSearch(index) {
+	let division = $("#pro_division").val();
+	let searchValue = $("#searchValue").val();
+	let category_cd = $("input[name='category_cd1']:radio:checked").val();
+
+	let condition = { "index": index, "division": division, "searchValue": searchValue, "category_cd": category_cd };
+
+	$.ajax({
+		cache: false,
+		url: "proc/productSearch.jsp",
+		type: 'get',
+		data: condition,
+		dataType: 'json',
+		success: function(data) {
+			$("#ProSearchTbody").empty();
+			let html = '';
+			for (key in data) {
+				html += '<tr class="trow">';
+				html += '<td>' + data[key].no + '</td>';
+				html += '<td>' + data[key].pro_cd + '</td>';
+				html += '<td>' + data[key].pro_name + '</td>';
+				html += '<td>' + data[key].pro_price + '</td>';
+				html += '<td>' + data[key].input_date + '</td>';
+				html += '<td>' + data[key].sell_fl + '</td>';
+				html += '<td>' + '<a href=\"ad_product_updateForm.jsp?pro_cd=' + data[key].pro_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=1200,height=300,top=200,left=200\'); return false;\">수정</a></td>';
+				html += '</tr>';
+			}
+			$("#ProSearchTbody").append(html);
+		},
+		error: function() {
+			alert("실패");
+		}
+	});
+}
+

@@ -140,38 +140,38 @@
 				<div class="col-12">
 					<div class="contentlabel">상품검색</div>
 					<div class="col-12 mt-2">
-						<form action="#" method="post">
+						<form id="productSearchForm" method="post">
 							<div class="form-group row">
 								<label class="col-auto col-form-label text-center">상품검색</label>
 								<div class="col-md-2">
-									<select class="form-control">
+									<select class="form-control" id="pro_division">
 										<option value="1">상품명</option>
 										<option value="2">상품코드</option>
 									</select>
 								</div>
 								<div class="col-md-3">
-									<input type="text" name="pro_name" class="form-control">
+									<input type="text" id="searchValue" class="form-control">
 								</div>
 							</div>
 							<div class="form-group row">
 								<label class="col-auto col-form-label text-center">상품분류</label>
 								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="category_cd" id="pro_category4" value="4">
+									<input class="form-check-input" type="radio" name="category_cd1" id="pro_category4" value="0" checked="checked">
 									<label class="form-check-label" for="pro_category4">전체</label>
 								</div>
 								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="category_cd" id="pro_category5" value="1">
+									<input class="form-check-input" type="radio" name="category_cd1" id="pro_category5" value="1">
 									<label class="form-check-label" for="pro_category5">농산물</label>
 								</div>
 								<div class="form-check form-check-inline">
-									<input class="form-check-input" type="radio" name="category_cd" id="pro_category6" value="2">
+									<input class="form-check-input" type="radio" name="category_cd1" id="pro_category6" value="2">
 									<label class="form-check-label" for="pro_category6">수산물</label>
 								</div>
 								<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="category_cd" id="pro_category7" value="3">
+								<input class="form-check-input" type="radio" name="category_cd1" id="pro_category7" value="3">
 								<label class="form-check-label" for="pro_category7">축산물</label>
 								</div>
-								<input type="button" class="btn btn-dark ml-3" value="검색" />
+								<input type="button" class="btn btn-dark ml-3" value="검색" onclick="pagenation(); return false;" />
 							</div>
 						</form>
 					</div>
@@ -181,13 +181,14 @@
 		<div class="container-fluid">
 			<div class="row mt-4">
 				<div class="col-3">
-					<input type="button" class="btn btn-dark mb-2" value="전체상품보기" />
+					<input type="button" id="allProductBtn" class="btn btn-dark mb-2" value="전체상품보기" onclick="productAllSearch(); return false;"/>
 				</div>
 				<div class="col-12">
 					<div class="contentlabel">상품목록</div>
-					<table class="table table-bordered">
+					<table class="table table-bordered paginated">
 						<thead>
 							<tr class="tcol">
+								<td class="col-1">번호</td>
 								<td class="col-2">상품코드</td>
 								<td class="col-2">상품명</td>
 								<td class="col-1">판매가</td>
@@ -196,32 +197,15 @@
 								<td class="col-1">관리</td>
 							</tr>
 						</thead>
-						<tbody>
-							<tr class="trow">
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
+						<tbody id="ProSearchTbody">
 						</tbody>
 					</table>
 				</div>
 			</div>
-			<nav aria-label="Page navigation example">
-				<ul class="pagination justify-content-md-center">
-					<li class="page-item"><a class="page-link" href="#"
-						aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-					</a></li>
-					<li class="page-item"><a class="page-link" href="#">1</a></li>
-					<li class="page-item"><a class="page-link" href="#">2</a></li>
-					<li class="page-item"><a class="page-link" href="#">3</a></li>
-					<li class="page-item"><a class="page-link" href="#"
-						aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-					</a></li>
-				</ul>
-			</nav>
+				<ul class="pagination justify-content-md-center" id="productSearchPageNumber">
+<!-- 					<li class="page-item"><a class="page-link" href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
+					<li class="page-item"><a class="page-link" href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li> -->	
+				</ul> 
 		</div>
 	</div>
 </div>

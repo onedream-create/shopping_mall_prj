@@ -1,5 +1,18 @@
+<%@page import="kr.co.shopping_mall.model.ProductVO"%>
+<%@page import="kr.co.shopping_mall.dao.AdminDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core" %>
+    <c:if test="${empty sessionScope.admin_id}">
+    <c:redirect url="ad_login.jsp"/>
+    </c:if>
+<% 
+String pro_cd = request.getParameter("pro_cd");
+
+AdminDAO aDAO = new AdminDAO();
+ProductVO pVO = aDAO.getProInfo(pro_cd);
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,11 +36,13 @@
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
 	integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
 	crossorigin="anonymous"></script>
-	
-<script type="text/javascript">
-
-</script>
 </head>
+<script type="text/javascript">
+$(function() {
+	let sell_fl = '<%=pVO.getSell_fl()%>'
+	$('#'+sell_fl).prop("checked",true);
+});
+</script>
 <body>
 	<div class="container">
 		<form action="#" method="post">
@@ -43,22 +58,22 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td class="readOnly"><input type="text" class="form-control" name="pro_cd" value="상품코드" readonly="readonly"/></td>
-						<td><input type="text" class="form-control" name="pro_name" value="상품명"/></td>
-						<td><input type="number" class="form-control" name="pro_price" value="판매가"/></td>
+						<td class="readOnly"><input type="text" class="form-control" name="pro_cd" value='<%=pVO.getPro_cd()%>' readonly="readonly"/></td>
+						<td><input type="text" class="form-control" name="pro_name" value='<%=pVO.getPro_name()%>'/></td>
+						<td><input type="number" class="form-control" name="pro_price" value='<%=pVO.getPro_price()%>'/></td>
 						<td>
  					<div class="col-10">
       					<div class="form-check float-sm-left">
-       				 		<input class="form-check-input" type="radio" name="sell_fl" id="sell" value="y">
+       				 		<input class="form-check-input" type="radio" name="sell_fl" id="y" value="y">
         					<label class="form-check-label" for="sell">판매함</label>
       					</div>
       					<div class="form-check float-sm-left">
-       						<input class="form-check-input" type="radio" name="sell_fl" id="notSell" value="n">
+       						<input class="form-check-input" type="radio" name="sell_fl" id="n" value="n">
        					 	<label class="form-check-label" for="notSell">판매안함</label>
       					</div>
       				</div>
 						</td>
-						<td class="readOnly"><input type="text" class="form-control" name="input_date" value="상품등록일" readonly="readonly"/></td>
+						<td class="readOnly"><input type="text" class="form-control" name="input_date" value='<%=pVO.getInput_date()%>' readonly="readonly"/></td>
 					</tr>
 				</tbody>
 			</table>
@@ -69,6 +84,5 @@
 			</div>
 		</form>
 	</div>
-	이미지랑 설명까지 변경하려면 그냥 삭제하고 다시 등록해
 </body>
 </html>

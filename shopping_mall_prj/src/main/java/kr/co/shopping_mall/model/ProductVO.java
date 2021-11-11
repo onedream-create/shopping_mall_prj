@@ -10,7 +10,8 @@ public class ProductVO {
 	private String sell_fl;
 	private String input_date;
 	private int cnt;
-	
+	private String no;
+
 	public ProductVO() {
 	}
 
@@ -97,6 +98,12 @@ public class ProductVO {
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
 	}
-	
-	
+
+	public String getNo() {
+		return no;
+	}
+
+	public void setNo(String no) {
+		this.no = no;
+	}
 }
