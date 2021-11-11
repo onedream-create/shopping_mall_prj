@@ -51,7 +51,7 @@
 	<div class="tab-pane h-100" id="home_account">
 		<div class="container home_account_form">
 			<div class="mb-5"><h3>관리자 비밀번호 변경</h3></div>
-			<form action="proc/ad_pass_updateProc.jsp" method="post">
+			<form action="proc/home/passUpdateProc.jsp" method="post">
 				<div class="form-group row justify-content-md-center">
 					<label class="col-md-4 col-form-label">현재 비밀번호</label>
 					<div class="col-md-6">

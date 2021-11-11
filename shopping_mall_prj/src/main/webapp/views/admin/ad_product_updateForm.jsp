@@ -6,13 +6,7 @@
     <c:if test="${empty sessionScope.admin_id}">
     <c:redirect url="ad_login.jsp"/>
     </c:if>
-<% 
-String pro_cd = request.getParameter("pro_cd");
 
-AdminDAO aDAO = new AdminDAO();
-ProductVO pVO = aDAO.getProInfo(pro_cd);
-
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,7 +18,7 @@ ProductVO pVO = aDAO.getProInfo(pro_cd);
 	href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 	integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
 	crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="http://localhost/shopping_mall_prj/common/css/custom_updateForm.css">
+<link rel="stylesheet" type="text/css" href="http://localhost/shopping_mall_prj/common/css/custom_updateForm.css" >
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
 	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
 	crossorigin="anonymous"></script>
@@ -36,16 +30,66 @@ ProductVO pVO = aDAO.getProInfo(pro_cd);
 	src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js"
 	integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
 	crossorigin="anonymous"></script>
-</head>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+
 <script type="text/javascript">
 $(function() {
-	let sell_fl = '<%=pVO.getSell_fl()%>'
+	//판매상태 radio 체크
+	let sell_fl = $('#sell_flag').val();
 	$('#'+sell_fl).prop("checked",true);
 });
+
+function btnClick(str) {
+	let formData = $("#updateForm").serializeArray();
+	formData.push({name: 'work', value: str});
+	let answer;
+
+	if(str == 'update'){
+		answer = confirm("수정완료하시겠습니까?");
+		if (!answer) {
+			return false;
+		}
+		work(formData);
+	}
+	if(str == 'delete'){
+		answer = confirm("정말 삭제하시겠습니까?");
+		if (!answer) {
+			return false;
+		}
+		work(formData);
+	}
+	if(str == 'cancle'){
+		self.close();
+	}
+	
+	function work(formData) {
+        $.ajax({
+        	cache: false,
+            url: "proc/product/updateProProc.jsp", 
+            type : "POST", 
+            data : formData, 
+            success: function(data) {
+            	alert("성공");
+            	self.close();
+            },
+			error: function() {
+				alert("실패");
+				self.close();
+			}
+        });
+	}
+}
 </script>
+</head>
 <body>
+<c:catch var="e">
+<% 
+String pro_cd = request.getParameter("pro_cd");
+AdminDAO aDAO = new AdminDAO();
+ProductVO pVO = aDAO.getProInfo(pro_cd);
+%>
 	<div class="container">
-		<form action="#" method="post">
+		<form id="updateForm" method="post">
 			<table class="table table-bordered text-center">
 				<thead class="thead-dark">
 					<tr>
@@ -63,6 +107,7 @@ $(function() {
 						<td><input type="number" class="form-control" name="pro_price" value='<%=pVO.getPro_price()%>'/></td>
 						<td>
  					<div class="col-10">
+ 						<input type="hidden" id="sell_flag" value="<%=pVO.getSell_fl()%>">
       					<div class="form-check float-sm-left">
        				 		<input class="form-check-input" type="radio" name="sell_fl" id="y" value="y">
         					<label class="form-check-label" for="sell">판매함</label>
@@ -78,11 +123,18 @@ $(function() {
 				</tbody>
 			</table>
 			<div class="row">
-			<input type="button" class="btn btn-dark col-auto ml-3 mr-auto" value="삭제">
-			<input type="button" class="btn btn-primary col-auto mr-3" value="수정완료">
-			<input type="button" class="btn btn-outline-primary mr-3" value="취소">
+			<input type="button" class="btn btn-dark col-auto ml-3 mr-auto" onclick="btnClick('delete');" value="삭제">
+			<input type="button" class="btn btn-primary col-auto mr-3" onclick="btnClick('update');" value="수정완료">
+			<input type="button" class="btn btn-outline-primary mr-3" onclick="btnClick('cancle');" value="취소">
 			</div>
 		</form>
 	</div>
+</c:catch>
+<c:if test="${not empty e}">
+<script type="text/javascript">
+alert("이미 삭제되거나 없는 상품입니다.");
+self.close();
+</script>
+</c:if>
 </body>
 </html>

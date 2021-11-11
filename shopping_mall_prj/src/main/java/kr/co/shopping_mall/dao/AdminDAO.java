@@ -11,7 +11,8 @@ import org.springframework.jdbc.core.RowMapper;
 import kr.co.shopping_mall.model.ProductVO;
 
 public class AdminDAO {
-
+	
+	//HOME===================================================================================================
 	public String checkAccount(String inputId, String inputPw) throws DataAccessException {
 		String admin_id = "";
 		// 1. Spring COntainer 생성
@@ -41,20 +42,25 @@ public class AdminDAO {
 
 		return cnt;
 	}
-
-	public void addProduct(ProductVO pVO) throws DataAccessException {
+	
+	//Product===================================================================================================
+	//상품추가
+	public void addPro(ProductVO pVO) throws DataAccessException {
 		// 스프링컨테이너 얻기
 		GetJdbcTemplate gjt = GetJdbcTemplate.getInstance();
 		// JdbcTemplate 얻기
 		JdbcTemplate jt = gjt.getJdbcTemplate();
 		// 쿼리 실행
-		String insertProduct = "insert into product(pro_cd,category_cd,pro_name,pro_detail,pro_img,pro_price) values(concat(to_char(sysdate, '\"P\"YYMMDD\"\"'),lpad(pro_cd_seq.nextval,5,'0')),?,?,?,?,?)";
-		jt.update(insertProduct, pVO.getCategory_cd(), pVO.getPro_name(), pVO.getPro_detail(), pVO.getPro_img(),
+		StringBuilder insertProduct = new StringBuilder();
+		insertProduct.append(" insert into product(pro_cd,category_cd,pro_name,pro_detail,pro_img,pro_price) ")
+					 .append(" values(concat(to_char(sysdate, '\"P\"YYMMDD\"'),lpad(pro_cd_seq.nextval,5,'0')),?,?,?,?,?" );
+		jt.update(insertProduct.toString(), pVO.getCategory_cd(), pVO.getPro_name(), pVO.getPro_detail(), pVO.getPro_img(),
 				pVO.getPro_price());
 		// 스프링컨테이너 닫기
 		gjt.closeAc();
 	}
-
+	
+	//상품 RowMapper
 	public class SelectPro implements RowMapper<ProductVO> {
 		public ProductVO mapRow(ResultSet rs, int rowNum) throws SQLException {
 			ProductVO pv = new ProductVO();
@@ -70,7 +76,8 @@ public class AdminDAO {
 			return pv;
 		}
 	}
-
+	
+	//상품 리스트 얻기
 	public List<ProductVO> searchPro(String division, String searchValue, int category_cd, int start, int rowsPerPage) throws SQLException {
 		List<ProductVO> list = null;
 		// 1. Spring Container 얻기
@@ -118,28 +125,28 @@ public class AdminDAO {
 		//2. JdbcTemplate 얻기
 		JdbcTemplate jt=gjt.getJdbcTemplate();
 		//3. 쿼리문 실행
-		StringBuilder count = new StringBuilder();
-		count.append(" select count(pro_cd) from product ");
+		StringBuilder countPro = new StringBuilder();
+		countPro.append(" select count(pro_cd) from product ");
 			if(division.equals("1")) {
-				count.append(" where pro_name ");
+				countPro.append(" where pro_name ");
 			} else {
-				count.append(" where pro_cd ");	
+				countPro.append(" where pro_cd ");	
 			}
 					
-				count.append(" like '%' || ? || '%' ");
+			countPro.append(" like '%' || ? || '%' ");
 						
 			if(category_cd != 0) {
-				count.append(" and category_cd=? ");
+				countPro.append(" and category_cd=? ");
 						
-				cnt=jt.queryForObject(count.toString(), new Object[] {String.valueOf(searchValue),String.valueOf(category_cd)},String.class);
+				cnt=jt.queryForObject(countPro.toString(), new Object[] {String.valueOf(searchValue),String.valueOf(category_cd)},String.class);
 			} else {	
-				cnt=jt.queryForObject(count.toString(), new Object[] {String.valueOf(searchValue)},String.class);
+				cnt=jt.queryForObject(countPro.toString(), new Object[] {String.valueOf(searchValue)},String.class);
 			}
 		//4. Spring Container 닫기
 		gjt.closeAc();
 		
 		return cnt;
-	}//countSearchPro	
+	}	
 	
 	//pro_cd에 해당하는 상품상세정보조회
 	public ProductVO getProInfo(String pro_cd) throws SQLException{
@@ -150,12 +157,39 @@ public class AdminDAO {
 		//2. JdbcTemplate 얻기
 		JdbcTemplate jt=gjt.getJdbcTemplate();
 		//3. 쿼리문 실행
-		String selectDetail="select rownum as rnum, p.* from product p where pro_cd=?";
-		pv=jt.queryForObject(selectDetail, new Object[] { String.valueOf(pro_cd) }, new SelectPro());
+		String selectProInfo=" select rownum as rnum, p.* from product p where pro_cd=? ";
+		pv=jt.queryForObject(selectProInfo, new Object[] { String.valueOf(pro_cd) }, new SelectPro());
 				
 		//4. Spring Container 닫기
 		gjt.closeAc();
 
 		return pv;
-	}//selectPro
+	}
+	
+	//상품삭제
+	public void deletePro(String pro_cd) throws SQLException {
+		// 스프링컨테이너 얻기
+		GetJdbcTemplate gjt = GetJdbcTemplate.getInstance();
+		// JdbcTemplate 얻기
+		JdbcTemplate jt = gjt.getJdbcTemplate();
+		// 쿼리 실행
+		String deletePro = " delete from product where pro_cd=? ";
+		jt.update(deletePro, pro_cd);
+		// 스프링컨테이너 닫기
+		gjt.closeAc();
+	}
+	
+	//상품수정
+	public void updatePro(String pro_cd , String pro_name, String pro_price ,String sell_fl) throws SQLException {
+		// 스프링컨테이너 얻기
+		GetJdbcTemplate gjt = GetJdbcTemplate.getInstance();
+		// JdbcTemplate 얻기
+		JdbcTemplate jt = gjt.getJdbcTemplate();
+		// 쿼리 실행
+		String updatePro = " update product set pro_name=?, pro_price=?, sell_fl=?, input_date=sysdate where pro_cd=?";
+		jt.update(updatePro, pro_name, pro_price, sell_fl, pro_cd);
+		// 스프링컨테이너 닫기
+		gjt.closeAc();
+	}
+	
 }

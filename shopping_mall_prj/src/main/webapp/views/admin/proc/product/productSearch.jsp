@@ -12,7 +12,7 @@ String searchValue = request.getParameter("searchValue");
 int category_cd = Integer.valueOf(request.getParameter("category_cd"));
 
 int index = Integer.valueOf(request.getParameter("index"));
-int rowsPerPage = 7; //페이지당 보여줄갯수
+int rowsPerPage = 8; //페이지당 보여줄갯수
 //데이터시작점
 int start = (index-1) * rowsPerPage;
 

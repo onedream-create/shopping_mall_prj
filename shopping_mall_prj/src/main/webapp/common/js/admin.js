@@ -1,4 +1,9 @@
 $(function() {
+	//정보 초기화
+	productSearch(1);
+	
+	//==========================================================================================================================
+	//datepicker	
 	$("#home_datepicker1,#home_datepicker2,#order_datepicker1,#order_datepicker2").datepicker({
 		dateFormat: 'yy-mm-dd' //달력 날짜 형태
 		, showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
@@ -17,10 +22,12 @@ $(function() {
 		, minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
 		, maxDate: "+0D" //최대 선택일자(+1D:하루후, +1M:한달후, +1Y:일년후)  
 	});
-
+	
 	//초기값을 오늘 날짜로 설정
 	$("#home_datepicker1,#home_datepicker2,#order_datepicker1,#order_datepicker2").datepicker("setDate", "today"); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)     
 
+	//==========================================================================================================================
+	//썸머노트 세팅
 	$('#summernote').summernote({
 		height: 450,                 // 에디터 높이
 		minHeight: null,             // 최소 높이
@@ -54,7 +61,8 @@ $(function() {
 			}
 		}
 	});
-
+	
+	//==========================================================================================================================
 	//비밀번호변경폼 새비밀번호 일치 확인
 	$("#newPassCheck,#newPass").keyup(function() {
 		if ($('#newPassCheck').val() != $('#newPass').val()) {
@@ -69,7 +77,9 @@ $(function() {
 			$('#adPassUpdateBtn').removeAttr("disabled");
 		}
 	});
-
+	
+	//==========================================================================================================================
+	//상품등록중 상품이미지 첨부파일 미리보기 처리
 	$("input[name='pro_img']").on("change", function() {
 
 		let fileInput = $("input[name='pro_img']");
@@ -85,38 +95,9 @@ $(function() {
 	});
 }); //ready
 
-//썸머노트 이미지 파일 업로드
-function uploadSummernoteImageFile(file, el) {
-	let data = new FormData();
-	data.append("file", file);
-	$.ajax({
-		data: data,
-		type: "POST",
-		url: "proc/ad_uploadSummernoteImageFile.jsp",
-		contentType: false,
-		enctype: 'multipart/form-data',
-		processData: false,
-		success: function(url) {
-			$(el).summernote('editor.insertImage', url); //url = 완전한 url이어야함 ../ 또는 c:// 안됨
-		}
-	});
-}
 
-//썸머노트 이미지 파일 삭제
-function deleteSummernoteImageFile(src) {
-	let splitSrc = src.split("/");
-	let fileName = splitSrc[splitSrc.length - 1];
-
-	let fileData = { fileName: fileName };
-
-	$.ajax({
-		url: "proc/ad_deleteSummernoteImageFile.jsp",
-		data: fileData,
-		type: "post",
-	});
-}
-
-//상품등록폼 상품이미지 유효성체크
+//==========================================================================================================================
+//상품등록중 상품이미지 첨부파일 유효성체크
 function imgFileCheck(fileName, fileSize) {
 	let regex = new RegExp("(.*?)\.(jpg|png)$");
 	let maxSize = 1048576; //1MB
@@ -132,12 +113,47 @@ function imgFileCheck(fileName, fileSize) {
 	return true;
 }
 
+//==========================================================================================================================
+//상품등록중 등록된 상품이미지 첨부파일 미리보기
 function imgPreview(fis) {
 	let reader = new FileReader();
 	reader.onload = function(e) {
 		$('#loadImg').attr('src', e.target.result);
 	}
 	reader.readAsDataURL(fis.files[0]);
+}
+
+//==========================================================================================================================
+//썸머노트 이미지 파일 업로드
+function uploadSummernoteImageFile(file, el) {
+	let data = new FormData();
+	data.append("file", file);
+	$.ajax({
+		data: data,
+		type: "POST",
+		url: "proc/product/uploadSummernoteImageFile.jsp",
+		contentType: false,
+		enctype: 'multipart/form-data',
+		processData: false,
+		success: function(url) {
+			$(el).summernote('editor.insertImage', url); //url = 완전한 url이어야함 ../ 또는 c:// 안됨
+		}
+	});
+}
+
+//==========================================================================================================================
+//썸머노트 이미지 파일 삭제
+function deleteSummernoteImageFile(src) {
+	let splitSrc = src.split("/");
+	let fileName = splitSrc[splitSrc.length - 1];
+
+	let fileData = { fileName: fileName };
+
+	$.ajax({
+		url: "proc/product/deleteSummernoteImageFile.jsp",
+		data: fileData,
+		type: "post",
+	});
 }
 
 //==========================================================================================================================
@@ -182,7 +198,7 @@ function addProduct() {
 
 	$.ajax({
 		cache: false,
-		url: "proc/ad_addProductProc.jsp",
+		url: "proc/product/addProductProc.jsp",
 		processData: false,
 		contentType: false,
 		type: 'POST',
@@ -200,15 +216,15 @@ function addProduct() {
 }
 
 //==========================================================================================================================
-//검색조건에 따라 상품갯수카운트
+//검색조건에 따라 상품갯수카운트하고 페이지버튼생성
 function productAllSearch() {
 	$("#searchValue").val("");
 	$("#pro_category4").prop("checked", true);
 
-	pagenation();
+	proPagenation();
 }
 
-function pagenation() {
+function proPagenation() {
 	let division = $("#pro_division").val();
 	let searchValue = $("#searchValue").val();
 	let category_cd = $("input[name='category_cd1']:radio:checked").val();
@@ -217,20 +233,18 @@ function pagenation() {
 
 	$.ajax({
 		cache: false,
-		url: "proc/pro_pagenation.jsp",
+		url: "proc/product/pagenation.jsp",
 		type: 'get',
 		data: condition,
 		success: function(data) {
 			//페이징버튼 그려줄 태그의 선택자
 			let paging = $("#productSearchPageNumber");
-			
 			paging.empty();
-			
 			//1,2,3 페이지 생성
 			for (let i = 1; i <= data; i++) {
 				paging.append('<li class=\"page-item\"><a class=\"page-link\" href=\"\">' + i + '</a></li>');
 			}
-			paging.find('li:first-child').addClass('active');
+			paging.find('li:nth-child(1)').addClass('active');
 			productSearch(1); //바로 첫번째 페이지 그려줌
 			
 			//상품 페이지 1,2,3...클릭시 active효과주고 검색
@@ -249,8 +263,10 @@ function pagenation() {
 	});
 }
 
+
+
 //==========================================================================================================================
-//상품검색
+//검색조건에따라 상품테이블 그리기
 function productSearch(index) {
 	let division = $("#pro_division").val();
 	let searchValue = $("#searchValue").val();
@@ -260,7 +276,7 @@ function productSearch(index) {
 
 	$.ajax({
 		cache: false,
-		url: "proc/productSearch.jsp",
+		url: "proc/product/productSearch.jsp",
 		type: 'get',
 		data: condition,
 		dataType: 'json',

@@ -171,7 +171,7 @@
 								<input class="form-check-input" type="radio" name="category_cd1" id="pro_category7" value="3">
 								<label class="form-check-label" for="pro_category7">축산물</label>
 								</div>
-								<input type="button" class="btn btn-dark ml-3" value="검색" onclick="pagenation(); return false;" />
+								<input type="button" class="btn btn-dark ml-3" value="검색" onclick="proPagenation(); return false;" />
 							</div>
 						</form>
 					</div>
@@ -202,9 +202,7 @@
 					</table>
 				</div>
 			</div>
-				<ul class="pagination justify-content-md-center" id="productSearchPageNumber">
-<!-- 					<li class="page-item"><a class="page-link" href="#" aria-label="Previous"> <span aria-hidden="true">&laquo;</span></a></li>
-					<li class="page-item"><a class="page-link" href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span></a></li> -->	
+				<ul class="pagination justify-content-md-center pager" id="productSearchPageNumber">
 				</ul> 
 		</div>
 	</div>
