@@ -1,7 +1,30 @@
+<%@page import="kr.co.shopping_mall.model.UserInfoVO"%>
+<%@page import="kr.co.sist.util.cipher.DataDecrypt"%>
+<%@page import="kr.co.shopping_mall.model.UserVO"%>
+<%@page import="kr.co.shopping_mall.dao.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     info="마이페이지_개인정보"%>
 <jsp:include page="../layout/header.jsp"/>
+<%
+//session을 통해 들어온 로그인 정보가 없으면 회원가입페이지로 이동
+String user_id=(String)session.getAttribute("user_id");
+if(user_id==null){ %>
+	<script>
+	alert("로그인이 필요한 페이지입니다.");
+	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
+	</script>
+<%}//end if 
+
+//user_id값을 통한 개인정보조회
+UserDAO ud=new UserDAO();
+UserInfoVO uv=ud.selectInfo(user_id);
+
+//성명 복호화
+DataDecrypt dd=new DataDecrypt("AbcdEfgHiJkLmnOpQ");
+uv.setUser_name(dd.decryption(uv.getUser_name()));
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -116,11 +139,11 @@
 </style>
 <script type="text/javascript">
 function movePassUpdate(){
-	location.href="http://localhost/shopping_mall_prj/user/passUpdateForm.jsp"
+	location.href="http://localhost/shopping_mall_prj/views/user/passUpdateForm.jsp"
 }
 
 function moveInfoUpdate(){
-	location.href="http://localhost/shopping_mall_prj/user/infoUpdateForm.jsp"
+	location.href="http://localhost/shopping_mall_prj/views/user/infoUpdateForm.jsp"
 }
 </script>
 <body>   
@@ -134,7 +157,7 @@ function moveInfoUpdate(){
         <!-- 본문 -->
         <div id="infoText"><h2 id="title" style="margin:10% 0 40px 0;">회원정보</h2>
         </div>
-        <div id="gradeText"><h5>회원님은 'VIP'입니다.</h5>
+        <div id="gradeText"><h5>회원님은 '<%= uv.getGrade_name() %>'입니다.</h5>
         </div>
         <div class="table-responsive">
         <table class="table table-borderless" id="tbl-product" style="border-top:1px solid #D09869;">
@@ -144,11 +167,11 @@ function moveInfoUpdate(){
             </colgroup>
         	<tr>
         		<td>아이디</td>
-        		<td id="tdStyle"></td>
+        		<td id="tdStyle"><%= uv.getUser_id() %></td>
         	</tr>
         	<tr>
         		<td>성명</td>
-        		<td id="tdStyle"></td>
+        		<td id="tdStyle"><%= uv.getUser_name() %></td>
         	</tr>
         </table>
         </div>
@@ -164,15 +187,15 @@ function moveInfoUpdate(){
             </colgroup>
         	<tr>
         		<td>주소</td>
-        		<td id="tdStyle"></td>
+        		<td id="tdStyle"><%= uv.getUser_addr() %></td>
         	</tr>
         	<tr>
         		<td>연락처</td>
-        		<td id="tdStyle"></td>
+        		<td id="tdStyle"><%= uv.getUser_tel() %></td>
         	</tr>
         	<tr>
         		<td>이메일</td>
-        		<td id="tdStyle"></td>
+        		<td id="tdStyle"><%= uv.getUser_email() %></td>
         	</tr>
         </table>
         </div>

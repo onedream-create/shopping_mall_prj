@@ -55,8 +55,8 @@ if(request.getParameter("category_cd") != null){
 	category_cd=request.getParameter("category_cd");
 	cnt=Integer.parseInt(pd.countPro(Integer.parseInt(category_cd)));//전체 데이터 개수
 }else{
-	searchValue=request.getParameter("searchValue");
-	cnt=Integer.parseInt(pd.countSearchPro(searchValue));
+		searchValue=request.getParameter("searchValue");
+		cnt=Integer.parseInt(pd.countSearchPro(searchValue));
 }//end else
 
 int cPage;//현재 페이지
@@ -75,7 +75,7 @@ try{
 int totalRows=cnt;
 
 //총 페이지 수 구하기
-int len=20; //한 페이지에 보여줄 데이터 수
+int len=1; //한 페이지에 보여줄 데이터 수
 int totalPages=(totalRows%len==0?totalRows/len:(totalRows/len)+1);
 if(totalPages==0){
 	totalPages=1;
@@ -92,7 +92,7 @@ List<ProductVO> list=null;
 if(request.getParameter("category_cd") != null){
 	list=pd.selectPro(Integer.parseInt(category_cd), start, len);
 }else{
-	list=pd.selectSearchPro(searchValue);
+	list=pd.selectSearchPro(searchValue, start, len);
 }//end else
 pageContext.setAttribute("proData", list);
 pageContext.setAttribute("proCnt", cnt);
@@ -168,7 +168,7 @@ if(endPage>totalPages){
 			<%
 				}else{
 			%>
-			<li class="page-item"><a class="page-link" href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?category_cd=<%=category_cd%>&page=<%=startPage-1 %>"
+			<li class="page-item"><a class="page-link" href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?<%if(category_cd!=null) {%>category_cd=<%=category_cd%><%}else{ %>searchValue=<%=searchValue %><%} %>&page=<%=startPage-1 %>"
 				 tabindex="-1" aria-disable="true">Previous </a></li>
 			<%
 				}//end else
@@ -177,7 +177,7 @@ if(endPage>totalPages){
 				for(int i=startPage; i <= endPage; i++){
 			%>
 			<li class="page-item">
-			<a class="page-link" href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?category_cd=<%=category_cd%>&page=<%=i%>"><%= i  %></a></li>
+			<a class="page-link" href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?<%if(category_cd!=null) {%>category_cd=<%=category_cd%><%}else{ %>searchValue=<%=searchValue %><%} %>&page=<%=i%>"><%= i  %></a></li>
 			<%
 				}//end for
 			%>
@@ -189,7 +189,7 @@ if(endPage>totalPages){
 				}else{
 			%>
 			<li class="page-item"><a class="page-link" 
-			href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?category_cd=<%=category_cd%>&page=<%=endPage+1%>">Next</a></li>
+			href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?<%if(category_cd!=null) {%>category_cd=<%=category_cd%><%}else{ %>searchValue=<%=searchValue %><%} %>&page=<%=endPage+1%>">Next</a></li>
 			<%
 				}//end else
 			%>

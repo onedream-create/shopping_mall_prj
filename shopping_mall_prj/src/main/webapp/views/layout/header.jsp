@@ -22,7 +22,7 @@ function moveCart(){
 	<h1
 		style="text-align: center; font-size:2.5rem; margin: 30px 0; color: #D09869; font-weight: bold; font-family: 'Sunflower', sans-serif;">
 		<a href="http://localhost/shopping_mall_prj/views/index.jsp" style="text-decoration:none; color:#D09869;">1조네 농산물</a></h1>
-	<% if(session.getAttribute("user_name")==null){ %>
+	<% if(session.getAttribute("user_id")==null){ %>
 	<input type="button" class="btn" value="로그인"
 		style="position: absolute; top: 10px; right: 30px;" onclick="moveLogin()">
 	<%}else{ %>

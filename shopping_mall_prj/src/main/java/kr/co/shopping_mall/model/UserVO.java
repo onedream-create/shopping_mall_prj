@@ -110,7 +110,6 @@ public class UserVO {
 		this.sec_date = sec_date;
 	}
 
-	@Override
 	public String toString() {
 		return "UserVO [user_id=" + user_id + ", user_pw=" + user_pw + ", user_name=" + user_name + ", user_tel="
 				+ user_tel + ", user_email=" + user_email + ", user_addr=" + user_addr + ", grade_no=" + grade_no
