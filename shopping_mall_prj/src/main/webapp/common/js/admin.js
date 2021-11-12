@@ -353,7 +353,6 @@ function proDashSearch(index, flag) {
 		$.ajax({
 		cache: false,
 		url: "proc/product/productSearch.jsp",
-		type: 'get',
 		data: condition,
 		dataType: 'json',
 		success: function(data) {
