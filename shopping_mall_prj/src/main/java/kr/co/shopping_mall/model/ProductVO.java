@@ -10,6 +10,7 @@ public class ProductVO {
 	private String sell_fl;
 	private String input_date;
 	private int cnt;
+	private String pro_price_fmt;
 	
 	public ProductVO() {
 	}
@@ -96,6 +97,14 @@ public class ProductVO {
 
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
+	}
+
+	public String getPro_price_fmt() {
+		return pro_price_fmt;
+	}
+
+	public void setPro_price_fmt(String pro_price_fmt) {
+		this.pro_price_fmt = pro_price_fmt;
 	}
 	
 	

@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="kr.co.shopping_mall.model.ProductVO"%>
 <%@page import="java.util.List"%>
@@ -10,6 +11,8 @@ ProductDAO pd=new ProductDAO();
 String pro_cd=request.getParameter("pro_cd");
 ProductVO pv=pd.selectPro(pro_cd);
 
+DecimalFormat fmt=new DecimalFormat("#,###,###,##0원");
+pv.setPro_price_fmt(fmt.format(pv.getPro_price()));
 %>
 <!DOCTYPE html>
 <html>
@@ -181,7 +184,7 @@ function addCart(){
 				<input type="number" id="numBox" min="1" max="20" value="1"
 					readonly="readonly"/>
 				<button type="button" id="minus">-</button>
-				<span id="numPrice"><%= pv.getPro_price() %>원</span>
+				<span id="numPrice"><%= pv.getPro_price_fmt() %></span>
 			</div>
 			
 			<div id="totalPriceDiv">

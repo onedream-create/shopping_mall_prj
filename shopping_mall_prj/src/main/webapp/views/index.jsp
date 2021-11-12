@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="kr.co.shopping_mall.model.ProductVO"%>
 <%@page import="java.util.List"%>
 <%@page import="kr.co.shopping_mall.dao.ProductDAO"%>
@@ -43,6 +44,12 @@
 <%
 ProductDAO pd=new ProductDAO();
 List<ProductVO> list=pd.selectPro(0, 0, 20);
+
+DecimalFormat fmt=new DecimalFormat("#,###,###,##0원");
+for(ProductVO pv : list){
+	pv.setPro_price_fmt(fmt.format(pv.getPro_price()));
+}//end for
+
 pageContext.setAttribute("proData", list);
 %>
 <jsp:include page="layout/header.jsp"/>
@@ -100,7 +107,7 @@ pageContext.setAttribute("proData", list);
 							<!-- Product name-->
 							<h5 class="fw-bolder"><c:out value="${ pro.pro_name }"/></h5>
 							<!-- Product price-->
-							<c:out value="${ pro.pro_price }"/>원
+							<c:out value="${ pro.pro_price_fmt }"/>
 						</div>
 					</div>
 				</div>

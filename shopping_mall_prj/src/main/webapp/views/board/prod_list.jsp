@@ -1,3 +1,4 @@
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="kr.co.shopping_mall.model.ProductVO"%>
 <%@page import="java.util.List"%>
 <%@page import="kr.co.shopping_mall.dao.ProductDAO"%>
@@ -75,7 +76,7 @@ try{
 int totalRows=cnt;
 
 //총 페이지 수 구하기
-int len=1; //한 페이지에 보여줄 데이터 수
+int len=20; //한 페이지에 보여줄 데이터 수
 int totalPages=(totalRows%len==0?totalRows/len:(totalRows/len)+1);
 if(totalPages==0){
 	totalPages=1;
@@ -94,6 +95,12 @@ if(request.getParameter("category_cd") != null){
 }else{
 	list=pd.selectSearchPro(searchValue, start, len);
 }//end else
+	
+DecimalFormat fmt=new DecimalFormat("#,###,###,##0원");
+for(ProductVO pv : list){
+	pv.setPro_price_fmt(fmt.format(pv.getPro_price()));
+}//end for
+
 pageContext.setAttribute("proData", list);
 pageContext.setAttribute("proCnt", cnt);
 
@@ -120,6 +127,9 @@ if(endPage>totalPages){
 	<c:if test="${ param.category_cd eq 3 }">
 		<h2 id="title">축산물</h2>
 	</c:if>
+	<c:if test="${ param.category_cd eq null }">
+		<h2 id="title">'${ param.searchValue }' 검색 결과</h2>
+	</c:if>
 
 </div>
 	<div class="container px-4 px-lg-5 mt-5">
@@ -142,7 +152,7 @@ if(endPage>totalPages){
 							<!-- Product name-->
 							<h5 class="fw-bolder"><c:out value="${ pro.pro_name }"/></h5>
 							<!-- Product price-->
-							<c:out value="${ pro.pro_price }"/>원
+							<c:out value="${ pro.pro_price_fmt }"/>
 						</div>
 					</div>
 				</div>

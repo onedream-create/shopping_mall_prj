@@ -196,7 +196,9 @@ $(function(){
 			<tbody>
             <c:forEach var="ord" items="${ orderData }">
             <tr>
-				<td rowspan="5"><input type="checkbox" name="chk" value="${ ord.ord_cd }"></td>
+				<td rowspan="5"><input type="checkbox" name="chk" value="${ ord.ord_cd }"
+					<c:if test="${ ord.ord_stat_name eq '주문취소' }"> disabled="disabled"</c:if>
+				></td>
 				<!-- <td class="orderInfo" colspan="3"><strong>1조네 해남 호박 고구마 3kg 외 1건</strong></td> -->
 				<td class="orderInfo" colspan="3"><strong>${ ord.pro_name }</strong></td>
 			</tr>
