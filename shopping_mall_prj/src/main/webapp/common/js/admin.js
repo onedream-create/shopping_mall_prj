@@ -1,7 +1,7 @@
 $(function() {
-	//정보 초기화
-	productSearch(1);
-	
+	//페이지정보 초기화
+	proDashCount();
+
 	//==========================================================================================================================
 	//datepicker	
 	$("#home_datepicker1,#home_datepicker2,#order_datepicker1,#order_datepicker2").datepicker({
@@ -22,7 +22,7 @@ $(function() {
 		, minDate: "-5Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
 		, maxDate: "+0D" //최대 선택일자(+1D:하루후, +1M:한달후, +1Y:일년후)  
 	});
-	
+
 	//초기값을 오늘 날짜로 설정
 	$("#home_datepicker1,#home_datepicker2,#order_datepicker1,#order_datepicker2").datepicker("setDate", "today"); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)     
 
@@ -61,7 +61,7 @@ $(function() {
 			}
 		}
 	});
-	
+
 	//==========================================================================================================================
 	//비밀번호변경폼 새비밀번호 일치 확인
 	$("#newPassCheck,#newPass").keyup(function() {
@@ -77,7 +77,7 @@ $(function() {
 			$('#adPassUpdateBtn').removeAttr("disabled");
 		}
 	});
-	
+
 	//==========================================================================================================================
 	//상품등록중 상품이미지 첨부파일 미리보기 처리
 	$("input[name='pro_img']").on("change", function() {
@@ -198,7 +198,7 @@ function addProduct() {
 
 	$.ajax({
 		cache: false,
-		url: "proc/product/addProductProc.jsp",
+		url: "proc/product/addProProc.jsp",
 		processData: false,
 		contentType: false,
 		type: 'POST',
@@ -217,7 +217,7 @@ function addProduct() {
 
 //==========================================================================================================================
 //검색조건에 따라 상품갯수카운트하고 페이지버튼생성
-function productAllSearch() {
+function allProPagenation() {
 	$("#searchValue").val("");
 	$("#pro_category4").prop("checked", true);
 
@@ -236,20 +236,19 @@ function proPagenation() {
 		url: "proc/product/pagenation.jsp",
 		type: 'get',
 		data: condition,
-		success: function(data) {
+		success: function(pageCount) {
 			//페이징버튼 그려줄 태그의 선택자
 			let paging = $("#productSearchPageNumber");
 			paging.empty();
 			//1,2,3 페이지 생성
-			for (let i = 1; i <= data; i++) {
-				paging.append('<li class=\"page-item\"><a class=\"page-link\" href=\"\">' + i + '</a></li>');
+			for (let i = 1; i <= pageCount; i++) {
+				paging.append('<li class=\"page-item\"><a class=\"page-link\" href=\"javascript:void(0)\">' + i + '</a></li>');
 			}
 			paging.find('li:nth-child(1)').addClass('active');
 			productSearch(1); //바로 첫번째 페이지 그려줌
-			
+
 			//상품 페이지 1,2,3...클릭시 active효과주고 검색
-			paging.find('li').click(function(e) {
-				e.preventDefault();
+			paging.find('li').click(function() {
 				paging.find('li').removeClass('active');
 				$(this).addClass('active');
 				let index = $(this).text();
@@ -263,8 +262,6 @@ function proPagenation() {
 	});
 }
 
-
-
 //==========================================================================================================================
 //검색조건에따라 상품테이블 그리기
 function productSearch(index) {
@@ -275,6 +272,85 @@ function productSearch(index) {
 	let condition = { "index": index, "division": division, "searchValue": searchValue, "category_cd": category_cd };
 
 	$.ajax({
+		cache: false,
+		url: "proc/product/productSearch.jsp",
+		data: condition,
+		dataType: 'json',
+		success: function(data) {
+			$("#ProSearchTbody").empty();
+			let html = '';
+			for (key in data) {
+				html += '<tr class="trow">';
+				html += '<td>' + data[key].no + '</td>';
+				html += '<td>' + data[key].pro_cd + '</td>';
+				html += '<td>' + data[key].pro_name + '</td>';
+				html += '<td>' + data[key].pro_price + '</td>';
+				html += '<td>' + data[key].input_date + '</td>';
+				html += '<td>' + data[key].sell_fl + '</td>';
+				html += '<td>' + '<a href=\"ad_product_updateForm.jsp?pro_cd=' + data[key].pro_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=1200,height=300,top=200,left=200\'); return false;\">수정</a></td>';
+				html += '</tr>';
+			}
+			$("#ProSearchTbody").append(html);
+		},
+		error: function() {
+			alert("실패");
+		}
+	});
+}
+
+//==========================================================================================================================
+//상품대시보드 등록상품,판매중,판매중이지않은상품 개수구하여 나타내기
+function proDashCount() {
+	$.ajax({
+		cache: false,
+		url: "proc/product/proDashCount.jsp",
+		dataType: 'json',
+		success: function(data) {
+			$("#proDashCount").empty();
+			let proDashCount = '';
+			proDashCount += '<tr class="trow">';
+			proDashCount += '<td>' + '<a href=\'javascript:void(0)\' onclick=\'proDashPagenation(\"' + data.countAll +',a\");\'>' + data.countAll + '개</a></td>';
+			proDashCount += '<td>' + '<a href=\'javascript:void(0)\' onclick=\'proDashPagenation(\"' + data.countSellY +',y\");\'>' + data.countSellY + '개</a></td>';
+			proDashCount += '<td>' + '<a href=\'javascript:void(0)\' onclick=\'proDashPagenation(\"' + data.countSellN +',n\");\'>' + data.countSellN + '개</a></td>';
+			proDashCount += '</tr>'
+			$("#proDashCount").append(proDashCount);
+		},
+		error: function() {
+			alert("실패");
+		}
+	});
+}
+
+//==========================================================================================================================
+//상품대시보드 페이지버튼 만들기
+function proDashPagenation(cntData, flag) {
+	
+	let paging = $("#proDashPageNumber");
+	let rowsPerPage = 8;
+	let pageCount = Math.ceil(cntData / rowsPerPage);
+
+	paging.empty();
+	for (let i = 1; i <= pageCount; i++) {
+		paging.append('<li class=\"page-item\"><a class=\"page-link\" href=\"javascript:void(0)\">' + i + '</a></li>');
+	}
+	paging.find('li:nth-child(1)').addClass('active');
+	proDashSearch(1);
+	
+	//상품 페이지 1,2,3...클릭시 active효과주고 검색
+	paging.find('li').click(function() {
+		paging.find('li').removeClass('active');
+		$(this).addClass('active');
+		let index = $(this).text();
+		proDashSearch(index, flag);
+	});
+}
+//==========================================================================================================================
+//상품대시보드 상품테이블 만들기
+function proDashSearch(index, flag) {
+		
+		let condition = {"index": index, "flag": flag};
+	
+		$.ajax({
 		cache: false,
 		url: "proc/product/productSearch.jsp",
 		type: 'get',
@@ -300,5 +376,5 @@ function productSearch(index) {
 			alert("실패");
 		}
 	});
+	
 }
-

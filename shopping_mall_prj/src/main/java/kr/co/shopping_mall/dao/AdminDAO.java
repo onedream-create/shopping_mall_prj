@@ -192,4 +192,27 @@ public class AdminDAO {
 		gjt.closeAc();
 	}
 	
+	public String countDashData(String flag) throws SQLException {
+		String cnt = null;
+		
+		//1. Spring Container 얻기
+		GetJdbcTemplate gjt=GetJdbcTemplate.getInstance();
+		//2. JdbcTemplate 얻기
+		JdbcTemplate jt=gjt.getJdbcTemplate();
+		//3. 쿼리문 실행
+		StringBuilder countPro = new StringBuilder();
+		countPro.append(" select count(pro_cd) from product ");
+			
+		if(flag == "y" || flag == "n") {countPro.append(" where sell_fl=? ");}
+						
+		if(flag == "a") {
+			cnt=jt.queryForObject(countPro.toString(),String.class);
+		} else {	
+			cnt=jt.queryForObject(countPro.toString(), new Object[] {String.valueOf(flag)},String.class);
+		}
+		//4. Spring Container 닫기
+		gjt.closeAc();
+		
+		return cnt;
+	}
 }
