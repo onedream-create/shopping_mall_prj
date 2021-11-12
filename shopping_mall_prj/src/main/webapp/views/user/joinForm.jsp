@@ -168,7 +168,7 @@ function telValidator(args) {
 <body>
     <div class="container container1">
       <div class="mb-5 container2">
-         <h1>1조네 농산물</h1>
+         <h1><a href="http://localhost/shopping_mall_prj/views/index.jsp" style="text-decoration:none; color:#D09869;">1조네 농산물</a></h1>
          <h6>회원정보를 입력해주세요</h6>
       </div>
       <form name="frm" action="join_proc.jsp" method="post">

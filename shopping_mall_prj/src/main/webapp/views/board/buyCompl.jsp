@@ -57,6 +57,15 @@ request.setCharacterEncoding("UTF-8");
 </head>
 <body>
 <jsp:include page="../layout/header.jsp"/>
+<%
+//session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
+String user_id=(String)session.getAttribute("user_id");
+if(user_id==null){ %>
+	<script>
+	alert("로그인이 필요한 페이지입니다.");
+	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
+	</script>
+<%}//end if %> 
 <form id="frm" name="frm" action="../user/order_detail.jsp" method="post">
 	<div class="container container2">
 		<h2>주문완료</h2>

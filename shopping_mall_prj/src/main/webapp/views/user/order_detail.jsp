@@ -26,13 +26,13 @@
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<jsp:useBean id="dVO" class="kr.co.shopping_mall.model.DeliveryVO" scope="page"/>
-<jsp:setProperty property="*" name="dVO"/>
+<jsp:useBean id="oVO" class="kr.co.shopping_mall.model.OrderVO" scope="page"/>
+<jsp:setProperty property="*" name="oVO"/>
 <%	
-	dVO.getDv_name();
-	dVO.getDv_tel();
-	dVO.getDv_addr();
-	dVO.getDv_memo();
+	oVO.getDv_name();
+	oVO.getDv_tel();
+	oVO.getDv_addr();
+	oVO.getDv_memo();
 %>
 </head>
 <%
@@ -126,19 +126,19 @@
 	              </tr>
 	              <tr>
 	              	<td class="bold">받는사람</td>
-	              	<td><%= dVO.getDv_name() %></td>
+	              	<td><%= oVO.getDv_name() %></td>
 	              </tr>
 	              <tr style="border-bottom : none;">
 	              	<td class="bold">휴대전화</td>
-	              	<td><%= dVO.getDv_tel() %></td>
+	              	<td><%= oVO.getDv_tel() %></td>
 	              </tr>
 	              <tr>
 	              	<td class="bold">주소</td>
-	              	<td><%= dVO.getDv_addr() %></td>
+	              	<td><%= oVO.getDv_addr() %></td>
 	              </tr>
 	              <tr>
 	              	<td class="bold">배송메모</td>
-	              	<td><%= dVO.getDv_memo() %></td>
+	              	<td><%= oVO.getDv_memo() %></td>
 	              </tr>
 	        </table>
         </div>
