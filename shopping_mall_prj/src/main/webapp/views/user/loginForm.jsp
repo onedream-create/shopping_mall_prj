@@ -95,7 +95,7 @@ h1{
          <div class="input-group input-group-lg mb-4">
             <input type="password" name="user_pw" value="1234" class="form-control" placeholder="비밀번호" required>
          </div>
-         <button id="login" class="btn btn-default btn-lg" onclick="href='../index.jsp'">로그인</button>
+         <button id="login" class="btn btn-default btn-lg">로그인</button>
          <input type="button" id="join"class="btn btn-default btn-lg" value="회원가입" onclick="location.href='joinForm.jsp'"/>
          <a class="idpwFind" href="idpwFind">아이디/비밀번호 찾기</a>
       </form>
