@@ -33,7 +33,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="container-fluid">-각 개수를 클릭시 항목에 맞는 데이터를 보여준다.</div>
+		<div class="container-fluid">- 개수를 클릭시 항목에 맞는 데이터를 보여줍니다.</div>
 		<div class="container-fluid">
 			<div class="row mt-4">
 				<div class="col-12">
@@ -50,7 +50,7 @@
 								<td class="col-1">관리</td>
 							</tr>
 						</thead>
-						<tbody id="상품대시보드테이블들어갈곳">
+						<tbody id="ProSearchTbody">
 						</tbody>
 					</table>
 				</div>
@@ -174,7 +174,7 @@
 								<td class="col-1">관리</td>
 							</tr>
 						</thead>
-						<tbody id="ProSearchTbody">
+						<tbody id="proSearchTbody">
 						</tbody>
 					</table>
 				</div>

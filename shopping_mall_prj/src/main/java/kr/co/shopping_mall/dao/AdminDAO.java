@@ -215,4 +215,35 @@ public class AdminDAO {
 		
 		return cnt;
 	}
+	
+	//상품 리스트 얻기
+		public List<ProductVO> proDashSearch(String flag, int start, int rowsPerPage) throws SQLException {
+			List<ProductVO> list = null;
+			// 1. Spring Container 얻기
+			GetJdbcTemplate gjt = GetJdbcTemplate.getInstance();
+			// 2. JdbcTemplate 얻기
+			JdbcTemplate jt = gjt.getJdbcTemplate();
+			// 3. 쿼리문 실행
+			StringBuilder selectPro = new StringBuilder();
+			
+			selectPro.append(" select * ");
+			selectPro.append(" from	(select rownum as rnum, p.* ");
+			selectPro.append("   	 from (select * from product ");
+			if(!flag.equals("a")) {
+				selectPro.append(" where sell_fl=? ");
+			}
+			selectPro.append(" order by input_date desc) p) ");  
+			selectPro.append(" where  rnum > ? and rnum <= ?+? ");  
+			selectPro.append(" order by rnum ");  
+			
+			if(!flag.equals("a")) {
+				list = jt.query(selectPro.toString(),new Object[] {String.valueOf(flag), Long.valueOf(start), Long.valueOf(rowsPerPage), Long.valueOf(start) }, new SelectPro());
+			} else {
+				list = jt.query(selectPro.toString(),new Object[] {Long.valueOf(start), Long.valueOf(rowsPerPage), Long.valueOf(start) }, new SelectPro());				
+			}
+			// 4. Spring Container 닫기
+			gjt.closeAc();
+
+			return list;
+		}
 }

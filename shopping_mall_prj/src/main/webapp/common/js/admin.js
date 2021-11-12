@@ -1,7 +1,7 @@
 $(function() {
 	//페이지정보 초기화
 	proDashCount();
-
+	
 	//==========================================================================================================================
 	//datepicker	
 	$("#home_datepicker1,#home_datepicker2,#order_datepicker1,#order_datepicker2").datepicker({
@@ -50,7 +50,7 @@ $(function() {
 		fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', '맑은 고딕', '궁서', '굴림체', '굴림', '돋움체', '바탕체'],
 		fontSizes: ['8', '9', '10', '11', '12', '14', '16', '18', '20', '22', '24', '28', '30', '36', '50', '72'],
 		callbacks: {
-			onImageUpload: function(files, editor, welEditable) {
+			onImageUpload: function(files) {
 				uploadSummernoteImageFile(files[0], this);
 			},
 			onMediaDelete: function(target) {
@@ -277,20 +277,20 @@ function productSearch(index) {
 		data: condition,
 		dataType: 'json',
 		success: function(data) {
-			$("#ProSearchTbody").empty();
-			let html = '';
+			$("#proSearchTbody").empty();
+			let ProSearchTbody = '';
 			for (key in data) {
-				html += '<tr class="trow">';
-				html += '<td>' + data[key].no + '</td>';
-				html += '<td>' + data[key].pro_cd + '</td>';
-				html += '<td>' + data[key].pro_name + '</td>';
-				html += '<td>' + data[key].pro_price + '</td>';
-				html += '<td>' + data[key].input_date + '</td>';
-				html += '<td>' + data[key].sell_fl + '</td>';
-				html += '<td>' + '<a href=\"ad_product_updateForm.jsp?pro_cd=' + data[key].pro_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=1200,height=300,top=200,left=200\'); return false;\">수정</a></td>';
-				html += '</tr>';
+				ProSearchTbody += '<tr class="trow">';
+				ProSearchTbody += '<td>' + data[key].no + '</td>';
+				ProSearchTbody += '<td>' + data[key].pro_cd + '</td>';
+				ProSearchTbody += '<td>' + data[key].pro_name + '</td>';
+				ProSearchTbody += '<td>' + data[key].pro_price + '</td>';
+				ProSearchTbody += '<td>' + data[key].input_date + '</td>';
+				ProSearchTbody += '<td>' + data[key].sell_fl + '</td>';
+				ProSearchTbody += '<td>' + '<a href=\"ad_product_updateForm.jsp?pro_cd=' + data[key].pro_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=1200,height=300,top=200,left=200\'); return false;\">수정</a></td>';
+				ProSearchTbody += '</tr>';
 			}
-			$("#ProSearchTbody").append(html);
+			$("#proSearchTbody").append(ProSearchTbody);
 		},
 		error: function() {
 			alert("실패");
@@ -309,9 +309,9 @@ function proDashCount() {
 			$("#proDashCount").empty();
 			let proDashCount = '';
 			proDashCount += '<tr class="trow">';
-			proDashCount += '<td>' + '<a href=\'javascript:void(0)\' onclick=\'proDashPagenation(\"' + data.countAll +',a\");\'>' + data.countAll + '개</a></td>';
-			proDashCount += '<td>' + '<a href=\'javascript:void(0)\' onclick=\'proDashPagenation(\"' + data.countSellY +',y\");\'>' + data.countSellY + '개</a></td>';
-			proDashCount += '<td>' + '<a href=\'javascript:void(0)\' onclick=\'proDashPagenation(\"' + data.countSellN +',n\");\'>' + data.countSellN + '개</a></td>';
+			proDashCount += '<td>' + '<a href=\'javascript:void(0)\' onclick=\'proDashPagenation(' + data.countAll + ',"a");\'>' + data.countAll + '개</a></td>';
+			proDashCount += '<td>' + '<a href=\'javascript:void(0)\' onclick=\'proDashPagenation(' + data.countSellY +',"y");\'>' + data.countSellY + '개</a></td>';
+			proDashCount += '<td>' + '<a href=\'javascript:void(0)\' onclick=\'proDashPagenation(' + data.countSellN +',"n");\'>' + data.countSellN + '개</a></td>';
 			proDashCount += '</tr>'
 			$("#proDashCount").append(proDashCount);
 		},
@@ -324,7 +324,6 @@ function proDashCount() {
 //==========================================================================================================================
 //상품대시보드 페이지버튼 만들기
 function proDashPagenation(cntData, flag) {
-	
 	let paging = $("#proDashPageNumber");
 	let rowsPerPage = 8;
 	let pageCount = Math.ceil(cntData / rowsPerPage);
@@ -334,7 +333,8 @@ function proDashPagenation(cntData, flag) {
 		paging.append('<li class=\"page-item\"><a class=\"page-link\" href=\"javascript:void(0)\">' + i + '</a></li>');
 	}
 	paging.find('li:nth-child(1)').addClass('active');
-	proDashSearch(1);
+	
+	proDashSearch(1, flag);
 	
 	//상품 페이지 1,2,3...클릭시 active효과주고 검색
 	paging.find('li').click(function() {
@@ -347,29 +347,29 @@ function proDashPagenation(cntData, flag) {
 //==========================================================================================================================
 //상품대시보드 상품테이블 만들기
 function proDashSearch(index, flag) {
-		
+	
 		let condition = {"index": index, "flag": flag};
 	
 		$.ajax({
 		cache: false,
-		url: "proc/product/productSearch.jsp",
+		url: "proc/product/proDashSearch.jsp",
 		data: condition,
 		dataType: 'json',
 		success: function(data) {
 			$("#ProSearchTbody").empty();
-			let html = '';
+			let ProSearchTbody = '';
 			for (key in data) {
-				html += '<tr class="trow">';
-				html += '<td>' + data[key].no + '</td>';
-				html += '<td>' + data[key].pro_cd + '</td>';
-				html += '<td>' + data[key].pro_name + '</td>';
-				html += '<td>' + data[key].pro_price + '</td>';
-				html += '<td>' + data[key].input_date + '</td>';
-				html += '<td>' + data[key].sell_fl + '</td>';
-				html += '<td>' + '<a href=\"ad_product_updateForm.jsp?pro_cd=' + data[key].pro_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=1200,height=300,top=200,left=200\'); return false;\">수정</a></td>';
-				html += '</tr>';
+				ProSearchTbody += '<tr class="trow">';
+				ProSearchTbody += '<td>' + data[key].no + '</td>';
+				ProSearchTbody += '<td>' + data[key].pro_cd + '</td>';
+				ProSearchTbody += '<td>' + data[key].pro_name + '</td>';
+				ProSearchTbody += '<td>' + data[key].pro_price + '</td>';
+				ProSearchTbody += '<td>' + data[key].input_date + '</td>';
+				ProSearchTbody += '<td>' + data[key].sell_fl + '</td>';
+				ProSearchTbody += '<td>' + '<a href=\"ad_product_updateForm.jsp?pro_cd=' + data[key].pro_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=1200,height=300,top=200,left=200\'); return false;\">수정</a></td>';
+				ProSearchTbody += '</tr>';
 			}
-			$("#ProSearchTbody").append(html);
+			$("#ProSearchTbody").append(ProSearchTbody);
 		},
 		error: function() {
 			alert("실패");
