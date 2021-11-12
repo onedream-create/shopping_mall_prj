@@ -1,3 +1,4 @@
+<%@page import="kr.co.shopping_mall.dao.ProductDAO"%>
 <%@page import="kr.co.shopping_mall.model.ProductVO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.text.DecimalFormat"%>
@@ -67,7 +68,7 @@
     }
     #tbl-product{margin-bottom:90px; border-top:1px solid #D09869;}
     p{text-align:center;}
-   
+   #btnDel{border: 1px solid #D09869; color: #D09869; background: #FFFFFF; width:60px;height:40px;}
     .btn2 {
  		width:22%; height:56px; color:#D09869; border-color: #D09869; font-size:15px;
 	}
@@ -78,42 +79,65 @@
     .btn3:hover{color:#FFFFFF;}
 </style>
 <script type="text/javascript">
-function selectAll(selectAll)  {
+/* function selectAll(selectAll)  {
 	  const checkboxes 
 	       = document.getElementsByName('item');
 	  
 	  checkboxes.forEach((checkbox) => {
 	    checkbox.checked = selectAll.checked;
 	  })
-	}
-function fnClear(){
-		location.href="CartClear.jsp";
-	}
+	} */
 
 function fnGo(){
 	location.href="../index.jsp";
 }
+function fnBuy(){
+	if(<%=cart.size()%>==0){
+		alert("장바구니가 비어 있습니다.");
+		return;
+	}
+	$("#frm").submit();
+}
+
+function cartRemove( pro_cd, pro_name ){
+	//입력받아온 상품코드를 hidden form 에 넣습니다.
+	if(confirm("["+pro_name+"] 을(를) 장바구니에서 삭제하시겠습니까?")){
+		$("#pro_cd").val( pro_cd );
+		$("#cartDelFrm").submit();
+		
+	}//end if
+}//cartRemove
 </script>
 <body>
-<jsp:include page="../layout/header.jsp"/>   
-	<form name="frm"  method="get">
+<jsp:include page="../layout/header.jsp"/>
+<%
+//session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
+String user_id=(String)session.getAttribute("user_id");
+if(user_id==null){ %>
+	<script>
+	alert("로그인이 필요한 페이지입니다.");
+	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
+	</script>
+<%}//end if %>   
+	<form name="frm" action="buyForm.jsp" method="post">
         <div class="container">
 	        <h2>장바구니</h2>    
 	        <div class="table-responsive">
 		        <table class="table table-borderless" id="tbl-product">
 		            <colgroup>
+		                <col style="width: 20%" />
+		                <col style="width: 35%" />
 		                <col style="width: 10%" />
-		                <col style="width: 10%" />
-		                <col style="width: 45%" />
 		                <col style="width: 10%" />
 		                <col style="width: 15%" />
 		            </colgroup>
 		            <tr>             
-		                <th><input type="checkbox" name="product" onclick="selectAll(this)"></th>   
+		                <!-- <th><input type="checkbox" name="product" onclick="selectAll(this)"></th> -->   
 		                <th></th>   
 		                <th>상품명</th>
 		                <th>수량</th>
 		                <th>가격</th>
+		                <th></th>
 		            </tr>
 		            <% 
 		            if(cart.size()==0){
@@ -126,14 +150,17 @@ function fnGo(){
 		    			int totalSum = 0, total = 0;
 		    			DecimalFormat df = new DecimalFormat("###,###,###,##0");
 		    			for(int i = 0; i < cart.size(); i++) {
-		    				ProductVO pVO = cart.get(i);
+		    				ProductVO pv = cart.get(i);
 		    				out.println("<tr>");
-		    					out.println("<td><input type='checkbox' name='item'></td>");
-		    					out.println("<td>" + pVO.getPro_img() + "</td>");
-		    					out.println("<td>" + pVO.getPro_name() + "</td>");
-		    					out.println("<td>" + pVO.getCnt() + "</td>");
-		    					total = pVO.getPro_price() * pVO.getCnt();
+		    					/* out.println("<td><input type='checkbox' name='item' value='"+pv.getPro_cd()+"'></td>"); */
+		    					out.println("<td><img src='../common/upload/" + pv.getPro_img() + "'></td>");
+		    					out.println("<td>" + pv.getPro_name() + "</td>");
+		    					out.println("<td>" + pv.getCnt() + "</td>");
+		    					total = pv.getPro_price() * pv.getCnt();
 		    					out.println("<td>" + df.format(total) + "</td>");
+		    					out.println("<td><input type='button' value='삭제' id='btnDel' onclick='cartRemove(\""+ pv.getPro_cd()+"\",\""+pv.getPro_name()+"\")'/></td>");
+		    					
+		    				
 		    				out.println("</tr>");
 		    				totalSum += total;
 		    			}
@@ -144,11 +171,14 @@ function fnGo(){
 		        </table>
         </div>
         <p>
-		  <button class="btn btn-default btn-lg btn2" onclick="fnClear()">삭제하기</button>
+		  <!-- <button class="btn btn-default btn-lg btn2" id="delete">삭제하기</button> -->
 		  <button type="button" class="btn btn-default btn-lg btn2" onclick='fnGo()'>쇼핑하기</button>
-		  <button class="btn btn-default btn-lg btn2 btn3" onclick="location.href='buyForm.jsp'">구매하기</button>
+		  <button class="btn btn-default btn-lg btn2 btn3" id="buy" onclick='fnBuy()'>구매하기</button>
 		</p>
         </div>
+        </form>
+        <form action="removeCart.jsp" method="post" id="cartDelFrm">
+         <input type="hidden" name="pro_cd" id="pro_cd">
         </form>
 <jsp:include page="../layout/footer.jsp"/>
 </body>

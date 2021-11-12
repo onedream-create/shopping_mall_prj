@@ -23,7 +23,7 @@ for(int i=0; i < cart.size(); i++){
 	ProductVO pv=cart.get(i);
 	if(pv.getPro_cd().equals(pro_cd)){
 		pos=1;
-		pv.setCnt(pv.getCnt()+1);
+		pv.setCnt(pv.getCnt()+cnt);
 		break;
 	}//end if
 }//end for
@@ -39,7 +39,7 @@ if(pos==-1){
 	//이미지, 상품명, 수량, 가격
 	pv.setPro_img(selectPv.getPro_img());
 	pv.setPro_name(selectPv.getPro_name());
-	pv.setCnt(1);
+	pv.setCnt(cnt);
 	pv.setPro_price(selectPv.getPro_price());
 	//배열에 등록
 	cart.add(pv);

@@ -60,27 +60,6 @@ public class UserDAO {
 		// 4. 스프링컨테이너 닫기
 		gjt.closeAc();
 	}// insertMember
-
-	/**
-	 * 아이디와 비밀번호를 입력받아 이름을 조회하는 일
-	 * 
-	 * @param uVO
-	 * @return
-	 * @throws SQLException
-	 */
-	public String selectLogin(UserVO uVO) throws DataAccessException {
-		String user_name = "";// 이름은 AES 암호화되어 있다.
-		// 1. Spring Container 얻기
-		GetJdbcTemplate gjt = GetJdbcTemplate.getInstance();
-		// 2. JdbcTemplate 얻기
-		JdbcTemplate jt = gjt.getJdbcTemplate();
-		// 3. 쿼리문 수행
-		String selectId = "select user_name from users where user_id=? and user_pw=?";
-		user_name = jt.queryForObject(selectId, new Object[] { uVO.getUser_id(), uVO.getUser_pw() }, String.class);
-		// 4. Spring Container 닫기
-		gjt.closeAc();
-		return user_name;
-	}// selectLogin
 	
 	public String checkAccount(String inputId,String inputPw) throws DataAccessException{
 		String user_id=""; 

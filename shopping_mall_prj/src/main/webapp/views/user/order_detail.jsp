@@ -1,3 +1,6 @@
+<%@page import="kr.co.shopping_mall.model.ProductVO"%>
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.text.DecimalFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     info="주문내역상세"%>
@@ -9,7 +12,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>주문내역상세</title>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -23,7 +26,26 @@
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<jsp:useBean id="oVO" class="kr.co.shopping_mall.model.OrderVO" scope="page"/>
+<jsp:setProperty property="*" name="oVO"/>
+<%	
+	oVO.getDv_name();
+	oVO.getDv_tel();
+	oVO.getDv_addr();
+	oVO.getDv_memo();
+%>
 </head>
+<%
+	request.setCharacterEncoding("UTF-8");
+	ArrayList<ProductVO> cart=null;
+	
+	Object obj=session.getAttribute("cart");
+	if(obj==null){//세션정보가 없으면 배열을 생성
+		cart = new ArrayList<ProductVO>();
+	}else{ //세션정보가 있으면 강제로 캐스팅 
+		cart=(ArrayList<ProductVO>)obj;
+	}
+%>
 <style>	
 	h2{text-align:left; color:#D09869; font-weight: bold; font-family: 'Sunflower', sans-serif; margin:100px 0 40px 0;}
     table, th, td{ 
@@ -47,6 +69,7 @@
 	#tbl-product tr:last-of-type td{text-align:right; background:#D09869; color:#FFFFFF; font-family: 'Sunflower', sans-serif; font-size:27px; padding-right:20px;}
 	colgroup{text-align:left;}
 	#tbl-info tr td:last-of-type{text-align:left; padding-left:50px;} 
+	.bold{font-weight:bold;}
 	p{text-align:center;}
    .btn1{
  		width:22%; height:56px; background:#D09869; color:#FFFFFF; border-color: #FFFFFF; margin-bottom:50px;font-size:15px;
@@ -73,16 +96,23 @@
 	                <th>수량</th>
 	                <th>가격</th> 
 	            </tr>
-	            <% for(int i=0;i<3;i++){ %>
-	            <tr>             
-	                <td><img src="http://placehold.it/100x100"></td>
-	                <td>호박고구마</td>
-	                <td>1개</td>
-	                <td>10000원</td>
-	            </tr>
-	            <% } %>
-	            <tr>
-	            	<td colspan="5">총 주문금액 : 30000원</td>
+	            <% 
+	            int totalSum=0, total=0;
+	            DecimalFormat df = new DecimalFormat("###,###,###,###,##0");
+	            for(int i=0;i<cart.size();i++){ 
+	            	ProductVO pv = cart.get(i);
+	            out.println("<tr>");             
+	            	out.println("<td><img src='../common/upload/" + pv.getPro_img() + "'></td>");
+	                out.println("<td>" + pv.getPro_name() + "</td>");
+	                out.println("<td>" + pv.getPro_name() + "</td>");
+	                out.println("<td>" + pv.getCnt() + "</td>");
+	                total = pv.getPro_price() * pv.getCnt();
+	                out.println("<td>" + df.format(total) + "</td>");
+	                out.println("</tr>");
+	                totalSum += total;
+	             } 
+	            	out.println("<td id='total' colspan='5'>총 주문금액 :"+df.format(totalSum)+"원</td>");	
+	            %>
 	        </table>
         </div>
         <div class="table-responsive">
@@ -95,20 +125,20 @@
 	                  <th colspan='2' style=" border-top-color: #D09869; border-bottom:1px solid #D09869;">배송정보</th> 
 	              </tr>
 	              <tr>
-	              	<td>받는사람</td>
-	              	<td>이현경</td>
+	              	<td class="bold">받는사람</td>
+	              	<td><%= oVO.getDv_name() %></td>
 	              </tr>
 	              <tr style="border-bottom : none;">
-	              	<td>휴대전화</td>
-	              	<td>010-1234-5678</td>
+	              	<td class="bold">휴대전화</td>
+	              	<td><%= oVO.getDv_tel() %></td>
 	              </tr>
 	              <tr>
-	              	<td>주소</td>
-	              	<td>서울시 강남구 역삼동</td>
+	              	<td class="bold">주소</td>
+	              	<td><%= oVO.getDv_addr() %></td>
 	              </tr>
 	              <tr>
-	              	<td>배송메모</td>
-	              	<td>배송 전에 미리 연락 바랍니다.</td>
+	              	<td class="bold">배송메모</td>
+	              	<td><%= oVO.getDv_memo() %></td>
 	              </tr>
 	        </table>
         </div>
