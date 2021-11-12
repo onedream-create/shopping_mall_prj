@@ -16,7 +16,7 @@ aDAO.changePass(admin_id, newPass);
 %>
 <script type="text/javascript">
 alert("비밀번호 변경에 성공하셨습니다. 다음 로그인시 새로운 비밀번호로 로그인 해주세요.");
-location.replace("ad_main.jsp");
+location.replace("../../ad_main.jsp");
 </script>
 
 </c:catch>

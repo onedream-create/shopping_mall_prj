@@ -14,12 +14,12 @@ String input_pw = DataEncrypt.messageDigest("MD5", request.getParameter("admin_p
 AdminDAO aDAO = new AdminDAO();
 session.setAttribute("admin_id", aDAO.checkAccount(input_id, input_pw));
 %>
-<c:redirect url="ad_main.jsp"/>
+<c:redirect url="../ad_main.jsp"/>
 </c:catch>
 
 <c:if test="${not empty e}">
 <script type="text/javascript">
 alert("아이디나 비밀번호를 확인해주세요");
-location.replace("ad_login.jsp");
+location.replace("../ad_login.jsp");
 </script>
 </c:if>

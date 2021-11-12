@@ -86,7 +86,7 @@ public class OrderDAO {
 		jt.update(insertDelivery,oVO.getDv_name(), oVO.getDv_tel(), oVO.getDv_addr(), oVO.getDv_memo());
 		
 		String insertOrderDetail = "insert into order_detail(ord_cd, pro_cd, ordd_qty) values(concat(to_char(sysdate, '\\\"P\\\"YYMMDD\\\"\\\"'),lpad(ord_cd_seq.curval,5,'0')),?,?)";
-		jt.update(insertOrderDetail,pro_cd,ordd_qty);
+		//jt.update(insertOrderDetail,pro_cd,ordd_qty);
 		// 4. 스프링컨테이너 닫기
 		gjt.closeAc();
 	}// insertDelivery

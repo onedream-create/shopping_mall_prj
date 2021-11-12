@@ -46,5 +46,5 @@
 	//mrequest.getOriginalFileName("pro_img"); //기존 이름
 	
 	AdminDAO aDAO = new AdminDAO();
-	aDAO.addProduct(pVO);
+	aDAO.addPro(pVO);
 %>

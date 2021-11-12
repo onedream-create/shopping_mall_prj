@@ -11,7 +11,8 @@ public class ProductVO {
 	private String input_date;
 	private int cnt;
 	private String pro_price_fmt;
-	
+	private String no;
+
 	public ProductVO() {
 	}
 
@@ -107,5 +108,11 @@ public class ProductVO {
 		this.pro_price_fmt = pro_price_fmt;
 	}
 	
-	
+	public String getNo() {
+		return no;
+	}
+
+	public void setNo(String no) {
+		this.no = no;
+	}
 }
