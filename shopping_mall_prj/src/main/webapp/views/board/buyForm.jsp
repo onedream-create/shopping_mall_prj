@@ -130,6 +130,9 @@ function telValidator(args) {
     }
 }//telValidator 
 </script>
+<% 
+System.out.println("안녕하세요");
+%>
 </head>
 <body>   
 <jsp:include page="../layout/header.jsp"/>
@@ -205,8 +208,8 @@ if(user_id==null){ %>
 		        </table>
 	        </div>
 	        <p>
-			  <button class="btn btn-default btn-lg" formaction="cart_list.jsp">장바구니</button>
-			  <button class="btn btn-default btn-lg" id="buy" formaction="buy_proc.jsp">구매하기</button>
+			  <button type="button" class="btn btn-default btn-lg" formaction="cart_list.jsp">장바구니</button>
+			  <button type="button" class="btn btn-default btn-lg" id="buy" formaction="buy_proc.jsp">구매하기</button>
 			</p>
         </div>
       </form> 
