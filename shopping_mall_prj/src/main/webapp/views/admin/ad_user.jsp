@@ -81,6 +81,21 @@
 								<div class="col-md-2">
 									<input type="button" class="btn btn-dark" value="검색" />
 								</div>
+								<div class="row mt-3">
+									<label class="col-3 col-form-label text-center">탈퇴상태</label>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="category_cd" id="pro_category1" value="1"> 
+										<label class="form-check-label" for="pro_category1">전체</label>
+									</div>
+								<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="category_cd" id="pro_category2" value="2"> 
+										<label class="form-check-label" for="pro_category2">정상회원</label>
+								</div>
+									<div class="form-check form-check-inline">
+										<input class="form-check-input" type="radio" name="category_cd" id="pro_category3" value="3"> 
+										<label class="form-check-label" for="pro_category3">탈퇴회원</label>
+								</div>
+								</div>
 							</div>
 						</form>
 					</div>
