@@ -5,7 +5,6 @@
     pageEncoding="UTF-8"
     info="마이페이지_주문내역"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<jsp:include page="../layout/header.jsp"/>
 <%
 //session을 통해 들어온 로그인 정보가 없으면 회원가입페이지로 이동
 String user_id=(String)session.getAttribute("user_id");
@@ -172,6 +171,7 @@ $(function(){
 });//ready
 </script>
 <body>   
+<jsp:include page="../layout/header.jsp"/>
 	<form id="OrderFrm" method="post" action="http://localhost/shopping_mall_prj/views/user/myOrder_proc.jsp">
         <div class="container">
         &nbsp;<div class="dl">
@@ -196,7 +196,9 @@ $(function(){
 			<tbody>
             <c:forEach var="ord" items="${ orderData }">
             <tr>
-				<td rowspan="5"><input type="checkbox" name="chk" value="${ ord.ord_cd }"></td>
+				<td rowspan="5"><input type="checkbox" name="chk" value="${ ord.ord_cd }"
+					<c:if test="${ ord.ord_stat_name eq '주문취소' }"> disabled="disabled"</c:if>
+				></td>
 				<!-- <td class="orderInfo" colspan="3"><strong>1조네 해남 호박 고구마 3kg 외 1건</strong></td> -->
 				<td class="orderInfo" colspan="3"><strong>${ ord.pro_name }</strong></td>
 			</tr>

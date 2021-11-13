@@ -1,8 +1,15 @@
 <%@page import="java.net.URLEncoder"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script type="text/javascript">
+$(function(){
+	$("#searchBtn").click(function(){
+		$("#searchFrm").submit();
+	});//click
+});//ready
+
 function moveLogin(){
 	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
 }
@@ -50,22 +57,16 @@ function moveCart(){
 					<li class="nav-item"><a class="nav-link" href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?category_cd=1">농산물</a></li>
 					<li class="nav-item"><a class="nav-link" href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?category_cd=2">수산물</a></li>
 					<li class="nav-item"><a class="nav-link" href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?category_cd=3">축산물</a></li>
-				</ul>                                                             
-				<form class="d-flex" id="frm" action="http://localhost/shopping_mall_prj/views/board/prod_list.jsp" method="get">
+				</ul>                                                      
+				<form class="d-flex" id="searchFrm" action="http://localhost/shopping_mall_prj/views/board/prod_list.jsp" method="get">
 					<div class="input-group" style="align-items: center;">
 						<input type="text" class="form-control" name="searchValue"
 							style="border-radius: 0.25rem; width: 200px; height: 38px; margin-right: 5px; line-height: 62px;">
 						<span class="input-group-btn">
-							<button class="btn btn-default" type="submit" id="btn"
+							<button class="btn btn-default" type="button" id="searchBtn"
 								style="border-radius: 0.25rem; border: 1px solid #212529; color: #000000; margin-right: 20px;">검색</button>
 						</span>
 					</div>
-					<!-- /input-group -->
-					<!-- <button class="btn btn-outline-dark" type="submit"
-						style="width: 176px">
-						<i class="bi-cart-fill me-1"></i> Cart <span
-							class="badge bg-dark text-white ms-1 rounded-pill">0</span>
-					</button> -->
 				</form>
 			</div>
 		</div>

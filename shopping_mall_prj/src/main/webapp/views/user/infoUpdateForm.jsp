@@ -50,6 +50,33 @@
     	margin-bottom: 6%;
     	
     }
+    #cancelBtn{
+    	width:15%; 
+    	height:56px; 
+    	background:#D09869; 
+    	color:#FFFFFF; 
+    	border-color:#FFFFFF; 
+    	font-size:15px;
+    }
+    
+    #backBtn{
+    	width:15%; 
+    	height:56px; 
+    	color:#D09869;
+    	border-color: #D09869; 
+    	font-size:15px;
+    }
+
+    #title{
+    	text-align:center; 
+    	color:#D09869; 
+    	font-weight: bold; 
+    	font-family: 'Sunflower', sans-serif; 
+    	margin:0 0 40px 0;
+    }
+    
+ 	.container3 {margin-bottom: 24px !important;}
+ 	.passInput{width:60%; height:45px; border:1px solid #ced4da; color:#333; padding-left:1%;}
 </style>
 <script type="text/javascript">
 
@@ -61,66 +88,43 @@
         	<a href="http://localhost/shopping_mall_prj/user/myOrder.jsp"><div class="dt" id="order"><h3 id="dt">주문내역</h3></div></a>
         	<a href="http://localhost/shopping_mall_prj/user/myInfo.jsp"><div class="dt" id="info"><h3 id="dt">개인정보</h3></div></a>
         </div>
-	<div align="center" style="color:#D09869; font-weight: bold; font-family: 'Sunflower', sans-serif;">
-      <div class="mb-5" align="center" style="margin-bottom:70px; margin-top: 70px" >
-         <h6 style="text-align:center; font-weight: bold; font-size: 30px">회원 정보 수정</h6>
-      </div>
-   <div class="row g-2 align-items-center" style="width:600px" >
-     <div class="col-auto" >
-       <label for="inputPassword6" class="col-form-label">아이디</label>
-     </div>
-     <div class="col-auto">
-       <input type="text" id="inputPassword6" class="form-control-lg"  style="width: 400px" placeholder="아이디(readonly)" readonly="readonly">
-     </div>
-     
-  </div>
-   <div class="row g-2 align-items-center" style="width: 600px;margin-top:10px">
-     <div class="col-auto">
-       <label class="col-form-label">비밀번호</label>
-     </div>
-     <div class="col-auto">
-       <input type="password" class="form-control-lg" style="width: 400px" placeholder="비밀번호 입력">
-     </div>
-  </div>
-   <div class="row g-2 align-items-center" style="width: 600px;margin-top:10px">
-     <div class="col-auto">
-       <label class="col-form-label">이름</label>
-     </div>
-     <div class="col-auto">
-       <input type="password" class="form-control-lg" style="width: 400px" placeholder="이름(read only)" readonly="readonly">
-     </div>
-  </div>
-   <div class="row g-2 align-items-center" style="width: 600px;margin-top:10px">
-     <div class="col-auto">
-       <label class="col-form-label">휴대폰번호</label>
-     </div>
-     <div class="col-auto">
-       <input type="text" class="form-control-lg" style="width: 400px" placeholder="휴대폰번호(read only)" readonly="readonly">
-     </div>
-  </div>
-   <div class="row g-2 align-items-center" style="width: 600px;margin-top:10px">
-     <div class="col-auto">
-       <label class="col-form-label">이메일</label>
-     </div>
-     <div class="col-auto">
-       <input type="text" class="form-control-lg" style="width: 400px" placeholder="이메일" >
-     </div>
-  </div>
-   <div class="row g-2 align-items-center" style="width: 600px;margin-top:10px">
-     <div class="col-auto">
-       <label class="col-form-label">주소</label>
-     </div>
-     <div class="col-auto">
-       <input type="text" class="form-control-lg" style="width: 400px" placeholder="주소">
-     </div>
-  </div>
 
-     </div> 
-              <p style="text-align:center;margin-top:10px; font-family: 'Sunflower', sans-serif;">
-        <button type="button" class="btn btn-default btn-lg" style="width:200px; height:56px; background:#D09869 ;color:#FFFFFF ">회원탈퇴</button>
-        <button type="button" class="btn btn-default btn-lg" style="width:200px; height:56px; background:#D09869 ;color:#FFFFFF ">돌아가기</button>
-        <button type="button" class="btn btn-default btn-lg" style="width:200px; height:56px; color:#000000">수정완료</button>
-      </p>
+		<div align="center" style="color: #D09869; margin-bottom: 5%;">
+			<h2 id="title">회원정보 수정</h2>
+			<div style="width: 30%;">
+				<div class="container3">
+					<label style="padding-right: 7%;">아이디</label> <input
+						type="text" class="passInput" readonly="readonly"/>
+				</div>
+				<div class="container3">
+					<label style="padding-right: 4%;">비밀번호</label> <input
+						type="password" class="passInput" placeholder="비밀번호" />
+				</div>
+				<div class="container3">
+					<label style="padding-right: 9.5%;">이름</label> <input
+						type="text" class="passInput" readonly="readonly"/>
+				</div>
+				<div class="container3">
+					<label style="padding-right: 1.5%;">휴대폰번호</label> <input
+						type="text" class="passInput" readonly="readonly"/>
+				</div>
+				<div class="container3">
+					<label style="padding-right: 7%;">이메일</label> <input
+						type="text" class="passInput" placeholder="이메일" />
+				</div>
+				<div class="container3">
+					<label style="padding-right: 9.5%;">주소</label> <input
+						type="text" class="passInput" placeholder="주소" />
+				</div>
+			</div>
+		</div>
+
+     
+     <p style="text-align:center;"><!-- 56px -->
+		 <button type="button" class="btn btn-default btn-lg" id="cancelBtn">회원탈퇴</button>
+		 <button type="button" class="btn btn-default btn-lg" id="cancelBtn">수정완료</button>
+		 <button type="button" class="btn btn-default btn-lg" id="backBtn" onclick="goBack()">돌아가기</button>
+	</p>
      </form>
 	
 	<jsp:include page="../layout/footer.jsp"/>
