@@ -5,7 +5,6 @@
 <%@page import="kr.co.shopping_mall.dao.ProductDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<jsp:include page="../layout/header.jsp"/>
 <%
 ProductDAO pd=new ProductDAO();
 String pro_cd=request.getParameter("pro_cd");
@@ -166,6 +165,7 @@ function addCart(){
 
 </script>
 <body>
+<jsp:include page="../layout/header.jsp"/>
 <div class="container px-4 px-lg-5 mt-5">
 	<form id="frm">
 	<div class="row" style="padding: 3%;">

@@ -14,6 +14,7 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <title>1조네 농산물</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
 <!-- Bootstrap icons-->

@@ -5,7 +5,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     info="마이페이지_개인정보"%>
-<jsp:include page="../layout/header.jsp"/>
 <%
 //session을 통해 들어온 로그인 정보가 없으면 회원가입페이지로 이동
 String user_id=(String)session.getAttribute("user_id");
@@ -147,6 +146,7 @@ function moveInfoUpdate(){
 }
 </script>
 <body>   
+<jsp:include page="../layout/header.jsp"/>
         <div class="container">
         &nbsp;<div class="dl">
         	<a href="myOrder.jsp"><div class="dt" id="order"><h3 id="dt">주문내역</h3></div></a>
