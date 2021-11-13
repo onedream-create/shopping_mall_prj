@@ -14,15 +14,15 @@ if(user_id==null){ %>
 	</script>
 <%}//end if 
 
-//user_id값을 통한 개인정보조회
-UserDAO ud=new UserDAO();
-UserInfoVO uv=ud.selectInfo(user_id);
+	//user_id값을 통한 개인정보조회
+	UserDAO ud=new UserDAO();
+	UserInfoVO uv=ud.selectInfo(user_id);
 
-//개인정보 복호화
-DataDecrypt dd=new DataDecrypt("AbcdEfgHiJkLmnOpQ");
-uv.setUser_name(dd.decryption(uv.getUser_name()));
-uv.setUser_email(dd.decryption(uv.getUser_email()));
-uv.setUser_tel(dd.decryption(uv.getUser_tel()));
+	//개인정보 복호화
+	DataDecrypt dd=new DataDecrypt("AbcdEfgHiJkLmnOpQ");
+	uv.setUser_name(dd.decryption(uv.getUser_name()));
+	uv.setUser_email(dd.decryption(uv.getUser_email()));
+	uv.setUser_tel(dd.decryption(uv.getUser_tel()));	
 %>
 <html>
 <head>
@@ -111,7 +111,13 @@ uv.setUser_tel(dd.decryption(uv.getUser_tel()));
  	.passInput{width:60%; height:45px; border:1px solid #ced4da; color:#333; padding-left:1%;}
 </style>
 <script type="text/javascript">
-
+$(function(){
+	$("#infoUpdateBtn").click(function(){
+		if($("#pass").val != <%%>)  ////패스워드가 맞지않으면
+		
+	});//click
+	
+});//ready
 </script>
 <body>
 	<jsp:include page="../layout/header.jsp"/>
@@ -130,7 +136,7 @@ uv.setUser_tel(dd.decryption(uv.getUser_tel()));
 				</div>
 				<div class="container3">
 					<label style="padding-right: 4%;">비밀번호</label> <input
-						type="password" class="passInput" placeholder="비밀번호" name="pass"/>
+						type="password" class="passInput" placeholder="" id="pass" name="pass"/>
 				</div>
 				<div class="container3">
 					<label style="padding-right: 9.5%;">이름</label> <input
@@ -142,11 +148,11 @@ uv.setUser_tel(dd.decryption(uv.getUser_tel()));
 				</div>
 				<div class="container3">
 					<label style="padding-right: 7%;">이메일</label> <input
-						type="text" class="passInput" placeholder="이메일" name="email"/>
+						type="text" class="passInput" placeholder="" name="email"/>
 				</div>
 				<div class="container3">
 					<label style="padding-right: 9.5%;">주소</label> <input
-						type="text" class="passInput" placeholder="주소" name="addr"/>
+						type="text" class="passInput" placeholder="" name="addr"/>
 				</div>
 			</div>
 		</div>
