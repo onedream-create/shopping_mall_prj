@@ -52,8 +52,8 @@ public class AdminDAO {
 		JdbcTemplate jt = gjt.getJdbcTemplate();
 		// 쿼리 실행
 		StringBuilder insertProduct = new StringBuilder();
-		insertProduct.append(" insert into product(pro_cd,category_cd,pro_name,pro_detail,pro_img,pro_price) ")
-					 .append(" values(concat(to_char(sysdate, '\"P\"YYMMDD\"'),lpad(pro_cd_seq.nextval,5,'0')),?,?,?,?,?" );
+		insertProduct.append(" insert into product(pro_cd, category_cd, pro_name, pro_detail, pro_img, pro_price) ")
+					 .append(" values(concat(to_char(sysdate, '\"P\"YYMMDD\"'),lpad(pro_cd_seq.nextval,5,'0')),?,?,?,?,?)" );
 		jt.update(insertProduct.toString(), pVO.getCategory_cd(), pVO.getPro_name(), pVO.getPro_detail(), pVO.getPro_img(),
 				pVO.getPro_price());
 		// 스프링컨테이너 닫기
@@ -350,14 +350,14 @@ public class AdminDAO {
 			return uv;
 		}
 		
-		public void updateUser(String grade_no, String user_tel, String user_addr, String user_email, String user_id) {
+		public void updateUser(String user_name, String grade_no, String user_tel, String user_addr, String user_email, String user_id) {
 			// 스프링컨테이너 얻기
 			GetJdbcTemplate gjt = GetJdbcTemplate.getInstance();
 			// JdbcTemplate 얻기
 			JdbcTemplate jt = gjt.getJdbcTemplate();
 			// 쿼리 실행
-			String updateUser = " update users set grade_no=?, user_tel=?, user_addr=?, user_email=? where user_id=?";
-			jt.update(updateUser, grade_no, user_tel, user_addr, user_email, user_id);
+			String updateUser = " update users set user_name=?, grade_no=?, user_tel=?, user_addr=?, user_email=? where user_id=?";
+			jt.update(updateUser, user_name, grade_no, user_tel, user_addr, user_email, user_id);
 			// 스프링컨테이너 닫기
 			gjt.closeAc();
 		}

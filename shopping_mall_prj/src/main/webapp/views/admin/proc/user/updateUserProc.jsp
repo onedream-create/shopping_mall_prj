@@ -3,11 +3,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" trimDirectiveWhitespaces="true" pageEncoding="UTF-8"%>
 
 <%
-
+System.out.println(request.getParameter("user_name"));
 DataEncrypt de = new DataEncrypt("AbcdEfgHiJkLmnOpQ");
 
 String work = request.getParameter("work");
 String user_id = request.getParameter("user_id");
+String user_name = de.encryption(request.getParameter("user_name"));
 String grade_no = request.getParameter("grade_no");
 String user_tel = de.encryption(request.getParameter("user_tel"));
 String user_addr = request.getParameter("user_addr");
@@ -17,7 +18,7 @@ String user_email = de.encryption(request.getParameter("user_email"));
 AdminDAO aDAO = new AdminDAO();
 
 if(work.equals("update")) {
-	aDAO.updateUser(grade_no, user_tel, user_addr, user_email, user_id);
+	aDAO.updateUser(user_name,grade_no, user_tel, user_addr, user_email, user_id);
 } 
 
 if(work.equals("secession")) {

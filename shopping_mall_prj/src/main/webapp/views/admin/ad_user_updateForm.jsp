@@ -101,6 +101,7 @@ uVO.setUser_email(dd.decryption(uVO.getUser_email()));
 				<thead class="thead-dark">
 					<tr>
 						<th>회원ID</th>
+						<th>이름</th>
 						<th>회원등급</th>
 						<th>휴대전화</th>
 						<th>주소</th>
@@ -111,6 +112,7 @@ uVO.setUser_email(dd.decryption(uVO.getUser_email()));
 				<tbody>
 					<tr>
 						<td class="readOnly"><input type="text" class="form-control" name="user_id" value="<%=uVO.getUser_id()%>" readonly="readonly"/></td>
+						<td><input type="text" class="form-control" name="user_name" value="<%=uVO.getUser_name()%>"/></td>
 						<td>
 							<input type="hidden" id="grade_no" value="<%=uVO.getGrade_no()%>">
 							<select class="custom-select" id="user_grade" name="grade_no">
