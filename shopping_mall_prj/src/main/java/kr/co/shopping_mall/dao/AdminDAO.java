@@ -86,7 +86,7 @@ public class AdminDAO {
 		JdbcTemplate jt = gjt.getJdbcTemplate();
 		// 3. 쿼리문 실행
 		StringBuilder selectPro = new StringBuilder();
-		selectPro.append(" Select * ") 
+		selectPro.append(" select * ") 
 				 .append(" from (select rownum as rnum, p.* ")
 		         		.append(" from ( select * ")
 		         				.append(" from product ");
@@ -277,7 +277,7 @@ public class AdminDAO {
 			return cnt;
 		}
 		
-		//Product===================================================================================================
+		//User===================================================================================================
 		//유저 RowMapper
 		public class SelectUser implements RowMapper<UserVO> {
 			public UserVO mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -350,6 +350,7 @@ public class AdminDAO {
 			return uv;
 		}
 		
+		//회원정보 수정
 		public void updateUser(String user_name, String grade_no, String user_tel, String user_addr, String user_email, String user_id) {
 			// 스프링컨테이너 얻기
 			GetJdbcTemplate gjt = GetJdbcTemplate.getInstance();
@@ -362,6 +363,7 @@ public class AdminDAO {
 			gjt.closeAc();
 		}
 		
+		//회원탈퇴
 		public void secessionUser(String user_id) {
 			// 스프링컨테이너 얻기
 			GetJdbcTemplate gjt = GetJdbcTemplate.getInstance();
@@ -372,5 +374,77 @@ public class AdminDAO {
 			jt.update(secessionUser, user_id);
 			// 스프링컨테이너 닫기
 			gjt.closeAc();
+		}
+		
+		//회원검색 조건에 맞는 레코드 수 얻기
+		public String countSearchUser(String division, String searchValue, String user_category) {
+			String cnt = null;
+			
+			//1. Spring Container 얻기
+			GetJdbcTemplate gjt=GetJdbcTemplate.getInstance();
+			//2. JdbcTemplate 얻기
+			JdbcTemplate jt=gjt.getJdbcTemplate();
+			//3. 쿼리문 실행
+			StringBuilder countPro = new StringBuilder();
+			countPro.append(" select count(user_id) from users ");
+				if(division.equals("1")) {
+					countPro.append(" where user_id ");
+				} else {
+					countPro.append(" where user_name ");	
+				}
+						
+				countPro.append(" like '%' || ? || '%' ");
+							
+				if(!user_category.equals("a")) {
+					countPro.append(" and del_fl=? ");
+							
+					cnt=jt.queryForObject(countPro.toString(), new Object[] {String.valueOf(searchValue),String.valueOf(user_category)},String.class);
+				} else {	
+					cnt=jt.queryForObject(countPro.toString(), new Object[] {String.valueOf(searchValue)},String.class);
+				}
+			//4. Spring Container 닫기
+			gjt.closeAc();
+			
+			return cnt;
+		}
+		
+		//회원 검색 리스트 얻기
+		public List<UserVO> searchUser(String division, String searchValue, String user_category, int start, int rowsPerPage) throws SQLException {
+			List<UserVO> list = null;
+			// 1. Spring Container 얻기
+			GetJdbcTemplate gjt = GetJdbcTemplate.getInstance();
+			// 2. JdbcTemplate 얻기
+			JdbcTemplate jt = gjt.getJdbcTemplate();
+			// 3. 쿼리문 실행
+			StringBuilder selectUser = new StringBuilder();
+			selectUser.append(" select * ") 
+					 .append(" from (select rownum as rnum, u.*, g.grade_name ")
+			         		.append(" from ( select * ")
+			         				.append(" from users ");
+						if(division.equals("1")) {
+							selectUser.append("where user_id");		 
+						} else {
+							selectUser.append("where user_name");
+						}
+							selectUser.append(" like '%' || ? || '%' ");
+						if(!user_category.equals("a")) {
+							selectUser.append(" and del_fl=? ");
+						}
+							selectUser.append(" order by reg_date desc) u, user_grade g ")
+									 .append(" where u.grade_no = g.grade_no) ")
+								 	 .append(" where rnum > ? and rnum <= ?+? ")	
+								 	 .append(" order by rnum ");
+			if (user_category.equals("a")) {
+				// 코드가 0이면 전체분류의 상품을 조회
+				list = jt.query(selectUser.toString(),new Object[] {String.valueOf(searchValue), Long.valueOf(start), Long.valueOf(rowsPerPage), Long.valueOf(start) }, new SelectUser());
+			} else {
+				// 카테고리별 상품정보를 조회
+				list = jt.query(selectUser.toString(), new Object[] {String.valueOf(searchValue), String.valueOf(user_category),Long.valueOf(start), Long.valueOf(rowsPerPage), Long.valueOf(start) },new SelectUser());
+			} // end else
+
+			// 4. Spring Container 닫기
+			gjt.closeAc();
+
+			return list;
 		}
 }

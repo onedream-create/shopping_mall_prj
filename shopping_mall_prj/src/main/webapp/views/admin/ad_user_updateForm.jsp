@@ -83,17 +83,21 @@ function btnClick(str) {
 </script>
 </head>
 <body>
-<c:catch var="e">  
 <% 
 String user_id = request.getParameter("user_id");
 AdminDAO aDAO = new AdminDAO();
 UserVO uVO = aDAO.getUserInfo(user_id);
 
 DataDecrypt dd = new DataDecrypt("AbcdEfgHiJkLmnOpQ");
-uVO.setUser_name(dd.decryption(uVO.getUser_name()));
-uVO.setUser_tel(dd.decryption(uVO.getUser_tel()));
-uVO.setUser_email(dd.decryption(uVO.getUser_email()));
-
+try {	
+	uVO.setUser_name(dd.decryption(uVO.getUser_name()));
+	uVO.setUser_tel(dd.decryption(uVO.getUser_tel()));
+	uVO.setUser_email(dd.decryption(uVO.getUser_email()));		
+} catch (NullPointerException e) {
+	uVO.setUser_name("삭제됨");
+	uVO.setUser_tel("삭제됨");
+	uVO.setUser_email("삭제됨");
+}
 %>
 	<div class="container">
 		<form id="updateForm" method="post">
@@ -107,6 +111,9 @@ uVO.setUser_email(dd.decryption(uVO.getUser_email()));
 						<th>주소</th>
 						<th>이메일</th>
 						<th>가입일자</th>
+						<%if(uVO.getSec_date() != null) { %>
+						<th>탈퇴일자</th>	
+						<%} %>
 					</tr>
 				</thead>
 				<tbody>
@@ -128,22 +135,20 @@ uVO.setUser_email(dd.decryption(uVO.getUser_email()));
 						<td><input type="text" class="form-control" name="user_addr" value="<%=uVO.getUser_addr()%>"/></td>
 						<td><input type="email" class="form-control" name="user_email" value="<%=uVO.getUser_email()%>"/></td>
 						<td class="readOnly"><input type="text" class="form-control" name="reg_date" value="<%=uVO.getReg_date()%>" readonly="readonly"/></td>
+						<%if(uVO.getSec_date() != null) { %>
+						<td class="readOnly"><input type="text" class="form-control" name="reg_date" value="<%=uVO.getSec_date()%>" readonly="readonly"/></td>
+						<%} %>
 					</tr>
 				</tbody>
 			</table>
 			<div class="row">
+			<%if(uVO.getSec_date() == null) { %>
 			<input type="button" class="btn btn-dark col-auto ml-3 mr-auto" onclick="btnClick('secession');" value="회원탈퇴">
 			<input type="button" class="btn btn-primary col-auto mr-3" onclick="btnClick('update');" value="수정완료">
 			<input type="button" class="btn btn-outline-primary mr-3" onclick="btnClick('cancle');" value="취소">
+			<%} %>
 			</div>
 		</form>
 	</div>
-</c:catch>
-<c:if test="${not empty e}">
-<script type="text/javascript">
-alert("이미 탈퇴되거나 없는 회원입니다.");
-self.close();
-</script>
-</c:if> 
 </body>
 </html>

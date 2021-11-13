@@ -443,6 +443,7 @@ function userDashSearch(index, flag) {
 				userDashTbody += '<tr class="trow">';
 				userDashTbody += '<td>' + data[key].no + '</td>';
 				userDashTbody += '<td>' + data[key].user_id + '</td>';
+				userDashTbody += '<td>' + data[key].user_name + '</td>';
 				userDashTbody += '<td>' + data[key].grade_name + '</td>';
 				userDashTbody += '<td>' + data[key].user_tel + '</td>';
 				userDashTbody += '<td>' + data[key].user_addr + '</td>';
@@ -452,6 +453,89 @@ function userDashSearch(index, flag) {
 				userDashTbody += '</tr>';
 			}
 			$("#userDashTbody").append(userDashTbody);
+		},
+		error: function() {
+			alert("실패");
+		}
+	});
+}
+
+//==========================================================================================================================
+//검색조건에 따라 유저정보 카운트하고 페이지버튼생성
+function allUserPagenation() {
+	$("#user_id_name").val("");
+	$("#user_category1").prop("checked", true);
+
+	userPagenation();
+}
+
+function userPagenation() {
+	let division = $("#user_division").val();
+	let searchValue = $("#user_id_name").val();
+	let user_category = $("input[name='user_category']:radio:checked").val();
+	let condition = { "division": division, "searchValue": searchValue, "user_category": user_category };
+
+	$.ajax({
+		cache: false,
+		url: "proc/user/pagenation.jsp",
+		type: 'get',
+		data: condition,
+		success: function(pageCount) {
+			//페이징버튼 그려줄 태그의 선택자
+			let paging = $("#userSearchPageNumber");
+			paging.empty();
+			//1,2,3 페이지 생성
+			for (let i = 1; i <= pageCount; i++) {
+				paging.append('<li class=\"page-item\"><a class=\"page-link\" href=\"javascript:void(0)\">' + i + '</a></li>');
+			}
+			paging.find('li:nth-child(1)').addClass('active');
+			userSearch(1); //바로 첫번째 페이지 그려줌
+
+			//상품 페이지 1,2,3...클릭시 active효과주고 검색
+			paging.find('li').click(function() {
+				paging.find('li').removeClass('active');
+				$(this).addClass('active');
+				let index = $(this).text();
+				userSearch(index);
+			});
+		},
+		error: function() {
+			alert("실패");
+		}
+	});
+}
+
+//==========================================================================================================================
+//검색조건에따라 상품테이블 그리기
+function userSearch(index) {
+	let division = $("#user_division").val();
+	let searchValue = $("#user_id_name").val();
+	let user_category = $("input[name='user_category']:radio:checked").val();
+
+	let condition = { "index": index, "division": division, "searchValue": searchValue, "user_category": user_category };
+
+	$.ajax({
+		cache: false,
+		url: "proc/user/userSearch.jsp",
+		data: condition,
+		dataType: 'json',
+		success: function(data) {
+			$("#userSearchTbody").empty();
+			let userSearchTbody = '';
+			for (key in data) {
+				userSearchTbody += '<tr class="trow">';
+				userSearchTbody += '<td>' + data[key].no + '</td>';
+				userSearchTbody += '<td>' + data[key].user_id + '</td>';
+				userSearchTbody += '<td>' + data[key].user_name + '</td>';
+				userSearchTbody += '<td>' + data[key].grade_name + '</td>';
+				userSearchTbody += '<td>' + data[key].user_tel + '</td>';
+				userSearchTbody += '<td>' + data[key].user_addr + '</td>';
+				userSearchTbody += '<td>' + data[key].user_email + '</td>';
+				userSearchTbody += '<td>' + data[key].reg_date + '</td>';
+				userSearchTbody += '<td>' + '<a href=\"ad_user_updateForm.jsp?user_id=' + data[key].user_id + '\" onclick=\"window.open(this.href,\'_blank\',\'width=1200,height=300,top=200,left=200\'); return false;\">수정</a></td>';
+				userSearchTbody += '</tr>';
+			}
+			$("#userSearchTbody").append(userSearchTbody);
 		},
 		error: function() {
 			alert("실패");

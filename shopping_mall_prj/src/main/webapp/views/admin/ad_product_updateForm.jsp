@@ -69,11 +69,11 @@ function btnClick(str) {
             type : "POST", 
             data : formData, 
             success: function(data) {
-            	alert("성공");
+            	alert("완료");
             	self.close();
             },
 			error: function() {
-				alert("실패");
+				alert("상품정보를 변경할 수 없습니다.");
 				self.close();
 			}
         });
