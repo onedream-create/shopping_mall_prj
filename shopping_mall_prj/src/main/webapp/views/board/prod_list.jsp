@@ -5,9 +5,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" info="상품게시판페이지"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <%
-String category_cd=request.getParameter("category_cd");
-%> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,6 +56,13 @@ if(request.getParameter("category_cd") != null){
 		searchValue=request.getParameter("searchValue");
 		cnt=Integer.parseInt(pd.countSearchPro(searchValue));
 }//end else
+	
+if(searchValue == ""){%>
+	<script>
+	alert("검색어를 입력해주세요.");
+	window.history.back();
+	</script>
+<%}
 
 int cPage;//현재 페이지
 
