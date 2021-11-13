@@ -38,7 +38,7 @@
 			<div class="row mt-4">
 				<div class="col-12">
 					<div class="contentlabel">상품목록</div>
-					<table class="table table-bordered paginated">
+					<table class="table table-bordered">
 						<thead>
 							<tr class="tcol">
 								<td class="col-1">번호</td>
@@ -50,7 +50,7 @@
 								<td class="col-1">관리</td>
 							</tr>
 						</thead>
-						<tbody id="ProSearchTbody">
+						<tbody id="proDashTbody">
 						</tbody>
 					</table>
 				</div>

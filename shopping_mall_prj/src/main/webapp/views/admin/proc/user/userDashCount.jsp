@@ -5,15 +5,14 @@
 <%
 AdminDAO aDAO = new AdminDAO();
 
-String countAll = aDAO.countProDashData("a");
-String countSellY = aDAO.countProDashData("y");
-String countSellN = aDAO.countProDashData("n");
-
+String countNewUser = aDAO.countUserDashData("n");
+String countSecUser = aDAO.countUserDashData("y");
+String countAllUser = aDAO.countUserDashData("a");
 
 JSONObject jo = new JSONObject();
-jo.put("countAll", countAll);
-jo.put("countSellY", countSellY);
-jo.put("countSellN", countSellN);
+jo.put("countNewUser", countNewUser);
+jo.put("countSecUser", countSecUser);
+jo.put("countAllUser", countAllUser);
 
 out.print(jo);
 %>

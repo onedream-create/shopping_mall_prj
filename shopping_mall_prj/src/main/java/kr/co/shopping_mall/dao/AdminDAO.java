@@ -9,9 +9,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import kr.co.shopping_mall.model.ProductVO;
+import kr.co.shopping_mall.model.UserVO;
 
 public class AdminDAO {
-	
 	//HOME===================================================================================================
 	public String checkAccount(String inputId, String inputPw) throws DataAccessException {
 		String admin_id = "";
@@ -192,7 +192,8 @@ public class AdminDAO {
 		gjt.closeAc();
 	}
 	
-	public String countDashData(String flag) throws SQLException {
+	//상품대시보드 상품개수 카운트
+	public String countProDashData(String flag) throws SQLException {
 		String cnt = null;
 		
 		//1. Spring Container 얻기
@@ -216,7 +217,7 @@ public class AdminDAO {
 		return cnt;
 	}
 	
-	//상품 리스트 얻기
+	//상품대시보드 리스트 얻기
 		public List<ProductVO> proDashSearch(String flag, int start, int rowsPerPage) throws SQLException {
 			List<ProductVO> list = null;
 			// 1. Spring Container 얻기
@@ -245,5 +246,131 @@ public class AdminDAO {
 			gjt.closeAc();
 
 			return list;
+		}
+		
+		//상품대시보드 상품개수 카운트
+		public String countUserDashData(String flag) throws SQLException {
+			String cnt = null;
+			
+			//1. Spring Container 얻기
+			GetJdbcTemplate gjt=GetJdbcTemplate.getInstance();
+			//2. JdbcTemplate 얻기
+			JdbcTemplate jt=gjt.getJdbcTemplate();
+			//3. 쿼리문 실행
+			StringBuilder countUser = new StringBuilder();
+			countUser.append(" select count(user_id) from users ");
+				
+			if(flag == "n" || flag == "y") {
+				countUser.append(" where del_fl=? ");
+				countUser.append(" and to_char(reg_date,'YYYYMMDD') = to_char(sysdate,'YYYYMMDD') ");
+			}
+
+			if(flag == "a") {
+				countUser.append(" where del_fl='n' ");
+				cnt=jt.queryForObject(countUser.toString(),String.class);
+			} else {	
+				cnt=jt.queryForObject(countUser.toString(), new Object[] {String.valueOf(flag)},String.class);
+			}
+			//4. Spring Container 닫기
+			gjt.closeAc();
+			
+			return cnt;
+		}
+		
+		//Product===================================================================================================
+		//유저 RowMapper
+		public class SelectUser implements RowMapper<UserVO> {
+			public UserVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+				UserVO uv = new UserVO();
+				uv.setNo(rs.getString("rnum"));
+				uv.setUser_id(rs.getString("user_id"));
+				uv.setUser_pw(rs.getString("user_pw"));
+				uv.setUser_name(rs.getString("user_name"));
+				uv.setUser_tel(rs.getString("user_tel"));
+				uv.setUser_email(rs.getString("user_email"));
+				uv.setUser_addr(rs.getString("user_addr"));
+				uv.setGrade_no(rs.getString("grade_no"));
+				uv.setGrade_name(rs.getString("grade_name"));
+				uv.setReg_date(rs.getString("reg_date"));
+				uv.setDel_fl(rs.getString("del_fl"));
+				uv.setSec_date(rs.getString("sec_date"));
+				return uv;
+			}
+		}
+		
+		//유저 대시보드 리스트얻기
+		public List<UserVO> userDashSearch(String flag, int start, int rowsPerPage){
+			List<UserVO> list = null;
+			// 1. Spring Container 얻기
+			GetJdbcTemplate gjt = GetJdbcTemplate.getInstance();
+			// 2. JdbcTemplate 얻기
+			JdbcTemplate jt = gjt.getJdbcTemplate();
+			// 3. 쿼리문 실행
+			StringBuilder selectUser = new StringBuilder();
+			
+			selectUser.append(" select * ");
+			selectUser.append(" from	(select rownum as rnum, u.*, g.grade_name ");
+			selectUser.append("   	 from (select * from users ");
+			if(!flag.equals("a")) {
+				selectUser.append(" 			where del_fl=? ");
+				selectUser.append(" 			and to_char(reg_date,'YYYYMMDD') = to_char(sysdate,'YYYYMMDD') ");
+			} else { selectUser.append(" 				where del_fl='n' "); }
+				
+			selectUser.append(" 				order by reg_date desc) u, user_grade g ");
+			selectUser.append(" 		 where u.grade_no = g.grade_no) ");
+			selectUser.append(" where  rnum > ? and rnum <= ?+? ");  
+			selectUser.append(" order by rnum ");  
+			
+			if(!flag.equals("a")) {
+				list = jt.query(selectUser.toString(),new Object[] {String.valueOf(flag), Long.valueOf(start), Long.valueOf(rowsPerPage), Long.valueOf(start) }, new SelectUser());
+			} else {
+				list = jt.query(selectUser.toString(),new Object[] {Long.valueOf(start), Long.valueOf(rowsPerPage), Long.valueOf(start) }, new SelectUser());				
+			}
+			// 4. Spring Container 닫기
+			gjt.closeAc();
+
+			return list;
+		}
+		
+		//user_id에 해당하는 상세정보조회
+		public UserVO getUserInfo(String user_id) throws SQLException{
+			UserVO uv=null;
+			
+			//1. Spring Container 얻기
+			GetJdbcTemplate gjt=GetJdbcTemplate.getInstance();
+			//2. JdbcTemplate 얻기
+			JdbcTemplate jt=gjt.getJdbcTemplate();
+			//3. 쿼리문 실행
+			String selectUserInfo=" select rownum as rnum, u.*, g.grade_name from users u, user_grade g where u.grade_no = g.grade_no and user_id=? ";
+			uv=jt.queryForObject(selectUserInfo, new Object[] { String.valueOf(user_id) }, new SelectUser());
+					
+			//4. Spring Container 닫기
+			gjt.closeAc();
+
+			return uv;
+		}
+		
+		public void updateUser(String grade_no, String user_tel, String user_addr, String user_email, String user_id) {
+			// 스프링컨테이너 얻기
+			GetJdbcTemplate gjt = GetJdbcTemplate.getInstance();
+			// JdbcTemplate 얻기
+			JdbcTemplate jt = gjt.getJdbcTemplate();
+			// 쿼리 실행
+			String updateUser = " update users set grade_no=?, user_tel=?, user_addr=?, user_email=? where user_id=?";
+			jt.update(updateUser, grade_no, user_tel, user_addr, user_email, user_id);
+			// 스프링컨테이너 닫기
+			gjt.closeAc();
+		}
+		
+		public void secessionUser(String user_id) {
+			// 스프링컨테이너 얻기
+			GetJdbcTemplate gjt = GetJdbcTemplate.getInstance();
+			// JdbcTemplate 얻기
+			JdbcTemplate jt = gjt.getJdbcTemplate();
+			// 쿼리 실행
+			String secessionUser = " update users set user_pw=null, user_name=null, user_tel=null, user_email=null, del_fl='y', sec_date=sysdate where user_id=?";
+			jt.update(secessionUser, user_id);
+			// 스프링컨테이너 닫기
+			gjt.closeAc();
 		}
 }

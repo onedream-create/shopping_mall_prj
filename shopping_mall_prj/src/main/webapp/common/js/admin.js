@@ -1,6 +1,7 @@
 $(function() {
 	//페이지정보 초기화
 	proDashCount();
+	userDashCount();
 	
 	//==========================================================================================================================
 	//datepicker	
@@ -278,19 +279,19 @@ function productSearch(index) {
 		dataType: 'json',
 		success: function(data) {
 			$("#proSearchTbody").empty();
-			let ProSearchTbody = '';
+			let proSearchTbody = '';
 			for (key in data) {
-				ProSearchTbody += '<tr class="trow">';
-				ProSearchTbody += '<td>' + data[key].no + '</td>';
-				ProSearchTbody += '<td>' + data[key].pro_cd + '</td>';
-				ProSearchTbody += '<td>' + data[key].pro_name + '</td>';
-				ProSearchTbody += '<td>' + data[key].pro_price + '</td>';
-				ProSearchTbody += '<td>' + data[key].input_date + '</td>';
-				ProSearchTbody += '<td>' + data[key].sell_fl + '</td>';
-				ProSearchTbody += '<td>' + '<a href=\"ad_product_updateForm.jsp?pro_cd=' + data[key].pro_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=1200,height=300,top=200,left=200\'); return false;\">수정</a></td>';
-				ProSearchTbody += '</tr>';
+				proSearchTbody += '<tr class="trow">';
+				proSearchTbody += '<td>' + data[key].no + '</td>';
+				proSearchTbody += '<td>' + data[key].pro_cd + '</td>';
+				proSearchTbody += '<td>' + data[key].pro_name + '</td>';
+				proSearchTbody += '<td>' + data[key].pro_price + '</td>';
+				proSearchTbody += '<td>' + data[key].input_date + '</td>';
+				proSearchTbody += '<td>' + data[key].sell_fl + '</td>';
+				proSearchTbody += '<td>' + '<a href=\"ad_product_updateForm.jsp?pro_cd=' + data[key].pro_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=1200,height=300,top=200,left=200\'); return false;\">수정</a></td>';
+				proSearchTbody += '</tr>';
 			}
-			$("#proSearchTbody").append(ProSearchTbody);
+			$("#proSearchTbody").append(proSearchTbody);
 		},
 		error: function() {
 			alert("실패");
@@ -356,24 +357,104 @@ function proDashSearch(index, flag) {
 		data: condition,
 		dataType: 'json',
 		success: function(data) {
-			$("#ProSearchTbody").empty();
-			let ProSearchTbody = '';
+			$("#proDashTbody").empty();
+			let proDashTbody = '';
 			for (key in data) {
-				ProSearchTbody += '<tr class="trow">';
-				ProSearchTbody += '<td>' + data[key].no + '</td>';
-				ProSearchTbody += '<td>' + data[key].pro_cd + '</td>';
-				ProSearchTbody += '<td>' + data[key].pro_name + '</td>';
-				ProSearchTbody += '<td>' + data[key].pro_price + '</td>';
-				ProSearchTbody += '<td>' + data[key].input_date + '</td>';
-				ProSearchTbody += '<td>' + data[key].sell_fl + '</td>';
-				ProSearchTbody += '<td>' + '<a href=\"ad_product_updateForm.jsp?pro_cd=' + data[key].pro_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=1200,height=300,top=200,left=200\'); return false;\">수정</a></td>';
-				ProSearchTbody += '</tr>';
+				proDashTbody += '<tr class="trow">';
+				proDashTbody += '<td>' + data[key].no + '</td>';
+				proDashTbody += '<td>' + data[key].pro_cd + '</td>';
+				proDashTbody += '<td>' + data[key].pro_name + '</td>';
+				proDashTbody += '<td>' + data[key].pro_price + '</td>';
+				proDashTbody += '<td>' + data[key].input_date + '</td>';
+				proDashTbody += '<td>' + data[key].sell_fl + '</td>';
+				proDashTbody += '<td>' + '<a href=\"ad_product_updateForm.jsp?pro_cd=' + data[key].pro_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=1200,height=300,top=200,left=200\'); return false;\">수정</a></td>';
+				proDashTbody += '</tr>';
 			}
-			$("#ProSearchTbody").append(ProSearchTbody);
+			$("#proDashTbody").append(proDashTbody);
 		},
 		error: function() {
 			alert("실패");
 		}
 	});
+}
+
+//==========================================================================================================================
+//유저대시보드 오늘을 기준으로한 신규회원 탈퇴회원 총회원수 구하기
+function userDashCount(){
+		$.ajax({
+		cache: false,
+		url: "proc/user/userDashCount.jsp",
+		dataType: 'json',
+		success: function(data) {
+			$("#userDashCount").empty();
+			let userDashCount = '';
+			userDashCount += '<tr class="trow">';
+			userDashCount += '<td>' + '<a href=\'javascript:void(0)\' onclick=\'userDashPagenation(' + data.countNewUser + ',"n");\'>' + data.countNewUser + '명</a></td>';
+			userDashCount += '<td>' + '<a href=\'javascript:void(0)\' onclick=\'userDashPagenation(' + data.countSecUser +',"y");\'>' + data.countSecUser + '명</a></td>';
+			userDashCount += '<td>' + '<a href=\'javascript:void(0)\' onclick=\'userDashPagenation(' + data.countAllUser +',"a");\'>' + data.countAllUser + '명</a></td>';
+			userDashCount += '</tr>'
+			$("#userDashCount").append(userDashCount);
+		},
+		error: function() {
+			alert("실패");
+		}
+	});
+} 
+
+//==========================================================================================================================
+//유저대시보드 페이지버튼 만들기
+function userDashPagenation(cntData, flag){
+	let paging = $("#userDashPageNumber");
+	let rowsPerPage = 8;
+	let pageCount = Math.ceil(cntData / rowsPerPage);
+
+	paging.empty();
+	for (let i = 1; i <= pageCount; i++) {
+		paging.append('<li class=\"page-item\"><a class=\"page-link\" href=\"javascript:void(0)\">' + i + '</a></li>');
+	}
+	paging.find('li:nth-child(1)').addClass('active');
 	
+	userDashSearch(1, flag);
+	
+	//상품 페이지 1,2,3...클릭시 active효과주고 검색
+	paging.find('li').click(function() {
+		paging.find('li').removeClass('active');
+		$(this).addClass('active');
+		let index = $(this).text();
+		userDashSearch(index, flag);
+	});
+}
+
+//==========================================================================================================================
+//유저대시보드 테이블만들기
+function userDashSearch(index, flag) {
+	
+		let condition = {"index": index, "flag": flag};
+	
+		$.ajax({
+		cache: false,
+		url: "proc/user/userDashSearch.jsp",
+		data: condition,
+		dataType: 'json',
+		success: function(data) {
+			$("#userDashTbody").empty();
+			let userDashTbody = '';
+			for (key in data) {
+				userDashTbody += '<tr class="trow">';
+				userDashTbody += '<td>' + data[key].no + '</td>';
+				userDashTbody += '<td>' + data[key].user_id + '</td>';
+				userDashTbody += '<td>' + data[key].grade_name + '</td>';
+				userDashTbody += '<td>' + data[key].user_tel + '</td>';
+				userDashTbody += '<td>' + data[key].user_addr + '</td>';
+				userDashTbody += '<td>' + data[key].user_email + '</td>';
+				userDashTbody += '<td>' + data[key].reg_date + '</td>';
+				userDashTbody += '<td>' + '<a href=\"ad_user_updateForm.jsp?user_id=' + data[key].user_id + '\" onclick=\"window.open(this.href,\'_blank\',\'width=1200,height=300,top=200,left=200\'); return false;\">수정</a></td>';
+				userDashTbody += '</tr>';
+			}
+			$("#userDashTbody").append(userDashTbody);
+		},
+		error: function() {
+			alert("실패");
+		}
+	});
 }

@@ -8,16 +8,19 @@ public class UserVO {
 	private String user_tel;
 	private String user_email;
 	private String user_addr;
-	private int grade_no;
+	private String grade_no;
+	private String grade_name;
 	private String reg_date;
 	private String del_fl;
 	private String sec_date;
+	private String no;
 	
 	public UserVO() {
 	}
-
+	
 	public UserVO(String user_id, String user_pw, String user_name, String user_tel, String user_email,
-			String user_addr, int grade_no, String reg_date, String del_fl, String sec_date) {
+			String user_addr, String grade_no, String grade_name, String reg_date, String del_fl, String sec_date,
+			String no) {
 		this.user_id = user_id;
 		this.user_pw = user_pw;
 		this.user_name = user_name;
@@ -25,9 +28,11 @@ public class UserVO {
 		this.user_email = user_email;
 		this.user_addr = user_addr;
 		this.grade_no = grade_no;
+		this.grade_name = grade_name;
 		this.reg_date = reg_date;
 		this.del_fl = del_fl;
 		this.sec_date = sec_date;
+		this.no = no;
 	}
 
 	public String getUser_id() {
@@ -78,14 +83,6 @@ public class UserVO {
 		this.user_addr = user_addr;
 	}
 
-	public int getGrade_no() {
-		return grade_no;
-	}
-
-	public void setGrade_no(int grade_no) {
-		this.grade_no = grade_no;
-	}
-
 	public String getReg_date() {
 		return reg_date;
 	}
@@ -112,8 +109,32 @@ public class UserVO {
 
 	public String toString() {
 		return "UserVO [user_id=" + user_id + ", user_pw=" + user_pw + ", user_name=" + user_name + ", user_tel="
-				+ user_tel + ", user_email=" + user_email + ", user_addr=" + user_addr + ", grade_no=" + grade_no
+				+ user_tel + ", user_email=" + user_email + ", user_addr=" + user_addr + ", grade_name=" + grade_name
 				+ ", reg_date=" + reg_date + ", del_fl=" + del_fl + ", sec_date=" + sec_date + "]";
 	}
+
+	public String getNo() {
+		return no;
+	}
+
+	public void setNo(String no) {
+		this.no = no;
+	}
 	
+	public String getGrade_name() {
+		return grade_name;
+	}
+
+	public void setGrade_name(String grade_name) {
+		this.grade_name = grade_name;
+	}
+	
+
+	public String getGrade_no() {
+		return grade_no;
+	}
+
+	public void setGrade_no(String grade_no) {
+		this.grade_no = grade_no;
+	}
 }

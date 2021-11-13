@@ -9,7 +9,6 @@ String pro_name = request.getParameter("pro_name");
 String pro_price = request.getParameter("pro_price");
 String sell_fl = request.getParameter("sell_fl");
 
-
 AdminDAO aDAO = new AdminDAO();
 
 if(work.equals("update")) {
