@@ -9,8 +9,6 @@
 		href="#user_dash" onclick="userDashCount();" >대시보드</a></li>
 	<li class="nav-item"><a class="nav-link" data-toggle="tab"
 		href="#user_search">회원검색</a></li>
-	<li class="nav-item"><a class="nav-link" data-toggle="tab"
-		href="#sec_user_search">탈퇴회원</a></li>
 </ul>
 
 <div class="tab-content content">
@@ -112,70 +110,6 @@
 						<tbody>
 							<tr class="trow">
 								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<ul class="pagination justify-content-md-center pager">
-			</ul>
-		</div>
-	</div>
-	<div class="tab-pane h-100" id="sec_user_search">
-		<div class="container-fluid">
-			<div class="row mt-4">
-				<div class="col-12">
-					<div class="contentlabel">회원정보 검색</div>
-					<div class="col-12 mt-2">
-						<form action="#" method="post">
-							<div class="form-group row">
-								<label class="col-auto col-form-label text-center">회원정보</label>
-								<div class="col-md-2">
-									<select class="form-control">
-										<option value="1">아이디</option>
-										<option value="2">이름</option>
-									</select>
-								</div>
-								<div class="col-md-3">
-									<input type="text" name="user_id_name" class="form-control">
-								</div>
-								<div class="col-md-2">
-									<input type="button" class="btn btn-dark" value="검색" />
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="container-fluid mt-5">
-			<input type="button" class="btn btn-dark" value="탈퇴회원 전체보기" />
-		</div>
-		<div class="container-fluid">
-			<div class="row mt-4">
-				<div class="col-12">
-					<div class="contentlabel">탈퇴회원목록</div>
-					<table class="table table-bordered">
-						<thead>
-							<tr class="tcol">
-								<td class="col-1">번호</td>
-								<td class="col-1">회원ID</td>
-								<td class="col-1">회원등급</td>
-								<td class="col-2">휴대전화</td>
-								<td class="col-2">주소</td>
-								<td class="col-2">이메일</td>
-								<td class="col-2">가입일자</td>
-								<td class="col-1">관리</td>
-							</tr>
-						</thead>
-						<tbody>
-							<tr class="trow">
 								<td></td>
 								<td></td>
 								<td></td>
