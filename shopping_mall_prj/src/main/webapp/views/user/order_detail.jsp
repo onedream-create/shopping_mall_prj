@@ -86,9 +86,9 @@
 	 		<table class="table table-borderless" id="tbl-product">
 	            <colgroup>
 	                <col style="width: 15%" />
-	                <col style="width: 50%" />
-	                <col style="width: 10%" />
+	                <col style="width: 40%" />
 	                <col style="width: 15%" />
+	                <col style="width: 20%" />
 	            </colgroup>
 	            <tr>             
 	                <th>주문상품</th>   
@@ -103,7 +103,6 @@
 	            	ProductVO pv = cart.get(i);
 	            out.println("<tr>");             
 	            	out.println("<td><img src='../common/upload/" + pv.getPro_img() + "'></td>");
-	                out.println("<td>" + pv.getPro_name() + "</td>");
 	                out.println("<td>" + pv.getPro_name() + "</td>");
 	                out.println("<td>" + pv.getCnt() + "</td>");
 	                total = pv.getPro_price() * pv.getCnt();

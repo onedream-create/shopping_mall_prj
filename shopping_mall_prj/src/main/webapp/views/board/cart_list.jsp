@@ -95,8 +95,10 @@ function fnBuy(){
 	if(<%=cart.size()%>==0){
 		alert("장바구니가 비어 있습니다.");
 		return;
-	}
+	}else{
+	alert(document.frm.action);
 	$("#frm").submit();
+	}
 }
 
 function cartRemove( pro_cd, pro_name ){
@@ -119,7 +121,7 @@ if(user_id==null){ %>
 	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
 	</script>
 <%}//end if %>   
-	<form name="frm" action="buyForm.jsp" method="post">
+	<form name="frm" id="frm" action="buyForm.jsp" method="post">
         <div class="container">
 	        <h2>장바구니</h2>    
 	        <div class="table-responsive">
@@ -173,7 +175,7 @@ if(user_id==null){ %>
         <p>
 		  <!-- <button class="btn btn-default btn-lg btn2" id="delete">삭제하기</button> -->
 		  <button type="button" class="btn btn-default btn-lg btn2" onclick='fnGo()'>쇼핑하기</button>
-		  <button class="btn btn-default btn-lg btn2 btn3" id="buy" onclick='fnBuy()'>구매하기</button>
+		  <button type="button" class="btn btn-default btn-lg btn2 btn3" id="buy" onclick='fnBuy()'>구매하기</button>
 		</p>
         </div>
         </form>
