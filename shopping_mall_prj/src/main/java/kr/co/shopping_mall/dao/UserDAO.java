@@ -61,6 +61,13 @@ public class UserDAO {
 		gjt.closeAc();
 	}// insertMember
 	
+	/**
+	 * 로그인 아이디, 비밀번호 체크
+	 * @param inputId
+	 * @param inputPw
+	 * @return
+	 * @throws DataAccessException
+	 */
 	public String checkAccount(String inputId,String inputPw) throws DataAccessException{
 		String user_id=""; 
 		//1. Spring COntainer 생성

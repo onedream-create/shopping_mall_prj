@@ -80,22 +80,26 @@ h1{
 </style>
 
 <script type="text/javascript">
-
+$(function(){
+	$("#login").click(function(){
+		$("#frm").submit();
+	});
+});//ready
 </script>
 </head>
 <body>
     <div class="container container1">
       <div class="mb-5 container2">
-         <h1 style="">1조네 농산물</h1>
+         <h1><a href="http://localhost/shopping_mall_prj/views/index.jsp" style="text-decoration:none;color:#D09869;">1조네 농산물</a></h1>
       </div>
-      <form name="frm" action="login_proc.jsp" method="post" >
+      <form name="frm" id="frm" action="login_proc.jsp" method="post" >
          <div class="input-group input-group-lg mb-3">
             <input type="text" name="user_id" value="LG123" class="form-control" placeholder="아이디" required >
          </div>
          <div class="input-group input-group-lg mb-4">
             <input type="password" name="user_pw" value="1234" class="form-control" placeholder="비밀번호" required>
          </div>
-         <button id="login" class="btn btn-default btn-lg">로그인</button>
+         <button type="button" id="login" class="btn btn-default btn-lg">로그인</button>
          <input type="button" id="join"class="btn btn-default btn-lg" value="회원가입" onclick="location.href='joinForm.jsp'"/>
          <a class="idpwFind" href="idpwFind">아이디/비밀번호 찾기</a>
       </form>
