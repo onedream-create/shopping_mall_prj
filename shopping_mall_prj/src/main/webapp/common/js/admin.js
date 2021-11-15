@@ -301,6 +301,42 @@ function productSearch(index) {
 }
 
 //==========================================================================================================================
+//검색조건에따라 상품테이블 그리기
+function productSearch(index) {
+	let division = $("#pro_division").val();
+	let searchValue = $("#searchValue").val();
+	let category_cd = $("input[name='category_cd1']:radio:checked").val();
+
+	let condition = { "index": index, "division": division, "searchValue": searchValue, "category_cd": category_cd };
+
+	$.ajax({
+		cache: false,
+		url: "proc/product/productSearch.jsp",
+		data: condition,
+		dataType: 'json',
+		success: function(data) {
+			$("#proSearchTbody").empty();
+			let proSearchTbody = '';
+			for (key in data) {
+				proSearchTbody += '<tr class="trow">';
+				proSearchTbody += '<td>' + data[key].no + '</td>';
+				proSearchTbody += '<td>' + data[key].pro_cd + '</td>';
+				proSearchTbody += '<td>' + data[key].pro_name + '</td>';
+				proSearchTbody += '<td>' + data[key].pro_price + '</td>';
+				proSearchTbody += '<td>' + data[key].input_date + '</td>';
+				proSearchTbody += '<td>' + data[key].sell_fl + '</td>';
+				proSearchTbody += '<td>' + '<a href=\"ad_product_updateForm.jsp?pro_cd=' + data[key].pro_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=1200,height=300,top=200,left=200\'); return false;\">수정</a></td>';
+				proSearchTbody += '</tr>';
+			}
+			$("#proSearchTbody").append(proSearchTbody);
+		},
+		error: function() {
+			alert("실패");
+		}
+	});
+}
+
+//==========================================================================================================================
 //상품대시보드 등록상품,판매중,판매중이지않은상품 개수구하여 나타내기
 function proDashCount() {
 	$.ajax({
@@ -610,7 +646,7 @@ function orderDashSearch(index, flag) {
 				orderDashTbody += '<td>' + data[key].ord_cd + '</td>';
 				orderDashTbody += '<td>' + data[key].ord_date + '</td>';
 				orderDashTbody += '<td>' + data[key].ord_stat_name + '</td>';
-				orderDashTbody += '<td>' + '<a href=\"ad_order_updateForm.jsp?user_id=' + data[key].ord_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=2000,height=500,top=200,left=200\'); return false;\">상세</a></td>';
+				orderDashTbody += '<td>' + '<a href=\"ad_order_updateForm.jsp?ord_cd=' + data[key].ord_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=2000,height=500,top=200,left=200\'); return false;\">상세</a></td>';
 				orderDashTbody += '</tr>';
 			}
 			$("#orderDashTbody").append(orderDashTbody);
@@ -650,15 +686,56 @@ function ordPagenation() {
 				paging.append('<li class=\"page-item\"><a class=\"page-link\" href=\"javascript:void(0)\">' + i + '</a></li>');
 			}
 			paging.find('li:nth-child(1)').addClass('active');
-			//productSearch(1); //바로 첫번째 페이지 그려줌
+			orderSearch(1); //바로 첫번째 페이지 그려줌
 
 			//상품 페이지 1,2,3...클릭시 active효과주고 검색
 			paging.find('li').click(function() {
 				paging.find('li').removeClass('active');
 				$(this).addClass('active');
 				let index = $(this).text();
-				//productSearch(index);
+				orderSearch(index);
 			});
+		},
+		error: function() {
+			alert("실패");
+		}
+	});
+}
+
+//==========================================================================================================================
+//검색조건에따라 상품테이블 그리기
+function orderSearch(index) {
+	let division = $("#ord_division").val();
+	let searchValue = $("#order_cd_id").val();
+	let order_stat_cd = $("input[name='order_stat_cd']:radio:checked").val();
+	let order_date1 = $("#order_datepicker1").val().replaceAll("-","");
+	let order_date2 = $("#order_datepicker2").val().replaceAll("-","");
+
+	let condition = { "index": index,
+					  "division": division, 
+					  "searchValue": searchValue, 
+					  "order_stat_cd": order_stat_cd,
+					  "order_date1": order_date1,
+					  "order_date2": order_date2 };
+
+	$.ajax({
+		cache: false,
+		url: "proc/order/orderSearch.jsp",
+		data: condition,
+		dataType: 'json',
+		success: function(data) {
+			$("#ordSearchTbody").empty();
+			let ordSearchTbody = '';
+			for (key in data) {
+				ordSearchTbody += '<tr class="trow">';
+				ordSearchTbody += '<td>' + data[key].no + '</td>';
+				ordSearchTbody += '<td>' + data[key].ord_cd + '</td>';
+				ordSearchTbody += '<td>' + data[key].ord_date + '</td>';
+				ordSearchTbody += '<td>' + data[key].ord_stat_name + '</td>';
+				ordSearchTbody += '<td>' + '<a href=\"ad_order_updateForm.jsp?ord_cd=' + data[key].ord_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=2000,height=500,top=200,left=200\'); return false;\">수정</a></td>';
+				ordSearchTbody += '</tr>';
+			}
+			$("#ordSearchTbody").append(ordSearchTbody);
 		},
 		error: function() {
 			alert("실패");

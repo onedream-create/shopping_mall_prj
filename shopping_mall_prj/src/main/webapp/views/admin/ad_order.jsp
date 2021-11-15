@@ -131,14 +131,7 @@
 								<td class="col-1">관리</td>
 							</tr>
 						</thead>
-						<tbody>
-							<tr class="trow">
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
+						<tbody id="ordSearchTbody">
 						</tbody>
 					</table>
 				</div>

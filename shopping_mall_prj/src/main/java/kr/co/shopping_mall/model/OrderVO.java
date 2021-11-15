@@ -29,6 +29,14 @@ public class OrderVO {
 		this.dv_addr = dv_addr;
 		this.dv_memo = dv_memo;
 	}
+	
+	
+
+	@Override
+	public String toString() {
+		return "OrderVO [no=" + no + ", ord_cd=" + ord_cd + ", ord_stat_name=" + ord_stat_name + ", ord_date="
+				+ ord_date + "]";
+	}
 
 	public String getOrd_cd() {
 		return ord_cd;

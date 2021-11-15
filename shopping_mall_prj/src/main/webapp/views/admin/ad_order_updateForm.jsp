@@ -1,3 +1,4 @@
+<%@page import="kr.co.sist.util.cipher.DataDecrypt"%>
 <%@page import="java.util.List"%>
 <%@page import="kr.co.shopping_mall.model.OrderDetailVO"%>
 <%@page import="kr.co.shopping_mall.model.OrderVO"%>
@@ -59,12 +60,17 @@ function btnClick(str) {
 </head>
 <body>
 <% 
-String order_cd = request.getParameter("user_id");
+String ord_cd = request.getParameter("ord_cd");
 
 AdminDAO aDAO = new AdminDAO();
-OrderVO oVO = aDAO.getOrderInfo(order_cd);
+OrderVO oVO = aDAO.getOrderInfo(ord_cd);
 
-List<OrderDetailVO> listOd = aDAO.getOrderDetailInfo(order_cd);
+DataDecrypt dd = new DataDecrypt("AbcdEfgHiJkLmnOpQ");
+
+oVO.setDv_name(dd.decryption(oVO.getDv_name()));
+
+List<OrderDetailVO> listOd = aDAO.getOrderDetailInfo(ord_cd);
+
 %>
 	<div class="container-fluid">
 		<form method="post" id="updateForm">

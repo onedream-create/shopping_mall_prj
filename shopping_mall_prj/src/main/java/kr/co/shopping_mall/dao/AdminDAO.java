@@ -7,7 +7,6 @@ import java.util.List;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.transaction.annotation.Transactional;
 
 import kr.co.shopping_mall.model.OrderDetailVO;
 import kr.co.shopping_mall.model.OrderVO;
@@ -513,12 +512,12 @@ public class AdminDAO {
 			list = jt.query(selectOrder.toString(),new Object[] {String.valueOf(flag), Long.valueOf(start), Long.valueOf(rowsPerPage), Long.valueOf(start) }, 
 					new RowMapper<OrderVO>() {
 						public OrderVO mapRow(ResultSet rs, int rowNum) throws SQLException {
-							OrderVO ov = new OrderVO();
-							ov.setNo(rs.getString("rnum"));
-							ov.setOrd_cd(rs.getString("ord_cd"));
-							ov.setOrd_date(rs.getString("ord_date"));
-							ov.setOrd_stat_name(rs.getString("ord_stat_name"));
-							return ov;
+							OrderVO oVO = new OrderVO();
+							oVO.setNo(rs.getString("rnum"));
+							oVO.setOrd_cd(rs.getString("ord_cd"));
+							oVO.setOrd_date(rs.getString("ord_date"));
+							oVO.setOrd_stat_name(rs.getString("ord_stat_name"));
+							return oVO;
 						}
 					});
 			// 4. Spring Container ´Ý±â
@@ -605,33 +604,93 @@ public class AdminDAO {
 			gjt.closeAc();
 		}
 		
-		public int countSearchOrder(String division, String searchValue, int order_stat_cd, String order_date1, String order_date2) throws SQLException {
-			int cnt = 0;
+		public String countSearchOrder(String division, String searchValue, int order_stat_cd, String order_date1, String order_date2) throws SQLException {
+			String cnt = null;
 			
 			//1. Spring Container ¾ò±â
 			GetJdbcTemplate gjt=GetJdbcTemplate.getInstance();
 			//2. JdbcTemplate ¾ò±â
 			JdbcTemplate jt=gjt.getJdbcTemplate();
 			//3. Äõ¸®¹® ½ÇÇà
-			StringBuilder countUser = new StringBuilder();
-			countUser.append(" select count(user_id) from users ");
+			StringBuilder countOrder = new StringBuilder();
+			countOrder.append(" select count(ord_cd) from orders ");
 				
-			if(flag == "n" || flag == "y") {
-				countUser.append(" where del_fl=? ");
-				countUser.append(" and to_char(reg_date,'YYYYMMDD') = to_char(sysdate,'YYYYMMDD') ");
+			if(division.equals("1")) {
+				countOrder.append(" where ord_cd ");
+			} else {
+				countOrder.append(" where user_id ");	
 			}
+			countOrder.append(" like '%' || ? || '%' ");
+			countOrder.append(" and to_char(ord_date,'YYYYMMDD') between ? and ? ");
 
-			if(flag == "a") {
-				countUser.append(" where del_fl='n' ");
-				cnt=jt.queryForObject(countUser.toString(),String.class);
+			if(order_stat_cd != 0) {
+				countOrder.append(" and ord_stat_cd=? ");
+				cnt=jt.queryForObject(countOrder.toString(), new Object[] {String.valueOf(searchValue),String.valueOf(order_date1),String.valueOf(order_date2),Long.valueOf(order_stat_cd)},String.class);
 			} else {	
-				cnt=jt.queryForObject(countUser.toString(), new Object[] {String.valueOf(flag)},String.class);
+				cnt=jt.queryForObject(countOrder.toString(), new Object[] {String.valueOf(searchValue),String.valueOf(order_date1),String.valueOf(order_date2)},String.class);
 			}
 			//4. Spring Container ´Ý±â
 			gjt.closeAc();
 			
 			return cnt;
+		}
+		
+		public List<OrderVO> searchOrder(String division, String searchValue, int order_stat_cd, String order_date1, String order_date2, int start, int rowsPerPage) throws SQLException {
+			List<OrderVO> list = null;
 			
-			return cnt;
+			//1. Spring Container ¾ò±â
+			GetJdbcTemplate gjt=GetJdbcTemplate.getInstance();
+			//2. JdbcTemplate ¾ò±â
+			JdbcTemplate jt=gjt.getJdbcTemplate();
+			//3. Äõ¸®¹® ½ÇÇà
+			//
+			StringBuilder searchOrder = new StringBuilder();
+			searchOrder.append(" select * ");
+			searchOrder.append(" from(select rownum as rnum, os.* ");
+			searchOrder.append(" 		from (select o.ord_cd, o.ord_date, s.ord_stat_name ");
+			searchOrder.append(" 				from orders o, order_stat s ");
+			searchOrder.append(" 				where o.ord_stat_cd = s.ord_stat_cd and to_char(o.ord_date,'YYYYMMDD') between ? and ?");
+			if(order_stat_cd != 0) {
+				searchOrder.append(" 				and o.ord_stat_cd = ? ");
+			}
+			if(division.equals("1")) {
+			searchOrder.append(" 				and o.ord_cd ");
+			} else {
+			searchOrder.append(" 				and o.user_id ");
+			}
+			searchOrder.append(" 				like '%' || ? || '%' ");
+			searchOrder.append(" 				order by ord_date desc) os) ");
+			searchOrder.append(" 		where  rnum > ? and rnum <= ?+? ");
+			searchOrder.append(" 		order by rnum ");
+			
+			if(order_stat_cd != 0) {
+			list = jt.query(searchOrder.toString(), new Object[] { String.valueOf(order_date1),String.valueOf(order_date2),Long.valueOf(order_stat_cd),String.valueOf(searchValue),Long.valueOf(start),Long.valueOf(rowsPerPage),Long.valueOf(start) }, 
+					new RowMapper<OrderVO>() {
+						public OrderVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+							OrderVO oVO = new OrderVO();
+							oVO.setNo(rs.getString("rnum"));
+							oVO.setOrd_cd(rs.getString("ord_cd"));
+							oVO.setOrd_date(rs.getString("ord_date"));
+							oVO.setOrd_stat_name(rs.getString("ord_stat_name"));
+							return oVO;
+						}
+					});	
+			} else {
+				list = jt.query(searchOrder.toString(), new Object[] { String.valueOf(order_date1),String.valueOf(order_date2),String.valueOf(searchValue),Long.valueOf(start),Long.valueOf(rowsPerPage),Long.valueOf(start) }, 
+						new RowMapper<OrderVO>() {
+							public OrderVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+								OrderVO oVO = new OrderVO();
+								oVO.setNo(rs.getString("rnum"));
+								oVO.setOrd_cd(rs.getString("ord_cd"));
+								oVO.setOrd_date(rs.getString("ord_date"));
+								oVO.setOrd_stat_name(rs.getString("ord_stat_name"));
+								return oVO;
+							}
+						});	
+			}
+			//4. Spring Container ´Ý±â
+			gjt.closeAc();
+			
+			return list;
 		}
 }
