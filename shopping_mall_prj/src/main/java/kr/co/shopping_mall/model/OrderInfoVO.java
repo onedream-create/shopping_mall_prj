@@ -1,8 +1,8 @@
 package kr.co.shopping_mall.model;
 
 public class OrderInfoVO {
-	private String pro_name, ord_cd, ord_date, ord_stat_name;
-	private int ord_price;
+	private String pro_name, ord_cd, ord_date, ord_stat_name, ordd_cd;
+	private int ord_price, ordd_qty;
 	
 	public String getPro_name() {
 		return pro_name;
@@ -33,6 +33,18 @@ public class OrderInfoVO {
 	}
 	public void setOrd_price(int ord_price) {
 		this.ord_price = ord_price;
+	}
+	public String getOrdd_cd() {
+		return ordd_cd;
+	}
+	public void setOrdd_cd(String ordd_cd) {
+		this.ordd_cd = ordd_cd;
+	}
+	public int getOrdd_qty() {
+		return ordd_qty;
+	}
+	public void setOrdd_qty(int ordd_qty) {
+		this.ordd_qty = ordd_qty;
 	}
 	
 	

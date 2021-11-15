@@ -28,7 +28,9 @@ public class OrderDAO {
 			oiv.setOrd_cd(rs.getString("ord_cd"));
 			oiv.setOrd_date(rs.getString("ord_date"));
 			oiv.setOrd_stat_name(rs.getString("ord_stat_name"));
+			oiv.setOrdd_cd(rs.getString("ordd_cd"));
 			oiv.setOrd_price(rs.getInt("ord_price"));
+			oiv.setOrdd_qty(rs.getInt("ordd_qty"));
 			return oiv;
 		}//mapRow
 	}//SelectPro	
@@ -43,9 +45,10 @@ public class OrderDAO {
 		JdbcTemplate jt=gjt.getJdbcTemplate();
 		//3. Äõ¸®¹® ½ÇÇà
 		StringBuilder selectOrder=new StringBuilder();
-		selectOrder.append("	select pr.pro_name, od.ord_cd, od.ord_date, od.ord_price, ost.ord_stat_name	")
+		selectOrder.append("	select pr.pro_name, od.ord_cd, od.ord_date, od.ord_price, ost.ord_stat_name, odt.ordd_cd, odt.ordd_qty		")
 		.append("	from orders od, order_stat ost, order_detail odt, product pr	")
-		.append("	where ost.ord_stat_cd=od.ord_stat_cd and odt.ord_cd=od.ord_cd and pr.pro_cd=odt.pro_cd and od.user_id=?	");
+		.append("	where ost.ord_stat_cd=od.ord_stat_cd and odt.ord_cd=od.ord_cd and pr.pro_cd=odt.pro_cd and od.user_id=?	")
+		.append("	order by od.ord_date desc 	");
 		
 		list=jt.query(selectOrder.toString(), new Object[] {user_id}, new SelectOrderInfo());
 		

@@ -19,6 +19,33 @@ if(user_id==null){ %>
 OrderDAO od=new OrderDAO();
 List<OrderInfoVO> list=od.selectOrder(user_id);
 
+//pro_name에 ordd_qty 더하기(test1 1개)
+for(int i=0; i < list.size(); i++){
+	list.get(i).setPro_name(list.get(i).getPro_name() + " " + list.get(i).getOrdd_qty() + "개");
+}//end for
+
+
+//ord_cd가 같은게 존재하면 pro_name에 += pro_name 
+String cur_ord_cd="";
+if(list.size() > 0){
+	cur_ord_cd=list.get(0).getOrd_cd();
+}
+int flagNum=0;
+int cnt=0;
+for(int i=1; i < list.size(); i++){
+	if(cur_ord_cd.equals(list.get(i).getOrd_cd())){
+		list.get(i).setOrd_cd("xxx");
+		cnt+=1;
+		//list.get(flagNum).setPro_name(list.get(flagNum).getPro_name() + ", " + list.get(i).getPro_name());
+		list.get(flagNum).setPro_name(list.get(flagNum).getPro_name() + " 외 " + cnt + "건" );
+	}else{
+		cur_ord_cd=list.get(i).getOrd_cd();
+		flagNum=i;
+		cnt=0;
+	}//end else
+		System.out.println(list.get(i).getOrd_cd()+ " / " + flagNum  + list.get(i).getPro_name());
+}//end for
+
 pageContext.setAttribute("orderData", list);
 pageContext.setAttribute("dataCnt", list.size());
 %>
@@ -151,6 +178,10 @@ pageContext.setAttribute("dataCnt", list.size());
     	text-align: center;
     	border-bottom:1px solid #FFF;
     }
+    
+    #colNone{
+    	color:#000;
+    }
 
 </style>
 <script type="text/javascript">
@@ -202,29 +233,26 @@ $(function(){
 			<tbody>
 			<c:if test="${ dataCnt > 0 }">
             <c:forEach var="ord" items="${ orderData }">
+            <c:if test="${ ord.ord_cd ne 'xxx' }">
             <tr>
 				<td rowspan="5"><input type="checkbox" name="chk" value="${ ord.ord_cd }"
 					<c:if test="${ ord.ord_stat_name eq '주문취소' }"> disabled="disabled"</c:if>
 				></td>
-				<!-- <td class="orderInfo" colspan="3"><strong>1조네 해남 호박 고구마 3kg 외 1건</strong></td> -->
-				<td class="orderInfo" colspan="3"><strong>${ ord.pro_name }</strong></td>
+				<td class="orderInfo" colspan="3"><a id="colNone" href="order_detail.jsp?ord_cd=${ ord.ord_cd }"><strong>${ ord.pro_name }</strong></a></td>
 			</tr>
 			<tr>
-				<!-- <td class="orderInfo" colspan="3">주문번호:123456</td> -->
 				<td class="orderInfo" colspan="3">주문번호 : ${ ord.ord_cd }</td>
 			</tr>
 			<tr>
-				<!-- <td class="orderInfo" colspan="3">2021.01.01</td> -->
 				<td class="orderInfo" colspan="3">${ ord.ord_date }</td>
 			</tr>
 			<tr>
-				<!-- <td class="orderInfo" colspan="3">0원</td> -->
 				<td class="orderInfo" colspan="3">${ ord.ord_price }원</td>
 			</tr>
 			<tr style="border-bottom: 2px solid #D09869;">
-				<!-- <td class="orderInfo" colspan="3">배송중</td> -->
 				<td class="orderInfo" colspan="3">${ ord.ord_stat_name }</td>
 			</tr>
+            </c:if>
             </c:forEach>
             </c:if>
             <c:if test="${ dataCnt == 0 }">
