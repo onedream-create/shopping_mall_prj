@@ -6,6 +6,8 @@ public class OrderDetailVO {
 	private String ord_cd;
 	private String pro_cd;
 	private int ordd_qty;
+	private String pro_name;
+	private int pro_price;
 	
 	public OrderDetailVO() {
 	}
@@ -47,5 +49,21 @@ public class OrderDetailVO {
 
 	public void setOrdd_qty(int ordd_qty) {
 		this.ordd_qty = ordd_qty;
+	}
+
+	public String getPro_name() {
+		return pro_name;
+	}
+
+	public void setPro_name(String pro_name) {
+		this.pro_name = pro_name;
+	}
+
+	public int getPro_price() {
+		return pro_price;
+	}
+
+	public void setPro_price(int pro_price) {
+		this.pro_price = pro_price;
 	}
 }

@@ -2,8 +2,10 @@ package kr.co.shopping_mall.model;
 
 public class OrderVO {
 	
+	private String no;
 	private String ord_cd;
 	private int ord_stat_cd;
+	private String ord_stat_name;
 	private String user_id;
 	private int ord_price;
 	private String ord_date;
@@ -99,4 +101,21 @@ public class OrderVO {
 	public void setDv_memo(String dv_memo) {
 		this.dv_memo = dv_memo;
 	}
+
+	public String getOrd_stat_name() {
+		return ord_stat_name;
+	}
+
+	public void setOrd_stat_name(String ord_stat_name) {
+		this.ord_stat_name = ord_stat_name;
+	}
+
+	public String getNo() {
+		return no;
+	}
+
+	public void setNo(String no) {
+		this.no = no;
+	}
 }
+

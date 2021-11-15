@@ -6,14 +6,12 @@
 <%
 AdminDAO aDAO = new AdminDAO();
 
-String countNewUser = aDAO.countUserDashData("n");
-String countSecUser = aDAO.countUserDashData("y");
-String countAllUser = aDAO.countUserDashData("a");
+String countProcessing = aDAO.countOrderDashData("1");
+String countInDelivery = aDAO.countOrderDashData("2");
 
 HashMap<String, Object> hm = new HashMap<String, Object>();
-hm.put("countNewUser", countNewUser);
-hm.put("countSecUser", countSecUser);
-hm.put("countAllUser", countAllUser);
+hm.put("countProcessing", countProcessing);
+hm.put("countInDelivery", countInDelivery);
 
 JSONObject jo = new JSONObject(hm);
 out.print(jo);

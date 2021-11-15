@@ -16,6 +16,5 @@ hm.put("countSellY", countSellY);
 hm.put("countSellN", countSellN);
 
 JSONObject jo = new JSONObject(hm);
-
 out.print(jo);
 %>

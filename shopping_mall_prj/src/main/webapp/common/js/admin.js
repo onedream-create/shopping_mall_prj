@@ -2,6 +2,7 @@ $(function() {
 	//페이지정보 초기화
 	proDashCount();
 	userDashCount();
+	orderDashCount();
 	
 	//==========================================================================================================================
 	//datepicker	
@@ -491,7 +492,7 @@ function userPagenation() {
 			paging.find('li:nth-child(1)').addClass('active');
 			userSearch(1); //바로 첫번째 페이지 그려줌
 
-			//상품 페이지 1,2,3...클릭시 active효과주고 검색
+			//페이지 1,2,3...클릭시 active효과주고 검색
 			paging.find('li').click(function() {
 				paging.find('li').removeClass('active');
 				$(this).addClass('active');
@@ -506,7 +507,7 @@ function userPagenation() {
 }
 
 //==========================================================================================================================
-//검색조건에따라 상품테이블 그리기
+//검색조건에따라 유저테이블 그리기
 function userSearch(index) {
 	let division = $("#user_division").val();
 	let searchValue = $("#user_id_name").val();
@@ -540,5 +541,132 @@ function userSearch(index) {
 		error: function() {
 			alert("실패");
 		}
+	});
+}
+
+//==========================================================================================================================
+//주문대시보드 주문완료, 배송중, 배송완료인 주문 개수구하여 나타내기
+function orderDashCount(){
+		$.ajax({
+		cache: false,
+		url: "proc/order/orderDashCount.jsp",
+		dataType: 'json',
+		success: function(data) {
+			$("#orderDashCount").empty();
+			let orderDashCount = '';
+			orderDashCount += '<tr class="trow">';
+			orderDashCount += '<td>' + '<a href=\'javascript:void(0)\' onclick=\'orderDashPagenation(' + data.countProcessing + ',"1");\'>' + data.countProcessing + '명</a></td>';
+			orderDashCount += '<td>' + '<a href=\'javascript:void(0)\' onclick=\'orderDashPagenation(' + data.countInDelivery +',"2");\'>' + data.countInDelivery + '명</a></td>';
+			orderDashCount += '</tr>'
+			$("#orderDashCount").append(orderDashCount);
+		},
+		error: function() {
+			alert("실패");
+		}
+	});
+} 
+
+//==========================================================================================================================
+//주문대시보드 페이지버튼 만들기
+function orderDashPagenation(cntData, flag){
+	let paging = $("#orderDashPageNumber");
+	let rowsPerPage = 8;
+	let pageCount = Math.ceil(cntData / rowsPerPage);
+
+	paging.empty();
+	for (let i = 1; i <= pageCount; i++) {
+		paging.append('<li class=\"page-item\"><a class=\"page-link\" href=\"javascript:void(0)\">' + i + '</a></li>');
+	}
+	paging.find('li:nth-child(1)').addClass('active');
+	
+	orderDashSearch(1, flag);
+	
+	//페이지 1,2,3...클릭시 active효과주고 검색
+	paging.find('li').click(function() {
+		paging.find('li').removeClass('active');
+		$(this).addClass('active');
+		let index = $(this).text();
+		orderDashSearch(index, flag);
+	});
+}
+
+//==========================================================================================================================
+//주문대시보드 테이블만들기
+function orderDashSearch(index, flag) {
+	
+		let condition = {"index": index, "flag": flag};
+	
+		$.ajax({
+		cache: false,
+		url: "proc/order/orderDashSearch.jsp",
+		data: condition,
+		dataType: 'json',
+		success: function(data) {
+			$("#orderDashTbody").empty();
+			let orderDashTbody = '';
+			for (key in data) {
+				orderDashTbody += '<tr class="trow">';
+				orderDashTbody += '<td>' + data[key].no + '</td>';
+				orderDashTbody += '<td>' + data[key].ord_cd + '</td>';
+				orderDashTbody += '<td>' + data[key].ord_date + '</td>';
+				orderDashTbody += '<td>' + data[key].ord_stat_name + '</td>';
+				orderDashTbody += '<td>' + '<a href=\"ad_order_updateForm.jsp?user_id=' + data[key].ord_cd + '\" onclick=\"window.open(this.href,\'_blank\',\'width=2000,height=500,top=200,left=200\'); return false;\">상세</a></td>';
+				orderDashTbody += '</tr>';
+			}
+			$("#orderDashTbody").append(orderDashTbody);
+		},
+		error: function() {
+			alert("실패");
+		}
+	});
+}
+
+//==========================================================================================================================
+//검색조건에 따라 상품갯수카운트하고 페이지버튼생성
+function allOrdPagenation() {
+	$("#searchValue").val("");
+	$("#pro_category4").prop("checked", true);
+
+	ordPagenation();
+}
+
+function ordPagenation() {
+	let division = $("#ord_division").val();
+	let searchValue = $("#searchValue").val();
+	let order_stat_cd = $("input[name='order_stat_cd']:radio:checked").val();
+	
+	let condition = { "division": division, 
+					  "searchValue": searchValue, 
+					  "order_stat_cd": order_stat_cd };
+	
+
+	$.ajax({
+		cache: false,
+		url: "proc/order/pagenation.jsp",
+		type: 'get',
+		data: condition,
+		success: function(pageCount) {
+			//페이징버튼 그려줄 태그의 선택자
+			let paging = $("#orderSearchPageNumber");
+			paging.empty();
+			//1,2,3 페이지 생성
+			for (let i = 1; i <= pageCount; i++) {
+				paging.append('<li class=\"page-item\"><a class=\"page-link\" href=\"javascript:void(0)\">' + i + '</a></li>');
+			}
+			paging.find('li:nth-child(1)').addClass('active');
+			//productSearch(1); //바로 첫번째 페이지 그려줌
+
+			//상품 페이지 1,2,3...클릭시 active효과주고 검색
+			paging.find('li').click(function() {
+				paging.find('li').removeClass('active');
+				$(this).addClass('active');
+				let index = $(this).text();
+				//productSearch(index);
+			});
+		},
+		error: function() {
+			alert("실패");
+		}
+
 	});
 }
