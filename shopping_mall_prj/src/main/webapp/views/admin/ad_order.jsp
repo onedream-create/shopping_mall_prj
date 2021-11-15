@@ -73,14 +73,14 @@
 									</select>
 								</div>
 								<div class="col-md-3">
-									<input type="text" name="order_cd_id" class="form-control" id="searchValue">
+									<input type="text" name="order_cd_id" class="form-control" id="order_cd_id">
 								</div>
 							</div>
 							<div class="form-group row">
 								<label class="col-auto col-form-label text-center">주문상태</label>
 								<div class="form-check form-check-inline">
 									<input class="form-check-input" type="radio" name="order_stat_cd"
-										id="order_stat" value="0"> <label
+										id="order_stat" value="0" checked="checked"> <label
 										class="form-check-label" for="order_stat">전체</label>
 								</div>
 								<div class="form-check form-check-inline">
@@ -100,16 +100,16 @@
 								</div>
 								<div class="form-check form-check-inline">
 									<input class="form-check-input" type="radio" name="order_stat_cd"
-										id="order_stat3" value="4"> <label
+										id="order_stat4" value="4"> <label
 										class="form-check-label" for="order_stat4">주문취소</label>
 								</div>
 							</div>
 							<div class="form-group row">
 								<label class="col-auto col-form-label text-center">주문일자</label>
-								<input type="text" id="order_datepicker1"> ~ <input
-									type="text" id="order_datepicker2">
+								<input type="date" id="order_datepicker1"> ~ <input
+									type="date" id="order_datepicker2">
 								<div class="col-2 ml-4">
-									<input type="button" class="btn btn-dark" value="검색" />
+									<input type="button" class="btn btn-dark" onclick="ordPagenation(); return false;" value="검색" />
 								</div>
 							</div>
 						</form>

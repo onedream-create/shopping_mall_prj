@@ -604,4 +604,34 @@ public class AdminDAO {
 			// 스프링컨테이너 닫기
 			gjt.closeAc();
 		}
+		
+		public int countSearchOrder(String division, String searchValue, int order_stat_cd, String order_date1, String order_date2) throws SQLException {
+			int cnt = 0;
+			
+			//1. Spring Container 얻기
+			GetJdbcTemplate gjt=GetJdbcTemplate.getInstance();
+			//2. JdbcTemplate 얻기
+			JdbcTemplate jt=gjt.getJdbcTemplate();
+			//3. 쿼리문 실행
+			StringBuilder countUser = new StringBuilder();
+			countUser.append(" select count(user_id) from users ");
+				
+			if(flag == "n" || flag == "y") {
+				countUser.append(" where del_fl=? ");
+				countUser.append(" and to_char(reg_date,'YYYYMMDD') = to_char(sysdate,'YYYYMMDD') ");
+			}
+
+			if(flag == "a") {
+				countUser.append(" where del_fl='n' ");
+				cnt=jt.queryForObject(countUser.toString(),String.class);
+			} else {	
+				cnt=jt.queryForObject(countUser.toString(), new Object[] {String.valueOf(flag)},String.class);
+			}
+			//4. Spring Container 닫기
+			gjt.closeAc();
+			
+			return cnt;
+			
+			return cnt;
+		}
 }

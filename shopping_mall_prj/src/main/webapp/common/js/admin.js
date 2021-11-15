@@ -623,22 +623,18 @@ function orderDashSearch(index, flag) {
 
 //==========================================================================================================================
 //검색조건에 따라 상품갯수카운트하고 페이지버튼생성
-function allOrdPagenation() {
-	$("#searchValue").val("");
-	$("#pro_category4").prop("checked", true);
-
-	ordPagenation();
-}
-
 function ordPagenation() {
 	let division = $("#ord_division").val();
-	let searchValue = $("#searchValue").val();
+	let searchValue = $("#order_cd_id").val();
 	let order_stat_cd = $("input[name='order_stat_cd']:radio:checked").val();
+	let order_date1 = $("#order_datepicker1").val().replaceAll("-","");
+	let order_date2 = $("#order_datepicker2").val().replaceAll("-","");
 	
 	let condition = { "division": division, 
 					  "searchValue": searchValue, 
-					  "order_stat_cd": order_stat_cd };
-	
+					  "order_stat_cd": order_stat_cd,
+					  "order_date1": order_date1,
+					  "order_date2": order_date2 };
 
 	$.ajax({
 		cache: false,
@@ -667,6 +663,5 @@ function ordPagenation() {
 		error: function() {
 			alert("실패");
 		}
-
 	});
 }
