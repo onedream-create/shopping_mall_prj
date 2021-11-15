@@ -36,14 +36,15 @@ for(int i=1; i < list.size(); i++){
 	if(cur_ord_cd.equals(list.get(i).getOrd_cd())){
 		list.get(i).setOrd_cd("xxx");
 		cnt+=1;
-		//list.get(flagNum).setPro_name(list.get(flagNum).getPro_name() + ", " + list.get(i).getPro_name());
-		list.get(flagNum).setPro_name(list.get(flagNum).getPro_name() + " 외 " + cnt + "건" );
 	}else{
+		if(cnt != 0){
+			list.get(flagNum).setPro_name(list.get(flagNum).getPro_name() + " 외 " + cnt + "건" );
+		}//end if
 		cur_ord_cd=list.get(i).getOrd_cd();
 		flagNum=i;
 		cnt=0;
 	}//end else
-		System.out.println(list.get(i).getOrd_cd()+ " / " + flagNum  + list.get(i).getPro_name());
+		
 }//end for
 
 pageContext.setAttribute("orderData", list);
