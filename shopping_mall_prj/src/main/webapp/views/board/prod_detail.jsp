@@ -180,10 +180,10 @@ function addCart(){
 			<h6>무료배송</h6>
 			
 			<div id="btnDiv">
-				<button type="button" id="plus">+</button>
+				<button type="button" id="minus">-</button>
 				<input type="number" id="numBox" min="1" max="20" value="1"
 					readonly="readonly"/>
-				<button type="button" id="minus">-</button>
+				<button type="button" id="plus">+</button>
 				<span id="numPrice"><%= pv.getPro_price_fmt() %></span>
 			</div>
 			

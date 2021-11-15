@@ -1,7 +1,7 @@
 package kr.co.shopping_mall.model;
 
 public class UserInfoVO {
-	private String user_id, user_name,	grade_name,	user_tel,	user_email,	user_addr;
+	private String user_id, user_pw, user_name,	grade_name,	user_tel,	user_email,	user_addr;
 
 	public String getUser_id() {
 		return user_id;
@@ -49,6 +49,14 @@ public class UserInfoVO {
 
 	public void setUser_addr(String user_addr) {
 		this.user_addr = user_addr;
+	}
+
+	public String getUser_pw() {
+		return user_pw;
+	}
+
+	public void setUser_pw(String user_pw) {
+		this.user_pw = user_pw;
 	}
 	
 	

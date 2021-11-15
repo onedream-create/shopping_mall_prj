@@ -91,7 +91,7 @@ public class UserDAO {
 		//2. JdbcTemplate 얻기
 		JdbcTemplate jt=gjt.getJdbcTemplate();
 		//3. 쿼리문 실행
-		String select="select u.user_id, u.user_name, ud.grade_name, u.user_tel, u.user_email, u.user_addr	"
+		String select="select u.user_id, u.user_pw, u.user_name, ud.grade_name, u.user_tel, u.user_email, u.user_addr	"
 				+ "	from users u, user_grade ud	"
 				+ "	where ud.grade_no=u.grade_no and u.user_id=? ";
 		//interface를 anonymous inner class 로 생성하여 그 안에서 조회결과를 VO에 할당
@@ -107,6 +107,7 @@ public class UserDAO {
 						uv.setUser_tel(rs.getString("user_tel"));
 						uv.setUser_email(rs.getString("user_email"));
 						uv.setUser_addr(rs.getString("user_addr"));
+						uv.setUser_pw(rs.getString("user_pw"));
 						//조회결과를 저장한 uv반환
 						return uv;
 					}
@@ -116,5 +117,69 @@ public class UserDAO {
 		
 		return uv;
 	}//selectInfo
+	
+	//회원정보수정(이메일, 주소)
+	public int updateInfo(String user_id, String email, String addr) throws SQLException{
+		int cnt=0;
+		
+		//1. Spring Container 얻기
+		GetJdbcTemplate gjt=GetJdbcTemplate.getInstance();
+		//2. JdbcTemplate 얻기
+		JdbcTemplate jt=gjt.getJdbcTemplate();
+		//3. 쿼리문 실행
+		String infoUpdate="update users set user_email=?, user_addr=? where user_id=?";
+		cnt=jt.update(infoUpdate, email, addr, user_id);
+		//4. Spring Container 닫기
+		gjt.closeAc();
+		
+		return cnt;
+	}//updateInfo
+	
+	//비밀번호 변경
+	public int updatePass(String user_id, String user_pw) throws SQLException{
+		int cnt=0;
+		
+		//1. Spring Container 얻기
+		GetJdbcTemplate gjt=GetJdbcTemplate.getInstance();
+		//2. JdbcTemplate 얻기
+		JdbcTemplate jt=gjt.getJdbcTemplate();
+		//3. 쿼리문 실행
+		String passUpdate="update users set user_pw=? where user_id=?";
+		cnt=jt.update(passUpdate, user_pw, user_id);
+		//4. Spring Container 닫기
+		gjt.closeAc();
+		
+		return cnt;
+	}//updatePass
+	
+	//아이디 찾기(이름, 이메일로 조회)
+	public String findId(String inputName,String inputEmail) throws DataAccessException{
+		String user_id=""; 
+		//1. Spring COntainer 생성
+		GetJdbcTemplate gjt = GetJdbcTemplate.getInstance();
+		//2.JdbcTemplate 얻기
+		JdbcTemplate jt = gjt.getJdbcTemplate();
+		//3. 쿼리문수행
+		String selectId="select user_id from users where user_name=? and user_email=?";
+		user_id = jt.queryForObject(selectId, new Object[] {inputName,inputEmail},  String.class);
+		//4. Spring COntainer 닫기
+		gjt.closeAc();
+		return user_id;
+	}//findId
+	
+	//비밀번호 찾기(이름, 이메일, 비밀번호로 조회)
+	public String findPw(String inputName,String inputEmail, String inputId) throws DataAccessException{
+		String user_id=""; 
+		//1. Spring COntainer 생성
+		GetJdbcTemplate gjt = GetJdbcTemplate.getInstance();
+		//2.JdbcTemplate 얻기
+		JdbcTemplate jt = gjt.getJdbcTemplate();
+		//3. 쿼리문수행
+		String selectId="select user_id from users where user_name=? and user_email=? and user_id=?";
+		user_id = jt.queryForObject(selectId, new Object[] {inputName,inputEmail, inputId},  String.class);
+		//4. Spring COntainer 닫기
+		gjt.closeAc();
+		return user_id;
+	}//findId
 	
 }// class

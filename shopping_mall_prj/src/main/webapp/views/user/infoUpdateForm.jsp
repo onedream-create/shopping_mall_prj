@@ -1,3 +1,4 @@
+<%@page import="kr.co.sist.util.cipher.DataEncrypt"%>
 <%@page import="kr.co.sist.util.cipher.DataDecrypt"%>
 <%@page import="kr.co.shopping_mall.model.UserInfoVO"%>
 <%@page import="kr.co.shopping_mall.dao.UserDAO"%>
@@ -113,8 +114,12 @@ if(user_id==null){ %>
 <script type="text/javascript">
 $(function(){
 	$("#infoUpdateBtn").click(function(){
-		if($("#pass").val != <%%>)  ////패스워드가 맞지않으면
+		if($("#user_pw").val() == ""){
+			alert("비밀번호는 필수입력입니다.");
+			return;
+		}//end if
 		
+		$("#infoUpdateFrm").submit();
 	});//click
 	
 });//ready
@@ -126,33 +131,33 @@ $(function(){
         	<a href="http://localhost/shopping_mall_prj/views/user/myInfo.jsp"><div class="dt" id="info"><h3 id="dt">개인정보</h3></div></a>
         </div>
 
-     <form id="infoUpdatefrm" action="infoUpdate_proc.jsp" method="post">
+     <form id="infoUpdateFrm" action="http://localhost/shopping_mall_prj/views/user/infoUpdate_proc.jsp" method="post">
 		<div align="center" style="color: #D09869; margin-bottom: 5%;">
 			<h2 id="title">회원정보 수정</h2>
 			<div style="width: 30%;">
 				<div class="container3">
 					<label style="padding-right: 7%;">아이디</label> <input
-						type="text" class="passInput" readonly="readonly" value="<%= uv.getUser_id()%>"/>
+						type="text" class="passInput" readonly="readonly" placeholder="<%= uv.getUser_id()%>"/>
 				</div>
 				<div class="container3">
 					<label style="padding-right: 4%;">비밀번호</label> <input
-						type="password" class="passInput" placeholder="" id="pass" name="pass"/>
+						type="password" class="passInput" id="user_pw" name="user_pw"/>
 				</div>
 				<div class="container3">
 					<label style="padding-right: 9.5%;">이름</label> <input
-						type="text" class="passInput" readonly="readonly" value="<%= uv.getUser_name()%>"/>
+						type="text" class="passInput" readonly="readonly" placeholder="<%= uv.getUser_name()%>"/>
 				</div>
 				<div class="container3">
 					<label style="padding-right: 1.5%;">휴대폰번호</label> <input
-						type="text" class="passInput" readonly="readonly" value="<%= uv.getUser_tel()%>"/>
+						type="text" class="passInput" readonly="readonly" placeholder="<%= uv.getUser_tel()%>"/>
 				</div>
 				<div class="container3">
 					<label style="padding-right: 7%;">이메일</label> <input
-						type="text" class="passInput" placeholder="" name="email"/>
+						type="text" class="passInput" name="user_email" value="<%= uv.getUser_email() %>"/>
 				</div>
 				<div class="container3">
 					<label style="padding-right: 9.5%;">주소</label> <input
-						type="text" class="passInput" placeholder="" name="addr"/>
+						type="text" class="passInput" name="user_addr" value="<%= uv.getUser_addr() %>"/>
 				</div>
 			</div>
 		</div>

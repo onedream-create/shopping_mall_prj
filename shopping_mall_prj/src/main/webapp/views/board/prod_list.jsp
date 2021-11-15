@@ -26,7 +26,7 @@
    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
    rel="stylesheet" />
 <style type="text/css">
-#title{ 
+.title{ 
 	text-align:left; color: #D09869; 
 	font-weight: bold; 
 	font-family: 'Sunflower', sans-serif; 
@@ -120,19 +120,19 @@ if(endPage>totalPages){
 <section class="py-5">
 <div class="container px-4 px-lg-5">
 	<c:if test="${ param.category_cd eq 0 }">
-		<h2 id="title">전체상품</h2>
+		<h2 class="title">전체상품</h2>
 	</c:if>
 	<c:if test="${ param.category_cd eq 1 }">
-		<h2 id="title">농산물</h2>
+		<h2 class="title">농산물</h2>
 	</c:if>
 	<c:if test="${ param.category_cd eq 2 }">
-		<h2 id="title">수산물</h2>
+		<h2 class="title">수산물</h2>
 	</c:if>
 	<c:if test="${ param.category_cd eq 3 }">
-		<h2 id="title">축산물</h2>
+		<h2 class="title">축산물</h2>
 	</c:if>
 	<c:if test="${ param.category_cd eq null }">
-		<h2 id="title">'${ param.searchValue }' 검색 결과</h2>
+		<h2 class="title">'${ param.searchValue }' 검색 결과</h2>
 	</c:if>
 
 </div>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" info="아이디 비밀번호 찾기"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,98 +26,120 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </head>
 <style type="text/css">
-.line {
-  border-left: 1px solid ;
-  height: 300px;
-  position: absolute;
-  left: 50%;
-  margin-left: -3px;
-  top:0;
-  margin-top: 90px
+#title{ 
+	text-align:left; color: #D09869; 
+	font-weight: bold; 
+	font-family: 'Sunflower', sans-serif; 
+	margin:100px 0 40px 0; 
 }
-   /* div{border : 1px solid;}   */
- 
-#contents{
-position: relative;
-height: 600px; 
-} 
-.selectid{
-position: relative;
-float: left;  
-margin-left: 360px;
-margin-top: 80px;
+
+.subTitle{
+	color: #D09869;
+	font-family: 'Sunflower', sans-serif; 
+	margin:0 0 20px 0;
 }
-.selectpass{
-position: absolute;
-float: right;
-margin-left: 1120px;
-margin-top: 80px;
+
+.subCon{
+	padding:0 0 0 40px;
 }
+
+.confirmBtn{
+ 	width:15%; 
+    height:40px; 
+    background:#D09869; 
+    color:#FFFFFF; 
+    border-color:#FFFFFF; 
+    font-size:15px;
+    margin-left:55%;
+}
+
+.colLab{
+	color:#D09869;
+}
+
+.inputBox{
+	width: 60%;
+    height: 45px;
+    border: 1px solid #ced4da;
+    color: #333;
+    padding-left: 1%;
+}
+
+#last{
+	margin-bottom: 92px;
+}
+
+.line{
+	margin-bottom:24px;
+}
+
+
 </style>
 <script type="text/javascript">
 $(function(){
-	$("#bt").click(function() {
-		alert("df")
-	})
+	/* 아이디찾기 */
+	$("#idFindBtn").click(function() {
+		if($("#idName").val() == ""){
+			alert("이름을 입력해주세요.");
+			return;
+		}
+		
+		if($("#idEmail").val() == ""){
+			alert("이메일을 입력해주세요.");
+			return;
+		}
+		
+		$("#idFrm").submit();
+	});//click
+	
+	/* 비밀번호찾기 */
+	$("#pwFindBtn").click(function() {
+		if($("#pwName").val() == ""){
+			alert("이름을 입력해주세요.");
+			return;
+		}
+		
+		if($("#pwId").val() == ""){
+			alert("아이디를 입력해주세요.");
+			return;
+		}
+		
+		if($("#pwEmail").val() == ""){
+			alert("이메일을 입력해주세요.");
+			return;
+		}
+		
+		$("#pwFrm").submit();
+	});//click
 });//ready
 </script>
 <body>
  <jsp:include page="../layout/header.jsp"/> 
  
-<form id="frm">
-<div id="contents"> 
-   <div class="selectid" align="left" style="color:#D09869; font-weight: bold; font-family: 'Sunflower', sans-serif;">
-      <div class="mb-5" >
-         <h6 style=" font-weight: bold; font-size: 30px;">아이디찾기</h6>
-     </div>
-     <div>
-   <div class="row g-2 align-items" style="width:600px;" >
-     <div class="col-auto" >
-       <input type="text" class="form-control-lg"  style="width: 400px" placeholder="이름">
-   <div class="row g-2 align-items" style="width: 600px;margin-top:10px">
-     <div class="col-auto">
-       <input type="text" class="form-control-lg" style="width: 400px" placeholder="이메일">
-        </div>
-     </div>
-     </div>   
-      </div>
-     </div>
-     <div style="margin-left: 150px; margin-top: 40px; "> 
-           <button id="btnn" type="button" class="btn btn-default btn-lg" style="background-color:#D09869; color : #FFFFFF; font-weight: bold; font-family: 'Sunflower', sans-serif;">확인</button>
-      </div>
-  </div>
-	<div class="line"></div>
-	
-	<div style="width: 600px;">
-   <div class="selectpass"align="left" style="color:#D09869; font-weight: bold; font-family: 'Sunflower', sans-serif;">
-      <div class="mb-5" >
-         <h6 style=" font-weight: bold; font-size: 30px;">비밀번호찾기</h6>
-     </div>
-     <div >
-   <div class="row g-2 align-items" style="width:600px;" >
-     <div class="col-auto" >
-       <input type="text" class="form-control-lg"  style="width: 400px" placeholder="이름">
-   <div class="row g-2 align-items" style="width: 600px;margin-top:10px">
-     <div class="col-auto">
-       <input type="text" class="form-control-lg" style="width: 400px" placeholder="아이디">
-   <div class="row g-2 align-items" style="width: 600px;margin-top:10px">
-     <div class="col-auto">
-       <input type="text" class="form-control-lg" style="width: 400px" placeholder="이메일">
-     </div>
-        </div>
-     </div>   
-      </div>
-     </div>
-     </div>
-     <div style="margin-left: 170px; margin-top: 40px">
-           <button id="bt" type="button" class="btn btn-default btn-lg" style="background-color:#D09869; color : #FFFFFF; font-weight: bold; font-family: 'Sunflower', sans-serif;">확인</button>
+<div class="container">
+<h2 id="title">아이디 찾기 / 비밀번호 찾기</h2>
+<div class="row">
+	<div class="col-md-6 subCon">
+		<h4 class="subTitle">아이디 찾기</h5>
+		<form id="idFrm" action="idFind_result.jsp" method="post">
+		<div class="line"><label class="colLab" style="padding-right:5.5%">이름</label><input type="text" class="inputBox" name="user_name" placeholder="이름" id="idName"/><br/></div>
+		<div class="line" id="last"><label class="colLab" style="padding-right:3%">이메일</label><input type="text" class="inputBox" name="user_email" placeholder="이메일" id="idEmail"/><br/></div>
+		<button type="button" class="btn btn-default btn-lg confirmBtn" id="idFindBtn">확인</button>
+		</form>
+	</div>
+	<div class="col-md-6 subCon">
+		<h4 class="subTitle">비밀번호 찾기</h5>
+		<form id="pwFrm" action="pwFind_result.jsp" method="post">
+		<div class="line"><label class="colLab" style="padding-right:5.5%">이름</label><input type="text" class="inputBox" name="user_name" placeholder="이름" id="pwName"/><br/></div>
+		<div class="line"><label class="colLab" style="padding-right:3%">아이디</label><input type="text" class="inputBox" name="user_id" placeholder="아이디" id="pwId"/><br/></div>
+		<div class="line"><label class="colLab" style="padding-right:3%">이메일</label><input type="text" class="inputBox" name="user_email" placeholder="이메일" id="pwEmail"/><br/></div>
+		<button type="button" class="btn btn-default btn-lg confirmBtn" id="pwFindBtn">확인</button>
+		</form>
+	</div>
 </div>
-     </div>
-      </div>
-  </div>
 </div>
 
-</form>
+
     <jsp:include page="../layout/footer.jsp"/> 
 </body>
 </html>

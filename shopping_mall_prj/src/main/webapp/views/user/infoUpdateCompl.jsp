@@ -32,7 +32,9 @@ hr{margin:0 auto; width:50%; border: 1px solid #000000; width : 800px; margin-bo
 #btn{width:15%; height:50px; background:#0099FF; ;color:#FFFFFF; font-size:16px; font-weight:bold; margin-bottom: 40px}
 </style>
 <script type="text/javascript">
-
+function moveMain(){
+	location.href="http://localhost/shopping_mall_prj/views/index.jsp";
+}
 </script>
 <body>
 	<jsp:include page="../layout/header.jsp"/>
@@ -46,7 +48,7 @@ hr{margin:0 auto; width:50%; border: 1px solid #000000; width : 800px; margin-bo
 			</div>
 			<form action="frm">
 		<div>
-			  <button id="btn" type="button" class="btn btn-default btn-lg" style="background-color:#D09869; color : #FFFFFF; font-weight: bold; font-family: 'Sunflower', sans-serif;">첫화면</button>
+			  <button id="btn" type="button" class="btn btn-default btn-lg" style="background-color:#D09869; color : #FFFFFF; font-weight: bold; font-family: 'Sunflower', sans-serif;" onclick="moveMain()">첫화면</button>
 		</div>
 			</form>
 		</div>

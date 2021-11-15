@@ -2,6 +2,14 @@
     pageEncoding="UTF-8" info="비밀번호 변경 페이지"%>
 <!DOCTYPE html>
 <%
+//session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
+String user_id=(String)session.getAttribute("user_id");
+if(user_id==null){ %>
+	<script>
+	alert("로그인이 필요한 페이지입니다.");
+	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
+	</script>
+<%}//end if 
 
 %>
 <html>
@@ -107,7 +115,7 @@ $(function(){
 			return;
 		}//end if
 		
-		
+		$("#passUpdateFrm").submit();
 	});//click
 });//ready
 </script>
@@ -124,11 +132,11 @@ $(function(){
          <div style="width:30%;">
          	<div class="container3">
          		<label style="padding-right:6.5%;">현재 비밀번호</label>
-         		<input type="password" class="passInput" id="curPass" placeholder="비밀번호"/>
+         		<input type="password" class="passInput" id="curPass" placeholder="비밀번호" name="cur_pass"/>
          	</div>
          	<div class="container3">
          		<label style="padding-right:9.2%;">새 비밀번호</label>
-         		<input type="password" class="passInput" id="newPass" placeholder="비밀번호"/>
+         		<input type="password" class="passInput" id="newPass" placeholder="비밀번호" name="new_pass"/>
          	</div>
          	<div class="container3">
          		<label style="padding-right:3%;">새 비밀번호 확인</label>
