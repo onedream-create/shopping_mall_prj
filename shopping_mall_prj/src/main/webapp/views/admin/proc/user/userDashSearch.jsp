@@ -19,22 +19,18 @@ List<UserVO> userList = aDAO.userDashSearch(flag, start, rowsPerPage);
 
 DataDecrypt dd = new DataDecrypt("AbcdEfgHiJkLmnOpQ");
 
-try {
-	for (int i = 0; i < userList.size(); i++) {
-		UserVO uVO = userList.get(i);
+for (int i = 0; i < userList.size(); i++) {
+	UserVO uVO = userList.get(i);
+	try {	
 		uVO.setUser_name(dd.decryption(uVO.getUser_name()));
 		uVO.setUser_tel(dd.decryption(uVO.getUser_tel()));
-		uVO.setUser_email(dd.decryption(uVO.getUser_email()));
-		userList.set(i, uVO);
-	}
-} catch (NullPointerException e) {
-	for (int i = 0; i < userList.size(); i++) {
-		UserVO uVO = userList.get(i);
+		uVO.setUser_email(dd.decryption(uVO.getUser_email()));		
+	} catch (NullPointerException e) {
 		uVO.setUser_name("삭제됨");
 		uVO.setUser_tel("삭제됨");
 		uVO.setUser_email("삭제됨");
-		userList.set(i, uVO);
 	}
+	userList.set(i, uVO);
 }
 
 Gson gson = new Gson();

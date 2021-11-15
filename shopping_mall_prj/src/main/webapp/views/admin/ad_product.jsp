@@ -10,7 +10,7 @@
 	<li class="nav-item"><a class="nav-link" data-toggle="tab"
 		href="#product_regist">상품등록</a></li>
 	<li class="nav-item"><a class="nav-link" data-toggle="tab"
-		href="#product_search" onclick="allProPagenation(); productSearch(1);">상품검색</a></li>
+		href="#product_search" onclick="allProPagenation();">상품검색</a></li>
 </ul>
 
 <div class="tab-content content">

@@ -3,7 +3,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" trimDirectiveWhitespaces="true" pageEncoding="UTF-8"%>
 
 <%
-System.out.println(request.getParameter("user_name"));
 DataEncrypt de = new DataEncrypt("AbcdEfgHiJkLmnOpQ");
 
 String work = request.getParameter("work");
