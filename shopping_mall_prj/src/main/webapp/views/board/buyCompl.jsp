@@ -1,9 +1,13 @@
+<%@page import="java.util.List"%>
+<%@page import="kr.co.shopping_mall.dao.OrderDAO"%>
+<%@page import="kr.co.sist.util.cipher.DataEncrypt"%>
 <%@page import="kr.co.shopping_mall.model.ProductVO"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     info="구매완료"
     %>
+<%@taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 request.setCharacterEncoding("UTF-8"); 
 %>
@@ -29,14 +33,6 @@ request.setCharacterEncoding("UTF-8");
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<jsp:useBean id="dVO" class="kr.co.shopping_mall.model.DeliveryVO" scope="page"/>
-<jsp:setProperty property="*" name="dVO"/>
-<%	
-	dVO.setDv_name(dVO.getDv_name());
-	dVO.setDv_tel(dVO.getDv_tel());
-	dVO.getDv_addr();
-	dVO.getDv_memo();
-%>
 <style type="text/css">
 	.container2{text-align:center; margin-bottom:40px;}
 	h2{margin-top:100px; font-family: 'Sunflower', sans-serif; font-weight: bold; color:#D09869; margin-bottom:40px;}
@@ -56,7 +52,6 @@ request.setCharacterEncoding("UTF-8");
 </style>
 </head>
 <body>
-<jsp:include page="../layout/header.jsp"/>
 <%
 //session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
 String user_id=(String)session.getAttribute("user_id");
@@ -66,6 +61,22 @@ if(user_id==null){ %>
 	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
 	</script>
 <%}//end if %> 
+<jsp:include page="../layout/header.jsp"/>
+<jsp:useBean id="dVO" class="kr.co.shopping_mall.model.DeliveryVO" scope="page"/>
+<jsp:setProperty property="*" name="dVO"/>
+<c:catch var="e">
+<%	
+OrderDAO oDAO = new OrderDAO();
+//세션 상품정보 꺼내오기
+//구매할 상품정보가 어디에 있고(세션)어디까지 가야하는지 (insert mehtod를타서 DBtable까지)
+ArrayList<ProductVO> cartList=(ArrayList<ProductVO>)session.getAttribute("cart");
+DataEncrypt de=new DataEncrypt("AbcdEfgHiJkLmnOpQ");
+dVO.setDv_name(de.encryption(dVO.getDv_name()));
+dVO.setDv_tel(de.encryption(dVO.getDv_tel()));
+oDAO.insertOrder(dVO, cartList, user_id);//db 전달
+String ord_cd=oDAO.selectOrdCd(user_id);
+session.removeAttribute("cart");
+%>
 <form id="frm" name="frm" action="../user/order_detail.jsp" method="post">
 	<div class="container container2">
 		<h2>주문완료</h2>
@@ -83,11 +94,11 @@ if(user_id==null){ %>
 			 	</tr>
 			 	<tr>
 			 		<th>주문번호</th>
-			 		<td>123456</td>
+			 		<td><%= ord_cd %></td>
 			 	</tr>
 			 	<tr>
 			 		<th>배송정보</th>
-			 		<td><%= dVO.getDv_name() %><br/><%= dVO.getDv_tel() %><br/><%= dVO.getDv_addr() %></td>
+			 		<td>${ param.dv_name }<br/>${ param.dv_tel }<br/>${ param.dv_addr }</td>
 			 	</tr>
 			 	<tr>
 			 		<th>배송메모</th>
@@ -98,6 +109,13 @@ if(user_id==null){ %>
 	 	<button class="btn btn-default btn-lg btn1">주문내역</button>
 	</div>
 </form>
+</c:catch>
+<c:if test="${ not empty e }">
+<script type="text/javascript">
+	alert("구매에 실패하였습니다.");
+	location.href="buyForm.jsp";
+</script>
+</c:if>
 <jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>
