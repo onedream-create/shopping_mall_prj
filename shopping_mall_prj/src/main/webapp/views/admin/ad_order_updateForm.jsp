@@ -48,12 +48,33 @@ function btnClick(str) {
 		if (!answer) {
 			return false;
 		}
-		//수정기능추가해야함
-	}
-	
-	if(str == 'cancle'){
-		self.close();
-	}
+		
+		let ord_cd = $("#ord_cd").val();
+		let dv_addr = $("#dv_addr").val();
+		let order_stat = $("#ord_stat").val();
+		
+		let formdata = { "ord_cd": ord_cd,
+				  		  "dv_addr": dv_addr, 
+				  	 	  "order_stat": order_stat};
+				  
+	     $.ajax({
+	       	cache: false,
+	          url: "proc/order/updateOrderProc.jsp", 
+	        type : "get", 
+	        data : formdata, 
+	     	 success: function(data) {
+	            alert("완료");
+	            self.close();
+	          },
+			error: function() {
+				alert("상품정보를 변경할 수 없습니다.");
+				self.close();
+			}
+	      });
+		} 
+		if(str == 'cancle'){
+			self.close();
+		}
 }
 
 </script>

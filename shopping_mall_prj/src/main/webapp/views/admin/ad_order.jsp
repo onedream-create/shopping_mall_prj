@@ -6,9 +6,9 @@
     </c:if>
 <ul class="nav nav-tabs">
 	<li class="nav-item"><a class="nav-link active" data-toggle="tab"
-		href="#order_dash">대시보드</a></li>
+		href="#order_dash" onclick="orderDashCount();">대시보드</a></li>
 	<li class="nav-item"><a class="nav-link" data-toggle="tab"
-		href="#order_search">주문검색</a></li>
+		href="#order_search" onclick="ordPagenation();">주문검색</a></li>
 </ul>
 
 <div class="tab-content content">

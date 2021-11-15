@@ -2,10 +2,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" trimDirectiveWhitespaces="true" pageEncoding="UTF-8"%>
 
 <%
-System.out.println("proc들어옴");
 String ord_cd = request.getParameter("ord_cd");
 String dv_addr = request.getParameter("dv_addr");
-String ord_stat_cd = request.getParameter("ord_stat_cd");
+String ord_stat_cd = request.getParameter("order_stat");
 
 AdminDAO aDAO = new AdminDAO();
 
