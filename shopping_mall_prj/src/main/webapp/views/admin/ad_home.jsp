@@ -6,7 +6,7 @@
     </c:if>
 <ul class="nav nav-tabs">
 	<li class="nav-item"><a class="nav-link active" data-toggle="tab"
-		href="#home_dash">대시보드</a></li>
+		href="#home_dash" onclick="homeDashCount()">대시보드</a></li>
 	<li class="nav-item"><a class="nav-link" data-toggle="tab"
 		href="#home_account">관리자계정</a></li>
 </ul>
@@ -24,12 +24,8 @@
 								<td>이번달</td>
 							</tr>
 						</thead>
-						<tbody>
-							<tr class="trow">
-								<td>_원(_건)</td>
-								<td>_원(_건)</td>
-							</tr>
-						<tbody>
+						<tbody id="homeDashTbody">
+						</tbody>
 					</table>
 				</div>
 			</div>
@@ -40,10 +36,9 @@
 				<div class="col-12 mt-4">
 					<input type="text" id="home_datepicker1"> ~ <input type="text"
 						id="home_datepicker2">
-					<input type="button" class="btn btn-dark btn-sm ml-2" value="검색"/>
+					<input type="button" class="btn btn-dark btn-sm ml-2" onclick="homeDashPeriod(); return false;" value="검색"/>
 				</div>
-				<div class="col-6 mt-4">
-					<div class="period">_원(_건)</div>
+				<div class="col-6 mt-4" id="homeDashPeriod">
 				</div>
 			</div>
 		</div>

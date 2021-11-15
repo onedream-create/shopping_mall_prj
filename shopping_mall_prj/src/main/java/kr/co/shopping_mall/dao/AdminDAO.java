@@ -693,4 +693,40 @@ public class AdminDAO {
 			
 			return list;
 		}
+		
+		public String countHomeDashPrice(String date1, String date2) throws SQLException {
+			String price = null;
+			
+			//1. Spring Container 얻기
+			GetJdbcTemplate gjt=GetJdbcTemplate.getInstance();
+			//2. JdbcTemplate 얻기
+			JdbcTemplate jt=gjt.getJdbcTemplate();
+			//3. 쿼리문 실행
+			StringBuilder countOrder = new StringBuilder();
+			countOrder.append(" select nvl(sum(ord_price),0) from orders where ord_stat_cd=? and to_char(ord_date,'YYYYMMDD') between ? and ? ");
+		
+			price=jt.queryForObject(countOrder.toString(), new Object[] {String.valueOf(3),String.valueOf(date1),String.valueOf(date2)},String.class);
+		
+			
+			return price;
+		}
+		
+		public String countHomeDashOrder(String date1, String date2) throws SQLException {
+			String cnt = null;
+			
+			//1. Spring Container 얻기
+			GetJdbcTemplate gjt=GetJdbcTemplate.getInstance();
+			//2. JdbcTemplate 얻기
+			JdbcTemplate jt=gjt.getJdbcTemplate();
+			//3. 쿼리문 실행
+			StringBuilder countOrder = new StringBuilder();
+			countOrder.append(" select nvl(count(ord_cd),0) from orders where ord_stat_cd=? and to_char(ord_date,'YYYYMMDD') between ? and ? ");
+		
+			cnt=jt.queryForObject(countOrder.toString(), new Object[] {String.valueOf(3),String.valueOf(date1),String.valueOf(date2)},String.class);
+		
+			//4. Spring Container 닫기
+			gjt.closeAc();
+			
+			return cnt;
+		}
 }

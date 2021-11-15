@@ -1,5 +1,6 @@
 $(function() {
 	//페이지정보 초기화
+	homeDashCount();
 	proDashCount();
 	userDashCount();
 	orderDashCount();
@@ -742,3 +743,49 @@ function orderSearch(index) {
 		}
 	});
 }
+
+//==========================================================================================================================
+//홈대시보드 오늘 이번달 매출 건수 구하여 나타내기
+function homeDashCount(){
+		$.ajax({
+		cache: false,
+		url: "proc/home/homeDashCount.jsp",
+		dataType: 'json',
+		success: function(data) {
+			$("#homeDashTbody").empty();
+			let homeDashTbody = '';
+			homeDashTbody += '<tr class="trow">';
+			homeDashTbody += '<td>' + data.countPrice1 +'원 (' + data.countOrder1 + '건)' +'</td>';
+			homeDashTbody += '<td>' + data.countPrice2 +'원 (' + data.countOrder2 + '건)' +'</td>';
+			homeDashTbody += '</tr>'
+			$("#homeDashTbody").append(homeDashTbody);
+		},
+		error: function() {
+			alert("실패");
+		}
+	});
+} 
+
+function homeDashPeriod(){
+	
+		let date1 = $("#home_datepicker1").val().replaceAll("-","");
+		let date2 = $("#home_datepicker2").val().replaceAll("-","");
+		
+		let date = { "date1": date1, "date2": date2}; 
+	
+		$.ajax({
+		cache: false,
+		url: "proc/home/homeDashPeriod.jsp",
+		data: date,
+		dataType: 'json',
+		success: function(data) {
+			$("#homeDashPeriod").empty();
+			let homeDashPeriod = '';
+			homeDashPeriod += '<div class="period">'+ data.countPrice +'원 ('+ data.countOrder + '건)' + '</div>';
+			$("#homeDashPeriod").append(homeDashPeriod);
+		},
+		error: function() {
+			alert("실패");
+		}
+	});
+} 
