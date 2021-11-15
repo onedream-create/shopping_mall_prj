@@ -6,7 +6,7 @@
     info="마이페이지_주문내역"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-//session을 통해 들어온 로그인 정보가 없으면 회원가입페이지로 이동
+//session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
 String user_id=(String)session.getAttribute("user_id");
 if(user_id==null){ %>
 	<script>
@@ -200,7 +200,7 @@ $(function(){
 				</tr>
 			</thead>
 			<tbody>
-			<c:if test="${ datacnt > 0 }">
+			<c:if test="${ dataCnt > 0 }">
             <c:forEach var="ord" items="${ orderData }">
             <tr>
 				<td rowspan="5"><input type="checkbox" name="chk" value="${ ord.ord_cd }"

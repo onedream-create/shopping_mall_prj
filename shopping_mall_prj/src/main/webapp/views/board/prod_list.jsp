@@ -36,6 +36,9 @@
 	text-decoration: none;
 	color:#000;
 }
+#last{
+	height:156px;
+}
 </style>
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -163,10 +166,6 @@ if(endPage>totalPages){
 			</a>
 			</div>
 			</c:forEach>
-			<%-- </c:if>
-			<c:if test="${ proCnt eq 0 }">
-				<div>해당 상품이 존재하지 않습니다.</div>
-			</c:if> --%>
 
 		</div>
 	</div>
@@ -211,7 +210,7 @@ if(endPage>totalPages){
 	</nav>	
 	</c:if>
 		<c:if test="${ proCnt eq 0 }">
-			<div>해당 상품이 존재하지 않습니다.</div>
+			<div id="last">해당 상품이 존재하지 않습니다.</div>
 		</c:if>
 </section>
 
