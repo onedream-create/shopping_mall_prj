@@ -136,16 +136,13 @@ public class ProductDAO {
 		.append("	from(select ROWNUM AS RNUM, P.* 	")
 		.append("	from product P	")
 		.append("	where ROWNUM <=?+? and pro_name like '%' || ? || '%')	")
-		.append("	where RNUM > ?");
+		.append("   where sell_fl='y'   ")
+		.append("	and RNUM > ?");
 		
 		list=jt.query(selectSearch.toString(), 
 				new Object[] {Long.valueOf(start),Long.valueOf(len),searchValue,Long.valueOf(start)},new SelectPro());
 		
 		
-		//"select * from product where sell_fl='y' and pro_name like '%' || ? || '%'";
-		//select * 
-		//from(select ROWNUM AS RNUM, P.* from product P where ROWNUM <=0+2 and pro_name like '%°í±¸%')
-		//where RNUM > 0;
 		//4. Spring Container ´Ý±â
 		gjt.closeAc();
 

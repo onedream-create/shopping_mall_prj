@@ -6,7 +6,7 @@
     info="마이페이지_주문내역"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
-//session을 통해 들어온 로그인 정보가 없으면 회원가입페이지로 이동
+//session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
 String user_id=(String)session.getAttribute("user_id");
 if(user_id==null){ %>
 	<script>
@@ -20,6 +20,7 @@ OrderDAO od=new OrderDAO();
 List<OrderInfoVO> list=od.selectOrder(user_id);
 
 pageContext.setAttribute("orderData", list);
+pageContext.setAttribute("dataCnt", list.size());
 %>
 
 <!DOCTYPE html>
@@ -145,6 +146,11 @@ pageContext.setAttribute("orderData", list);
     	border-color: #D09869; 
     	font-size:15px;
     }
+    
+    #emptyList{
+    	text-align: center;
+    	border-bottom:1px solid #FFF;
+    }
 
 </style>
 <script type="text/javascript">
@@ -194,6 +200,7 @@ $(function(){
 				</tr>
 			</thead>
 			<tbody>
+			<c:if test="${ dataCnt > 0 }">
             <c:forEach var="ord" items="${ orderData }">
             <tr>
 				<td rowspan="5"><input type="checkbox" name="chk" value="${ ord.ord_cd }"
@@ -219,6 +226,12 @@ $(function(){
 				<td class="orderInfo" colspan="3">${ ord.ord_stat_name }</td>
 			</tr>
             </c:forEach>
+            </c:if>
+            <c:if test="${ dataCnt == 0 }">
+            	<tr>
+            		<td colspan="4" id="emptyList">주문내역이 없습니다.</td>
+            	</tr>
+            </c:if>
 			</tbody>
         </table>
         </div>

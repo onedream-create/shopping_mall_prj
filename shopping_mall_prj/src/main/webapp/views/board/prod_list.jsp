@@ -5,9 +5,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" info="상품게시판페이지"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <%
-String category_cd=request.getParameter("category_cd");
-%> --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,7 +26,7 @@ String category_cd=request.getParameter("category_cd");
    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
    rel="stylesheet" />
 <style type="text/css">
-#title{ 
+.title{ 
 	text-align:left; color: #D09869; 
 	font-weight: bold; 
 	font-family: 'Sunflower', sans-serif; 
@@ -38,6 +35,9 @@ String category_cd=request.getParameter("category_cd");
 #pro{
 	text-decoration: none;
 	color:#000;
+}
+#last{
+	height:156px;
 }
 </style>
 <!-- Core theme CSS (includes Bootstrap)-->
@@ -59,6 +59,13 @@ if(request.getParameter("category_cd") != null){
 		searchValue=request.getParameter("searchValue");
 		cnt=Integer.parseInt(pd.countSearchPro(searchValue));
 }//end else
+	
+if(searchValue == ""){%>
+	<script>
+	alert("검색어를 입력해주세요.");
+	window.history.back();
+	</script>
+<%}
 
 int cPage;//현재 페이지
 
@@ -116,19 +123,19 @@ if(endPage>totalPages){
 <section class="py-5">
 <div class="container px-4 px-lg-5">
 	<c:if test="${ param.category_cd eq 0 }">
-		<h2 id="title">전체상품</h2>
+		<h2 class="title">전체상품</h2>
 	</c:if>
 	<c:if test="${ param.category_cd eq 1 }">
-		<h2 id="title">농산물</h2>
+		<h2 class="title">농산물</h2>
 	</c:if>
 	<c:if test="${ param.category_cd eq 2 }">
-		<h2 id="title">수산물</h2>
+		<h2 class="title">수산물</h2>
 	</c:if>
 	<c:if test="${ param.category_cd eq 3 }">
-		<h2 id="title">축산물</h2>
+		<h2 class="title">축산물</h2>
 	</c:if>
 	<c:if test="${ param.category_cd eq null }">
-		<h2 id="title">'${ param.searchValue }' 검색 결과</h2>
+		<h2 class="title">'${ param.searchValue }' 검색 결과</h2>
 	</c:if>
 
 </div>
@@ -159,10 +166,6 @@ if(endPage>totalPages){
 			</a>
 			</div>
 			</c:forEach>
-			<%-- </c:if>
-			<c:if test="${ proCnt eq 0 }">
-				<div>해당 상품이 존재하지 않습니다.</div>
-			</c:if> --%>
 
 		</div>
 	</div>
@@ -207,7 +210,7 @@ if(endPage>totalPages){
 	</nav>	
 	</c:if>
 		<c:if test="${ proCnt eq 0 }">
-			<div>해당 상품이 존재하지 않습니다.</div>
+			<div id="last">해당 상품이 존재하지 않습니다.</div>
 		</c:if>
 </section>
 

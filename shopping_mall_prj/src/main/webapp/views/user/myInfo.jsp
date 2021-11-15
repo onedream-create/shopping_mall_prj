@@ -19,9 +19,11 @@ if(user_id==null){ %>
 UserDAO ud=new UserDAO();
 UserInfoVO uv=ud.selectInfo(user_id);
 
-//성명 복호화
+//개인정보 복호화
 DataDecrypt dd=new DataDecrypt("AbcdEfgHiJkLmnOpQ");
 uv.setUser_name(dd.decryption(uv.getUser_name()));
+uv.setUser_email(dd.decryption(uv.getUser_email()));
+uv.setUser_tel(dd.decryption(uv.getUser_tel()));
 
 %>
 <!DOCTYPE html>

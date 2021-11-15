@@ -1,5 +1,45 @@
+<%@page import="kr.co.shopping_mall.dao.GetTempPw"%>
+<%@page import="java.io.IOException"%>
+<%@page import="org.springframework.dao.EmptyResultDataAccessException"%>
+<%@page import="kr.co.sist.util.cipher.DataEncrypt"%>
+<%@page import="kr.co.sist.util.cipher.DataDecrypt"%>
+<%@page import="kr.co.shopping_mall.model.UserInfoVO"%>
+<%@page import="kr.co.shopping_mall.dao.UserDAO"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" info="비밀번호 찾기 성공 페이지"%>
+<%
+request.setCharacterEncoding("UTF-8");
+
+String input_name=request.getParameter("user_name");//입력된 이름(암호화 전)
+String input_id=request.getParameter("user_id");//입력된 아이디(암호화 전)
+String input_email=request.getParameter("user_email");//입력된 이메일(암호화 전)
+
+//입력된 이름, 이메일 암호화
+DataEncrypt de=new DataEncrypt("AbcdEfgHiJkLmnOpQ");
+String de_input_name=de.encryption(input_name);
+String de_input_email=de.encryption(input_email);
+String user_id=null;
+String tempPw=null;
+
+UserDAO ud=new UserDAO();
+//조회되는 아이디 반환 / 조회되는 결과가 없으면 idpwFind_fail.jsp로 이동
+try{
+	user_id=ud.findPw(de_input_name, de_input_email, input_id);
+	//임시 비밀번호 발급
+	GetTempPw gtp=new GetTempPw();
+	tempPw=gtp.temporaryPassword(8);
+
+	//발급된 임시 비밀번호로 회원정보 재설정
+	//임시 비밀번호 암호화
+	String de_tempPw=DataEncrypt.messageDigest("MD5", tempPw);
+	int cnt=ud.updatePass(user_id, de_tempPw);
+}catch(EmptyResultDataAccessException erdae){ %>
+	<script>
+	location.href="http://localhost/shopping_mall_prj/views/help/idpwFind_fail.jsp";
+	</script>	
+<%}
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +80,8 @@
 </div>
 <hr class="lin" style="border: solid 1px black; width: 800px">
 
-<h4 style="text-align:center; margin-bottom:189px; margin-top : 70px ;color:#D8D8D8; font-weight: bold; font-family: 'Sunflower', sans-serif;">이현경님의 비밀번호는 1234 입니다.</h4>
+<h4 style="text-align:center; margin-bottom:20px; margin-top : 70px ;color:#D8D8D8; font-weight: bold; font-family: 'Sunflower', sans-serif;">임시 비밀번호가 발급되었습니다.</h4>
+<h3 style="text-align:center; margin-bottom:189px; margin-top : 70px ;color:#D8D8D8; font-weight: bold; font-family: 'Sunflower', sans-serif;"><%= tempPw %></h3>
 	<jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>
