@@ -1,5 +1,7 @@
 package kr.co.shopping_mall.dao;
 
+
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -47,6 +49,12 @@ public class GetJdbcTemplate {
 		jt = ac.getBean(JdbcTemplate.class);
 
 		return jt;
+	}
+//	org.apache.commons.dbcp2.BasicDataSource
+	public BasicDataSource getDataSource() {
+		ApplicationContext ac=getAc();
+		BasicDataSource ds= ac.getBean(BasicDataSource.class, "dataSource");
+		return ds;
 	}
 
 	public void closeAc() {

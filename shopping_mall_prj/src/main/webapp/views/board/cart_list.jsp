@@ -96,7 +96,6 @@ function fnBuy(){
 		alert("장바구니가 비어 있습니다.");
 		return;
 	}else{
-	alert(document.frm.action);
 	$("#frm").submit();
 	}
 }

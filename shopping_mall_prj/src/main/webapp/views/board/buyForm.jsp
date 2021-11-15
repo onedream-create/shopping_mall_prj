@@ -1,3 +1,4 @@
+<%@page import="kr.co.shopping_mall.model.DeliveryVO"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="kr.co.shopping_mall.model.ProductVO"%>
 <%@page import="java.util.ArrayList"%>
@@ -36,6 +37,8 @@
 	}else{ //세션정보가 있으면 강제로 캐스팅 
 		cart=(ArrayList<ProductVO>)obj;
 	}
+	ArrayList<DeliveryVO> delivery= new ArrayList<DeliveryVO>();
+	
 %>
 <style type="text/css">
 	form h2:nth-child(1){margin-top:100px;} 
@@ -108,14 +111,6 @@ $(function(){
 	   $("#frm").submit();
 	});//click
 });//ready
-function selectAll(selectAll)  {
-	  const checkboxes 
-	       = document.getElementsByName('item');
-	  
-	  checkboxes.forEach((checkbox) => {
-	    checkbox.checked = selectAll.checked;
-	  })
-	}
 function telValidator(args) {
 	var flag=false;
     const msg = '유효하지 않는 전화번호입니다.';
@@ -129,10 +124,13 @@ function telValidator(args) {
     	$("#user_tel").val('');
     }
 }//telValidator 
+function goCart(){
+	location.href="http://localhost/shopping_mall_prj/views/board/cart_list.jsp";
+}
+function buy(){
+	$("#frm").submit();
+}
 </script>
-<% 
-System.out.println("안녕하세요");
-%>
 </head>
 <body>   
 <jsp:include page="../layout/header.jsp"/>
@@ -145,7 +143,7 @@ if(user_id==null){ %>
 	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
 	</script>
 <%}//end if %> 
-	<form name="frm" method="post" action="buy_proc.jsp">
+	<form name="frm" id="frm" method="post" action="buyCompl.jsp"><!-- 헐 -->
         <div class="container">
 	        <h2>주문서 작성</h2>         
 	        <div class="table-responsive">
@@ -203,13 +201,11 @@ if(user_id==null){ %>
 		    				out.println("<td id='total' colspan='5'>총 주문금액 :"+df.format(totalSum)+"원</td>");			           		
 		            
 		    		%>	
-		            <!-- <tr>
-		            	<td colspan="5" id="total">총 주문금액 : 30000원</td> -->
 		        </table>
 	        </div>
 	        <p>
-			  <button type="button" class="btn btn-default btn-lg" formaction="cart_list.jsp">장바구니</button>
-			  <button type="button" class="btn btn-default btn-lg" id="buy" formaction="buy_proc.jsp">구매하기</button>
+			  <button type="button" class="btn btn-default btn-lg" onclick="goCart()">장바구니</button>
+			  <button  type="button" class="btn btn-default btn-lg" id="buy" onclick="buy()">구매하기</button>
 			</p>
         </div>
       </form> 
