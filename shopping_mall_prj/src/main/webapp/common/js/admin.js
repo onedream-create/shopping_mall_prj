@@ -592,8 +592,8 @@ function orderDashCount(){
 			$("#orderDashCount").empty();
 			let orderDashCount = '';
 			orderDashCount += '<tr class="trow">';
-			orderDashCount += '<td>' + '<a href=\'javascript:void(0)\' onclick=\'orderDashPagenation(' + data.countProcessing + ',"1");\'>' + data.countProcessing + '명</a></td>';
-			orderDashCount += '<td>' + '<a href=\'javascript:void(0)\' onclick=\'orderDashPagenation(' + data.countInDelivery +',"2");\'>' + data.countInDelivery + '명</a></td>';
+			orderDashCount += '<td>' + '<a href=\'javascript:void(0)\' onclick=\'orderDashPagenation(' + data.countProcessing + ',"1");\'>' + data.countProcessing + '건</a></td>';
+			orderDashCount += '<td>' + '<a href=\'javascript:void(0)\' onclick=\'orderDashPagenation(' + data.countInDelivery +',"2");\'>' + data.countInDelivery + '건</a></td>';
 			orderDashCount += '</tr>'
 			$("#orderDashCount").append(orderDashCount);
 		},
