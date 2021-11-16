@@ -237,7 +237,7 @@ $(function(){
             <c:if test="${ ord.ord_cd ne 'xxx' }">
             <tr>
 				<td rowspan="5"><input type="checkbox" name="chk" value="${ ord.ord_cd }"
-					<c:if test="${ ord.ord_stat_name eq '주문취소' }"> disabled="disabled"</c:if>
+					<c:if test="${ ord.ord_stat_name ne '주문완료' }"> disabled="disabled"</c:if>
 				></td>
 				<td class="orderInfo" colspan="3"><a id="colNone" href="order_detail.jsp?ord_cd=${ ord.ord_cd }"><strong>${ ord.pro_name }</strong></a></td>
 			</tr>

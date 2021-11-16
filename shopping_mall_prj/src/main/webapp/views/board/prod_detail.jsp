@@ -64,7 +64,7 @@ pv.setPro_price_fmt(fmt.format(pv.getPro_price()));
 	#imgSize{ 
 		text-align: center; 
 		max-width:100%; 
-		height:auto;  
+		height:400px;  
 	}
 	#h2Size{ 
 		text-align: center; 
@@ -203,13 +203,12 @@ function addCart(){
 	</form>
 	<div class="py-5" id="detailDiv">
 		<!-- <img src="http://placehold.it/500" id="imgSize"> -->
+		<h2 id="h2Size">상품상세</h2>
 		<%= pv.getPro_detail() %>
-		<p>※고구마는 중량으로 구분하여 모양과 크기가 다를 수 있습니다.</p>
-		<p>※위 사이즈 표는 꿀고구마 사이즈 입니다.</p>
+		<%System.out.println(pv.getPro_detail()); %>
 	</div>
 	<div class="py-5" id="detailDiv">
-		<h2 id="h2Size">상품구성</h2>
-		<img src="http://placehold.it/500X100" id="imgSize">
+
 		<h2 id="h2Size">배송안내</h2>
 		<img src="http://placehold.it/500X100" id="imgSize">
 	</div>

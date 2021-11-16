@@ -94,14 +94,15 @@ pageContext.setAttribute("proData", list);
 <section class="py-5">
 	<h2 id="title">전체상품</h2>
 	<div class="container px-4 px-lg-5 mt-5">
-		<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+		<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-left">
 			<c:forEach var="pro" items="${ proData }">
 			<div class="col mb-5">
 			<a href="http://localhost/shopping_mall_prj/views/board/prod_detail.jsp?pro_cd=${ pro.pro_cd }" id="pro">
 				<div class="card h-100">
 					<!-- Product image-->
 					<img class="card-img-top"
-						src="http://placehold.it/550X500" alt="..." />
+						src="http://localhost/shopping_mall_prj/common/uploadImg/pro_img/${ pro.pro_img }" style="width:100%; height:300px;" />
+						<!-- src="http://placehold.it/550X500" alt="..." /> -->
 					<!-- Product details-->
 					<div class="card-body p-4">
 						<div class="text-center">
