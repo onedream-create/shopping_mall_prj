@@ -61,6 +61,13 @@ public class UserDAO {
 		gjt.closeAc();
 	}// insertMember
 	
+	/**
+	 * 아이디 비밀번호 검사
+	 * @param inputId
+	 * @param inputPw
+	 * @return
+	 * @throws DataAccessException
+	 */
 	public String checkAccount(String inputId,String inputPw) throws DataAccessException{
 		String user_id=""; 
 		//1. Spring COntainer 생성
@@ -175,4 +182,20 @@ public class UserDAO {
 		return user_id;
 	}//findId
 	
+	//탈퇴 플래그 변경
+		public int updateDelFl(String user_id, String user_pw) throws SQLException{
+			int cnt=0;
+			
+			//1. Spring Container 얻기
+			GetJdbcTemplate gjt=GetJdbcTemplate.getInstance();
+			//2. JdbcTemplate 얻기
+			JdbcTemplate jt=gjt.getJdbcTemplate();
+			//3. 쿼리문 실행
+			String delFlUpdate="update users set user_pw=null, user_name=null, user_tel=null, user_email=null, del_fl='y', sec_date=sysdate where user_id=?and user_pw=?";
+			cnt=jt.update(delFlUpdate, user_id, user_pw);
+			//4. Spring Container 닫기
+			gjt.closeAc();
+			
+			return cnt;
+		}//updatePass
 }// class

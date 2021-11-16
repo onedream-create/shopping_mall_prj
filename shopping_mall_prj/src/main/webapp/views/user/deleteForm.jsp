@@ -5,34 +5,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" info="회원정보수정"%>
 <!DOCTYPE html>
-<%
-//session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
-String user_id=(String)session.getAttribute("user_id");
-if(user_id==null){ %>
-	<script>
-	alert("로그인이 필요한 페이지입니다.");
-	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
-	</script>
-<%}//end if 
-
-	//user_id값을 통한 개인정보조회
-	UserDAO ud=new UserDAO();
-	UserInfoVO uv=ud.selectInfo(user_id);
-
-	//개인정보 복호화
-	DataDecrypt dd=new DataDecrypt("AbcdEfgHiJkLmnOpQ");
-	uv.setUser_name(dd.decryption(uv.getUser_name()));
-	uv.setUser_email(dd.decryption(uv.getUser_email()));
-	uv.setUser_tel(dd.decryption(uv.getUser_tel()));	
-%>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>회원정보수정</title>
+<title>회원</title>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -113,68 +93,81 @@ if(user_id==null){ %>
 </style>
 <script type="text/javascript">
 $(function(){
-	$("#infoUpdateBtn").click(function(){
+	$("#outBtn").click(function(){
 		if($("#user_pw").val() == ""){
-			alert("비밀번호는 필수입력입니다.");
+			alert("비밀번호를 입력해 주세요.");
+			$("#user_pw").focus();
+			return;
+		}//end if
+		if($("#user_pw2").val() == ""){
+			alert("비밀번호 확인을 입력해 주세요.");
+			$("#user_pw2").focus();
+			return;
+		}//end if
+		if($("#user_pw").val() != $("#user_pw2").val()){
+			alert("비밀번호가 일치하지 않습니다.");
+		    $('#user_pw1').focus();
+		    $('#user_pw2').val('');
 			return;
 		}//end if
 		
-		$("#infoUpdateFrm").submit();
+		$("#delFrm").submit();
 	});//click
+	
 });//ready
-function userDelete(user_id){
-	$("#user_id").val( user_id );
-	$("#deleteFrm").submit();
+function goBack(){
+	location.href="http://localhost/shopping_mall_prj/views/user/infoUpdateForm.jsp";
 }
+
 </script>
 <body>
 	<jsp:include page="../layout/header.jsp"/>
+	<%
+//session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
+String user_id=(String)session.getAttribute("user_id");
+if(user_id==null){ %>
+	<script>
+	alert("로그인이 필요한 페이지입니다.");
+	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
+	</script>
+<%}//end if %>  
+<% 
+String userId=(String)session.getAttribute("user_id");
+request.setCharacterEncoding("UTF-8");
+%>
+<jsp:useBean id="uVO" class="kr.co.shopping_mall.model.UserVO" scope="page"/>
+<jsp:setProperty property="*" name="uVO"/>
      &nbsp;<div class="dl" >
         	<a href="http://localhost/shopping_mall_prj/views/user/myOrder.jsp"><div class="dt" id="order"><h3 id="dt">주문내역</h3></div></a>
         	<a href="http://localhost/shopping_mall_prj/views/user/myInfo.jsp"><div class="dt" id="info"><h3 id="dt">개인정보</h3></div></a>
         </div>
 
-     <form id="infoUpdateFrm" action="http://localhost/shopping_mall_prj/views/user/infoUpdate_proc.jsp" method="post">
+     <form id="delFrm" name="delFrm" action="http://localhost/shopping_mall_prj/views/user/delete_proc.jsp" method="post">
 		<div align="center" style="color: #D09869; margin-bottom: 5%;">
-			<h2 id="title">회원정보 수정</h2>
+			<h2 id="title">회원 탈퇴</h2>
 			<div style="width: 30%;">
 				<div class="container3">
-					<label style="padding-right: 7%;">아이디</label> <input
-						type="text" class="passInput" readonly="readonly" placeholder="<%= uv.getUser_id()%>"/>
+					<!-- <label style="padding-right: 7%;">아이디</label> --> <input
+						type="text" class="passInput" readonly="readonly" placeholder="<%= user_id%>"/>
 				</div>
 				<div class="container3">
-					<label style="padding-right: 4%;">비밀번호</label> <input
-						type="password" class="passInput" id="user_pw" name="user_pw"/>
+					<!-- <label style="padding-right: 4%;">비밀번호</label>  --><input
+						type="password" class="passInput" id="user_pw" name="user_pw" placeholder="비밀번호"/>
 				</div>
 				<div class="container3">
-					<label style="padding-right: 9.5%;">이름</label> <input
-						type="text" class="passInput" readonly="readonly" placeholder="<%= uv.getUser_name()%>"/>
-				</div>
-				<div class="container3">
-					<label style="padding-right: 1.5%;">휴대폰번호</label> <input
-						type="text" class="passInput" readonly="readonly" placeholder="<%= uv.getUser_tel()%>"/>
-				</div>
-				<div class="container3">
-					<label style="padding-right: 7%;">이메일</label> <input
-						type="text" class="passInput" name="user_email" value="<%= uv.getUser_email() %>"/>
-				</div>
-				<div class="container3">
-					<label style="padding-right: 9.5%;">주소</label> <input
-						type="text" class="passInput" name="user_addr" value="<%= uv.getUser_addr() %>"/>
+					<!-- <label style="padding-right: 2%;">비밀번호 확인</label> --> <input
+						type="password" class="passInput" id="user_pw2" name="user_pw" placeholder="비밀번호 확인"/>
 				</div>
 			</div>
 		</div>
 
      
      <p style="text-align:center;"><!-- 56px -->
-		 <button type="button" class="btn btn-default btn-lg" id="outBtn" onclick="userDelete('user_id')">회원탈퇴</button>
-		 <button type="button" class="btn btn-default btn-lg" id="infoUpdateBtn">수정완료</button>
 		 <button type="button" class="btn btn-default btn-lg" id="backBtn" onclick="goBack()">돌아가기</button>
+		 <button type="button" class="btn btn-default btn-lg" id="outBtn">탈퇴하기</button>
 	</p>
      </form>
-	   <form action="deleteForm.jsp" method="post" id="deleteFrm">
-         <input type="hidden" name="user_id" id="user_id">
-        </form>
+	
 	<jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>
