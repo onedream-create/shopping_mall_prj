@@ -77,7 +77,7 @@ oDAO.insertOrder(dVO, cartList, user_id);//db 전달
 String ord_cd=oDAO.selectOrdCd(user_id);
 session.removeAttribute("cart");
 %>
-<form id="frm" name="frm" action="../user/order_detail.jsp" method="post">
+<form id="frm" name="frm" >
 	<div class="container container2">
 		<h2>주문완료</h2>
 		<div id="div1">1조네 농산물을 이용해 주셔서 감사합니다.</div>
@@ -106,13 +106,13 @@ session.removeAttribute("cart");
 			 	</tr>
 		 	</table>
 		 </div>
-	 	<button class="btn btn-default btn-lg btn1">주문내역</button>
+	 	<button type="button" class="btn btn-default btn-lg btn1" onclick="location.href='http://localhost/shopping_mall_prj/views/user/myOrder.jsp'">주문내역</button>
 	</div>
 </form>
 </c:catch>
 <c:if test="${ not empty e }">
 <script type="text/javascript">
-	alert("구매에 실패하였습니다.");
+	alert("Error");
 	location.href="buyForm.jsp";
 </script>
 </c:if>

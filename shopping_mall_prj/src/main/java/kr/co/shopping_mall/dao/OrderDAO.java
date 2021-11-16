@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import kr.co.shopping_mall.model.DeliveryVO;
+import kr.co.shopping_mall.model.OrderDetailVO;
 import kr.co.shopping_mall.model.OrderInfoVO;
 import kr.co.shopping_mall.model.ProductVO;
 
@@ -34,6 +35,26 @@ public class OrderDAO {
 			return oiv;
 		}//mapRow
 	}//SelectPro	
+	///////////// inner class ////////////
+	public class SelectPrdInfo implements RowMapper<ProductVO>{
+		public ProductVO mapRow(ResultSet rs, int rowNum) throws SQLException{
+			ProductVO pv=new ProductVO();
+			pv.setPro_name(rs.getString("pro_name"));
+			pv.setPro_price(rs.getInt("pro_price"));
+			pv.setPro_img(rs.getString("pro_img"));
+			return pv;
+		}//mapRow
+	}//SelectPro	
+	///////////// inner class ////////////
+	public class SelectOrdDetailInfo implements RowMapper<OrderDetailVO>{
+		public OrderDetailVO mapRow(ResultSet rs, int rowNum) throws SQLException{
+			OrderDetailVO odv=new OrderDetailVO();
+			odv.setOrdd_cd(rs.getString("ordd_cd"));
+			odv.setPro_cd(rs.getString("pro_cd"));
+			odv.setOrdd_qty(rs.getInt("ordd_qty"));			
+			return odv;
+		}//mapRow
+	}//SelectOrdDetailInfo	
 	
 	//주문정보 조회
 	public List<OrderInfoVO> selectOrder(String user_id)throws SQLException{
@@ -51,6 +72,28 @@ public class OrderDAO {
 		.append("	order by od.ord_date desc 	");
 		
 		list=jt.query(selectOrder.toString(), new Object[] {user_id}, new SelectOrderInfo());
+		
+		//4. Spring Container 닫기
+		gjt.closeAc();
+		
+		return list;
+	}//selectOrder
+	
+	//주문 상세코드로 상품정보 조회
+	public List<ProductVO> selectPrd(String ord_cd)throws SQLException{
+		List<ProductVO> list=null;
+		
+		//1. Spring Container 얻기
+		GetJdbcTemplate gjt=GetJdbcTemplate.getInstance();
+		//2. JdbcTemplate 얻기
+		JdbcTemplate jt=gjt.getJdbcTemplate();
+		//3. 쿼리문 실행
+		StringBuilder selectPrd=new StringBuilder();
+		selectPrd.append("	select pr.pro_name,  pr.pro_img, pr.pro_price	")
+		.append("	from orders od, order_stat ost, order_detail odt, product pr	")
+		.append("	where ost.ord_stat_cd=od.ord_stat_cd and odt.ord_cd=od.ord_cd and pr.pro_cd=odt.pro_cd and od.ord_cd=?	");
+		
+		list=jt.query(selectPrd.toString(), new Object[] {ord_cd}, new SelectPrdInfo());
 		
 		//4. Spring Container 닫기
 		gjt.closeAc();
@@ -182,7 +225,7 @@ public class OrderDAO {
 	}//insertOrder
 	
 	/**
-	 * 입려한 아이디의 최신 주문 번호 조회 
+	 * 입력한 아이디의 최신 주문 번호 조회 
 	 * @param user_id
 	 * @return ord_cd
 	 * @throws SQLException
@@ -209,4 +252,69 @@ public class OrderDAO {
 		return ord_cd;
 	}// selectId
 	
+	
+	/**
+	 * 주문상세정보 테이블 조회
+	 * @param ord_cd
+	 * @return returnOrdd_cd
+	 * @throws SQLException
+	 */
+	public List<OrderDetailVO> selectOrdDetail(String ord_cd) throws SQLException {
+		List<OrderDetailVO> list=null;
+
+		// 1. Spring Container 얻기
+		GetJdbcTemplate gjt = GetJdbcTemplate.getInstance();
+		// 2. JdbcTemplate 얻기
+		JdbcTemplate jt = gjt.getJdbcTemplate();
+		// 3. 쿼리실행
+		String selectOrdDetail = "select ordd_cd, pro_cd, ordd_qty from order_detail where ord_cd=?";
+		try {
+			// 조회되면 조회결과가 변수에 저장
+			list = jt.query(selectOrdDetail.toString(), new Object[] { ord_cd }, new SelectOrdDetailInfo());
+					
+		} catch (EmptyResultDataAccessException erdae) {
+			// 조회결과가 없을 때에는 예외발생
+			list = null;
+		} // end catch
+			// 4. Spring Container 닫기
+		gjt.closeAc();
+		return list;
+	}// selectId
+	
+	/**
+	 * 배달정보 테이블 조회
+	 * @param ord_cd
+	 * @return returnOrdd_cd
+	 * @throws SQLException
+	 */
+	public DeliveryVO selectDelivery(String ord_cd) throws SQLException {
+		DeliveryVO dVO=null;
+		
+		// 1. Spring Container 얻기
+		GetJdbcTemplate gjt = GetJdbcTemplate.getInstance();
+		// 2. JdbcTemplate 얻기
+		JdbcTemplate jt = gjt.getJdbcTemplate();
+		// 3. 쿼리실행
+		String selectDelivery = "select dv_name, dv_tel, dv_addr, dv_memo from delivery where ord_cd=?";
+		try {
+			// 조회되면 조회결과가 변수에 저장
+			dVO = jt.queryForObject(selectDelivery, new Object[] { ord_cd }, 
+					new RowMapper<DeliveryVO>() {
+				public DeliveryVO mapRow(ResultSet rs, int rowNum)throws SQLException{
+					DeliveryVO dVO=new DeliveryVO();
+					dVO.setDv_name(rs.getString("dv_name"));
+					dVO.setDv_tel(rs.getString("dv_tel"));
+					dVO.setDv_addr(rs.getString("dv_addr"));
+					dVO.setDv_memo(rs.getString("dv_memo"));
+					return dVO;
+				}
+			});
+		} catch (EmptyResultDataAccessException erdae) {
+			// 조회결과가 없을 때에는 예외발생
+			dVO = null;
+		} // end catch
+		// 4. Spring Container 닫기
+		gjt.closeAc();
+		return dVO;
+	}// selectId
 }//class

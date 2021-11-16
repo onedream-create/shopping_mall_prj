@@ -1,9 +1,42 @@
+<%@page import="kr.co.sist.util.cipher.DataDecrypt"%>
+<%@page import="kr.co.shopping_mall.model.DeliveryVO"%>
+<%@page import="kr.co.shopping_mall.model.OrderDetailVO"%>
+<%@page import="java.util.List"%>
+<%@page import="kr.co.shopping_mall.dao.OrderDAO"%>
 <%@page import="kr.co.shopping_mall.model.ProductVO"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"
     info="주문내역상세"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:catch var="e">
+<%
+request.setCharacterEncoding("UTF-8");
+//session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
+String user_id=(String)session.getAttribute("user_id");
+if(user_id==null){ %>
+	<script>
+	alert("로그인이 필요한 페이지입니다.");
+	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
+	</script>
+<%}//end if
+String ord_cd=request.getParameter("ord_cd");
+//out.println(ord_cd);
+OrderDAO od=new OrderDAO();
+//ord_cd 값을 통한 주문 상세 정보 조회
+List<OrderDetailVO> list=od.selectOrdDetail(ord_cd);
+DeliveryVO dVO=od.selectDelivery(ord_cd);
+List<ProductVO> pVO=od.selectPrd(ord_cd);
+
+//개인정보 복호화
+DataDecrypt dd=new DataDecrypt("AbcdEfgHiJkLmnOpQ");
+dVO.setDv_name(dd.decryption(dVO.getDv_name()));
+dVO.setDv_tel(dd.decryption(dVO.getDv_tel()));
+/* pageContext.setAttribute("orderData", list);
+pageContext.setAttribute("dataCnt", list.size()); */
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,26 +59,8 @@
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-<jsp:useBean id="oVO" class="kr.co.shopping_mall.model.OrderVO" scope="page"/>
-<jsp:setProperty property="*" name="oVO"/>
-<%	
-	oVO.getDv_name();
-	oVO.getDv_tel();
-	oVO.getDv_addr();
-	oVO.getDv_memo();
-%>
+<
 </head>
-<%
-	request.setCharacterEncoding("UTF-8");
-	ArrayList<ProductVO> cart=null;
-	
-	Object obj=session.getAttribute("cart");
-	if(obj==null){//세션정보가 없으면 배열을 생성
-		cart = new ArrayList<ProductVO>();
-	}else{ //세션정보가 있으면 강제로 캐스팅 
-		cart=(ArrayList<ProductVO>)obj;
-	}
-%>
 <style>	
 	h2{text-align:left; color:#D09869; font-weight: bold; font-family: 'Sunflower', sans-serif; margin:100px 0 40px 0;}
     table, th, td{ 
@@ -96,21 +111,25 @@
 	                <th>수량</th>
 	                <th>가격</th> 
 	            </tr>
-	            <% 
-	            int totalSum=0, total=0;
-	            DecimalFormat df = new DecimalFormat("###,###,###,###,##0");
-	            for(int i=0;i<cart.size();i++){ 
-	            	ProductVO pv = cart.get(i);
-	            out.println("<tr>");             
-	            	out.println("<td><img src='../common/upload/" + pv.getPro_img() + "'></td>");
-	                out.println("<td>" + pv.getPro_name() + "</td>");
-	                out.println("<td>" + pv.getCnt() + "</td>");
-	                total = pv.getPro_price() * pv.getCnt();
-	                out.println("<td>" + df.format(total) + "</td>");
-	                out.println("</tr>");
-	                totalSum += total;
-	             } 
-	            	out.println("<td id='total' colspan='5'>총 주문금액 :"+df.format(totalSum)+"원</td>");	
+	            <%
+		         DecimalFormat df = new DecimalFormat("###,###,###,###,##0");
+	             int totalSum=0, total=0;
+	             for(int i=0; i< list.size() ;i++){
+	             OrderDetailVO ov=list.get(i);
+	             ProductVO pv=pVO.get(i);
+	             %>
+	             <tr>
+				<td><img src="http://localhost/shopping_mall_prj/common/uploadImg/pro_img/<%=pv.getPro_img() %>"></td>
+				<td><%=pv.getPro_name() %></td>
+				<td><%= ov.getOrdd_qty() %></td>
+				<% total = pv.getPro_price() * ov.getOrdd_qty(); %>
+				<td><%= df.format(total) %></td>
+				<% totalSum += total; %>
+				</tr>
+				<%} 
+	            out.println("<tr>");
+	            out.println("<td id='total' colspan='5'>총 주문금액 : "+df.format(totalSum)+"원</td>"); 
+	            out.println("</tr>");
 	            %>
 	        </table>
         </div>
@@ -125,27 +144,34 @@
 	              </tr>
 	              <tr>
 	              	<td class="bold">받는사람</td>
-	              	<td><%= oVO.getDv_name() %></td>
+	              	<td><%=  dVO.getDv_name() %></td>
 	              </tr>
 	              <tr style="border-bottom : none;">
 	              	<td class="bold">휴대전화</td>
-	              	<td><%= oVO.getDv_tel() %></td>
+	              	<td><%= dVO.getDv_tel() %></td>
 	              </tr>
 	              <tr>
 	              	<td class="bold">주소</td>
-	              	<td><%= oVO.getDv_addr() %></td>
+	              	<td><%= dVO.getDv_addr() %></td>
 	              </tr>
 	              <tr>
 	              	<td class="bold">배송메모</td>
-	              	<td><%= oVO.getDv_memo() %></td>
+	              	<td><%= dVO.getDv_memo() %></td>
 	              </tr>
 	        </table>
         </div>
         <p style="text-align:center">
-		  <button class="btn btn-default btn-lg btn1">돌아가기</button>
+		  <button type="button" class="btn btn-default btn-lg btn1" onclick="location.href='http://localhost/shopping_mall_prj/views/user/myOrder.jsp'">돌아가기</button>
 		</p>
 	</div>
         </form>
 <jsp:include page="../layout/footer.jsp"/>
 </body>
 </html>
+</c:catch>
+<c:if test="${ not empty e }">
+<script type="text/javascript">
+	alert("Error");
+	location.href="http://localhost/shopping_mall_prj/views/user/myOrder.jsp";
+</script>
+</c:if>

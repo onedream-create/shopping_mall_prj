@@ -114,7 +114,6 @@ $(function(){
 		}//end if
 		if($("#user_tel").val()==""){
 			alert("전화번호를 입력해주세요.");
-			$("#user_tel").focusin();
 			return;
 		}//end if
 		if($("#user_email").val()==""){
@@ -171,7 +170,7 @@ function telValidator(args) {
          <h1><a href="http://localhost/shopping_mall_prj/views/index.jsp" style="text-decoration:none; color:#D09869;">1조네 농산물</a></h1>
          <h6>회원정보를 입력해주세요</h6>
       </div>
-      <form name="frm" action="join_proc.jsp" method="post">
+      <form name="frm" id="frm" action="join_proc.jsp" method="post">
          <div class="input-group input-group-lg mb-3 container3">
             <input type="text" name="user_id" id="user_id" class="form-control" required readonly="readonly" placeholder="아이디">
             <input type="button" class="form-control" value="중복확인" id="dupId">
@@ -252,7 +251,7 @@ function telValidator(args) {
                 </li>
             </ul>
          </div>
-         <button class="btn btn-default btn-lg btn-block btn1" id="btn1">동의하고 가입하기</button>
+         <button type="button" class="btn btn-default btn-lg btn-block btn1" id="btn1">동의하고 가입하기</button>
 </form>
 </div>
 </body>
