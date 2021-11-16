@@ -4,6 +4,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+
 String pro_cd=request.getParameter("pro_cd");
 int cnt=Integer.parseInt(request.getParameter("cnt"));
 
@@ -50,6 +51,6 @@ session.setAttribute("cart", cart);
 %>
 
 <script>
-alert("장바구에 담았습니다."); 
+alert("장바구니에 담았습니다."); 
 location.href="http://localhost/shopping_mall_prj/views/board/prod_detail.jsp?pro_cd=<%=pro_cd%>";
 </script>

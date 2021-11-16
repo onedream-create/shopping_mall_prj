@@ -111,7 +111,7 @@ function cartRemove( pro_cd, pro_name ){
 </script>
 <body>
 <jsp:include page="../layout/header.jsp"/>
-<%
+<%-- <%
 //session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
 String user_id=(String)session.getAttribute("user_id");
 if(user_id==null){ %>
@@ -119,7 +119,7 @@ if(user_id==null){ %>
 	alert("로그인이 필요한 페이지입니다.");
 	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
 	</script>
-<%}//end if %>   
+<%}//end if %>  --%>  
 	<form name="frm" id="frm" action="buyForm.jsp" method="post">
         <div class="container">
 	        <h2>장바구니</h2>    
