@@ -38,6 +38,8 @@
 }
 #last{
 	height:156px;
+	width:100%;
+	text-align: center;
 }
 </style>
 <!-- Core theme CSS (includes Bootstrap)-->
@@ -141,7 +143,7 @@ if(endPage>totalPages){
 </div>
 	<div class="container px-4 px-lg-5 mt-5">
 		<div
-			class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+			class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-left">
 			<!-- 상품 -->
 			
 			<c:if test="${ proCnt ne 0 }">
@@ -152,7 +154,7 @@ if(endPage>totalPages){
 				<div class="card h-100" id="pro">
 					<!-- Product image-->
 					<img class="card-img-top"
-						src="http://placehold.it/550X500" alt="..." />
+						src="http://localhost/shopping_mall_prj/common/uploadImg/pro_img/${ pro.pro_img }" style="width:100%; height:300px;"/>
 					<!-- Product details-->
 					<div class="card-body p-4">
 						<div class="text-center">
@@ -189,8 +191,8 @@ if(endPage>totalPages){
 			<%
 				for(int i=startPage; i <= endPage; i++){
 			%>
-			<li class="page-item">
-			<a class="page-link" href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?<%if(category_cd!=null) {%>category_cd=<%=category_cd%><%}else{ %>searchValue=<%=searchValue %><%} %>&page=<%=i%>"><%= i  %></a></li>
+			<li class="page-item <%if( i == cPage){ %>active<%}%>">
+			<a class="page-link my" href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?<%if(category_cd!=null) {%>category_cd=<%=category_cd%><%}else{ %>searchValue=<%=searchValue %><%} %>&page=<%=i%>"><%= i  %></a></li>
 			<%
 				}//end for
 			%>
