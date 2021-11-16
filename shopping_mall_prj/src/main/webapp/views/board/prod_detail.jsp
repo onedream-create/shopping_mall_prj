@@ -61,6 +61,11 @@ pv.setPro_price_fmt(fmt.format(pv.getPro_price()));
 		width: 40px; 
 		height:40px;
 	}
+	#deImgSize{
+		text-align: center; 
+		max-width:70%; 
+		height:auto; 
+	}
 	#imgSize{ 
 		text-align: center; 
 		max-width:100%; 
@@ -205,12 +210,11 @@ function addCart(){
 		<!-- <img src="http://placehold.it/500" id="imgSize"> -->
 		<h2 id="h2Size">상품상세</h2>
 		<%= pv.getPro_detail() %>
-		<%System.out.println(pv.getPro_detail()); %>
 	</div>
 	<div class="py-5" id="detailDiv">
 
 		<h2 id="h2Size">배송안내</h2>
-		<img src="http://placehold.it/500X100" id="imgSize">
+		<img src="http://localhost/shopping_mall_prj/common/image/delivery.png" id="deImgSize">
 	</div>
 </div>
 

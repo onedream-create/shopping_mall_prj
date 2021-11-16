@@ -38,6 +38,8 @@
 }
 #last{
 	height:156px;
+	width:100%;
+	text-align: center;
 }
 </style>
 <!-- Core theme CSS (includes Bootstrap)-->
