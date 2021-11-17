@@ -1,3 +1,6 @@
+<%@page import="kr.co.sist.util.cipher.DataDecrypt"%>
+<%@page import="kr.co.shopping_mall.dao.UserDAO"%>
+<%@page import="kr.co.shopping_mall.model.UserInfoVO"%>
 <%@page import="kr.co.shopping_mall.model.DeliveryVO"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="kr.co.shopping_mall.model.ProductVO"%>
@@ -38,7 +41,13 @@
 		cart=(ArrayList<ProductVO>)obj;
 	}
 	ArrayList<DeliveryVO> delivery= new ArrayList<DeliveryVO>();
-	
+	String user_id=(String)session.getAttribute("user_id");
+	UserDAO uDAO= new UserDAO();
+	UserInfoVO uVO = uDAO.selectInfo(user_id);
+	//개인정보 복호화
+	DataDecrypt dd=new DataDecrypt("AbcdEfgHiJkLmnOpQ");
+	uVO.setUser_name(dd.decryption(uVO.getUser_name()));
+	uVO.setUser_tel(dd.decryption(uVO.getUser_tel()));
 %>
 <style type="text/css">
 	form h2:nth-child(1){margin-top:100px;} 
@@ -136,7 +145,6 @@ function buy(){
 <jsp:include page="../layout/header.jsp"/>
 <%
 //session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
-String user_id=(String)session.getAttribute("user_id");
 if(user_id==null){ %>
 	<script>
 	alert("로그인이 필요한 페이지입니다.");
@@ -157,19 +165,19 @@ if(user_id==null){ %>
 		              </tr>
 		              <tr>
 		              	<td>받는사람</td>
-		              	<td><input type="text" name="dv_name" id="dv_name" value="이현경"></td>
+		              	<td><input type="text" name="dv_name" id="dv_name" value="<%= uVO.getUser_name()%>"></td>
 		              </tr>
 		              <tr>
 		              	<td>휴대전화</td>
-		              	<td><input type="text" name="dv_tel" id="dv_tel" value="01022221111"></td>
+		              	<td><input type="text" name="dv_tel" id="dv_tel" value="<%= uVO.getUser_tel()%>"></td>
 		              </tr>
 		              <tr>
 		              	<td>주소</td>
-		              	<td><input type="text" name="dv_addr" id="dv_addr" value="강남"></td>
+		              	<td><input type="text" name="dv_addr" id="dv_addr" value="<%= uVO.getUser_addr()%>"></td>
 		              </tr>
 		              <tr>
 		              	<td>배송메모</td>
-		              	<td><input type="text" name="dv_memo" id="dv_memo" value="조심히 오세요"></td>
+		              	<td><input type="text" name="dv_memo" id="dv_memo" value="메모"></td>
 		              </tr>
 		        </table>
 	        </div>
