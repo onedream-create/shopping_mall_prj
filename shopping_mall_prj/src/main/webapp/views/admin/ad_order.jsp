@@ -106,8 +106,8 @@
 							</div>
 							<div class="form-group row">
 								<label class="col-auto col-form-label text-center">주문일자</label>
-								<input type="date" id="order_datepicker1"> ~ <input
-									type="date" id="order_datepicker2">
+								<input type="text" id="order_datepicker1"> ~ <input
+									type="text" id="order_datepicker2">
 								<div class="col-2 ml-4">
 									<input type="button" class="btn btn-dark" onclick="ordPagenation(); return false;" value="검색" />
 								</div>
