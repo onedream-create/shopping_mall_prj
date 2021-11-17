@@ -707,7 +707,7 @@ public class AdminDAO {
 		
 			price=jt.queryForObject(countOrder.toString(), new Object[] {String.valueOf(3),String.valueOf(date1),String.valueOf(date2)},String.class);
 		
-			
+			gjt.closeAc();
 			return price;
 		}
 		
