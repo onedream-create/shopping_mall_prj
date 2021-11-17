@@ -84,7 +84,7 @@ $(function(){
 	$("#login").click(function(){
 		$("#frm").submit();
 	});
-	$("#user_pw").keydown(function(){
+	$("#user_pw").keydown(function(key){
 		if(key.keyCode==13){
 			$("#frm").submit();
 		}

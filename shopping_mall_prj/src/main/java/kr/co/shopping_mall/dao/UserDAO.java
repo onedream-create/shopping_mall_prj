@@ -9,9 +9,11 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
+import kr.co.shopping_mall.model.ProductVO;
 import kr.co.shopping_mall.model.UserInfoVO;
 import kr.co.shopping_mall.model.UserVO;
 import kr.co.shopping_mall.dao.GetJdbcTemplate;
+import kr.co.shopping_mall.dao.ProductDAO.SelectPro;
 
 public class UserDAO {
 	/**
@@ -197,5 +199,6 @@ public class UserDAO {
 			gjt.closeAc();
 			
 			return cnt;
-		}//updatePass
+		}//updateDelFl
+		
 }// class
