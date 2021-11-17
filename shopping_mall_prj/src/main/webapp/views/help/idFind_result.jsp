@@ -21,7 +21,7 @@ try{
 	user_id=ud.findId(de_input_name, de_input_email);
 }catch(EmptyResultDataAccessException erdae){ %>
 	<script>
-	location.href="http://localhost/shopping_mall_prj/views/help/idpwFind_fail.jsp";
+	location.href="http://211.63.89.152/views/help/idpwFind_fail.jsp";
 	</script>	
 <%}
 

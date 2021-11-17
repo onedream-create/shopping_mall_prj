@@ -35,7 +35,7 @@ try{
 	int cnt=ud.updatePass(user_id, de_tempPw);
 }catch(EmptyResultDataAccessException erdae){ %>
 	<script>
-	location.href="http://localhost/shopping_mall_prj/views/help/idpwFind_fail.jsp";
+	location.href="http://211.63.89.152/views/help/idpwFind_fail.jsp";
 	</script>	
 <%}
 

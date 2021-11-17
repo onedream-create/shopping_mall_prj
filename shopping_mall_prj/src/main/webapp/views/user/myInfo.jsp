@@ -11,7 +11,7 @@ String user_id=(String)session.getAttribute("user_id");
 if(user_id==null){ %>
 	<script>
 	alert("로그인이 필요한 페이지입니다.");
-	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
+	location.href="http://211.63.89.152/views/user/loginForm.jsp";
 	</script>
 <%}//end if 
 
@@ -35,7 +35,7 @@ uv.setUser_tel(dd.decryption(uv.getUser_tel()));
 <title>마이페이지_개인정보</title>
 
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
+<link rel="icon" type="image/x-icon" href="http://211.63.89.152/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -140,11 +140,11 @@ uv.setUser_tel(dd.decryption(uv.getUser_tel()));
 </style>
 <script type="text/javascript">
 function movePassUpdate(){
-	location.href="http://localhost/shopping_mall_prj/views/user/passUpdateForm.jsp"
+	location.href="http://211.63.89.152/views/user/passUpdateForm.jsp"
 }
 
 function moveInfoUpdate(){
-	location.href="http://localhost/shopping_mall_prj/views/user/infoUpdateForm.jsp"
+	location.href="http://211.63.89.152/views/user/infoUpdateForm.jsp"
 }
 </script>
 <body>   

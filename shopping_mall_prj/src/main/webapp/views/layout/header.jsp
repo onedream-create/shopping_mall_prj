@@ -11,24 +11,24 @@ $(function(){
 });//ready
 
 function moveLogin(){
-	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
+	location.href="http://211.63.89.152/views/user/loginForm.jsp";
 }
 
 function moveLogout(){
-	location.href="http://localhost/shopping_mall_prj/views/user/logoout_proc.jsp";
+	location.href="http://211.63.89.152/views/user/logoout_proc.jsp";
 }
 
 function moveMy(){
-	location.href="http://localhost/shopping_mall_prj/views/user/myOrder.jsp";
+	location.href="http://211.63.89.152/views/user/myOrder.jsp";
 }
 
 function moveCart(){
-	location.href="http://localhost/shopping_mall_prj/views/board/cart_list.jsp";
+	location.href="http://211.63.89.152/views/board/cart_list.jsp";
 }
 </script>
 	<h1
 		style="text-align: center; font-size:2.5rem; margin: 30px 0; color: #D09869; font-weight: bold; font-family: 'Sunflower', sans-serif;">
-		<a href="http://localhost/shopping_mall_prj/views/index.jsp" style="text-decoration:none; color:#D09869;">1조네 농산물</a></h1>
+		<a href="http://211.63.89.152/views/index.jsp" style="text-decoration:none; color:#D09869;">1조네 농산물</a></h1>
 	<% if(session.getAttribute("user_id")==null){ %>
 	<input type="button" class="btn" value="로그인"
 		style="position: absolute; top: 10px; right: 30px;" onclick="moveLogin()">
@@ -53,12 +53,12 @@ function moveCart(){
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
 					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?category_cd=0">전체상품</a></li>
-					<li class="nav-item"><a class="nav-link" href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?category_cd=1">농산물</a></li>
-					<li class="nav-item"><a class="nav-link" href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?category_cd=2">수산물</a></li>
-					<li class="nav-item"><a class="nav-link" href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?category_cd=3">축산물</a></li>
+						aria-current="page" href="http://211.63.89.152/views/board/prod_list.jsp?category_cd=0">전체상품</a></li>
+					<li class="nav-item"><a class="nav-link" href="http://211.63.89.152/views/board/prod_list.jsp?category_cd=1">농산물</a></li>
+					<li class="nav-item"><a class="nav-link" href="http://211.63.89.152/views/board/prod_list.jsp?category_cd=2">수산물</a></li>
+					<li class="nav-item"><a class="nav-link" href="http://211.63.89.152/views/board/prod_list.jsp?category_cd=3">축산물</a></li>
 				</ul>                                                      
-				<form class="d-flex" id="searchFrm" action="http://localhost/shopping_mall_prj/views/board/prod_list.jsp" method="get">
+				<form class="d-flex" id="searchFrm" action="http://211.63.89.152/views/board/prod_list.jsp" method="get">
 					<div class="input-group" style="align-items: center;">
 						<input type="text" class="form-control" name="searchValue"
 							style="border-radius: 0.25rem; width: 200px; height: 38px; margin-right: 5px; line-height: 62px;">

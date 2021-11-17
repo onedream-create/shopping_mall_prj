@@ -7,5 +7,5 @@
 %>
 <!--  2: 로그인 페이지로 이동시킴. -->
 <script type="text/javascript">
-location.href="http://localhost/shopping_mall_prj/views/index.jsp";
+location.href="http://211.63.89.152/views/index.jsp";
 </script> 

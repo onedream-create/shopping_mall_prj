@@ -11,7 +11,7 @@ OrderDAO od=new OrderDAO();
 if(chkList==null){ %>
 	<script>
 		alert("항목을 체크해주세요.");
-		location.href="http://localhost/shopping_mall_prj/views/user/myOrder.jsp";
+		location.href="http://211.63.89.152/views/user/myOrder.jsp";
 	</script>
 <%}
 
@@ -25,5 +25,5 @@ if(chkList!=null){
 %>
 <!-- 다시 주문관리페이지로 이동 -->
 <script>
-	location.href="http://localhost/shopping_mall_prj/views/user/myOrder.jsp";
+	location.href="http://211.63.89.152/views/user/myOrder.jsp";
 </script>

@@ -20,7 +20,7 @@ String curPass=uv.getUser_pw();
 if(!inputCurPass.equals(curPass)){%>
 	<script>
 		alert("현재 비밀번호가 일치하지 않습니다.");
-		location.href="http://localhost/shopping_mall_prj/views/user/passUpdateForm.jsp";
+		location.href="http://211.63.89.152/views/user/passUpdateForm.jsp";
 	</script>
 <%}
 
@@ -30,7 +30,7 @@ if(inputCurPass.equals(curPass)){
 	int cnt=ud.updatePass(user_id, user_pw); %>
 	<script>
 		alert("비밀번호 변경이 완료되었습니다.");
-		location.href="http://localhost/shopping_mall_prj/views/user/passUpdateCompl.jsp";
+		location.href="http://211.63.89.152/views/user/passUpdateCompl.jsp";
 	</script>
 <%}
 %>	

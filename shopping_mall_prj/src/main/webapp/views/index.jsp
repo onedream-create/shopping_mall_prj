@@ -16,13 +16,13 @@
 <title>1조네 농산물</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
+<link rel="icon" type="image/x-icon" href="http://211.63.89.152/common/image/favicon.png" />
 <!-- Bootstrap icons-->
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css"
 	rel="stylesheet" />
 <!-- Core theme CSS (includes Bootstrap)-->
-<link href="http://localhost/shopping_mall_prj/common/css/index.css" rel="stylesheet" />
+<link href="http://211.63.89.152/common/css/index.css" rel="stylesheet" />
 <link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@500&display=swap" rel="stylesheet">
 <style>
 	#title{ text-align: center; 
@@ -67,14 +67,14 @@ pageContext.setAttribute("proData", list);
 			</div>
 			<div class="carousel-inner">
 				<div class="carousel-item active">
-					<img src="http://localhost/shopping_mall_prj/common/image/carousel1.png" class="d-block w-100" alt="..."
+					<img src="http://211.63.89.152/common/image/carousel1.png" class="d-block w-100" alt="..."
 						style="height:500px;">
 				</div>
 				<div class="carousel-item">
-					<img src="http://localhost/shopping_mall_prj/common/image/carousel2.png" class="d-block w-100" alt="..." style="height:500px;">
+					<img src="http://211.63.89.152/common/image/carousel2.png" class="d-block w-100" alt="..." style="height:500px;">
 				</div>
 				<div class="carousel-item">
-					<img src="http://localhost/shopping_mall_prj/common/image/carousel3.png" class="d-block w-100" alt="..." style="height:500px;">
+					<img src="http://211.63.89.152/common/image/carousel3.png" class="d-block w-100" alt="..." style="height:500px;">
 				</div>
 			</div>
 			<button class="carousel-control-prev" type="button"
@@ -97,11 +97,11 @@ pageContext.setAttribute("proData", list);
 		<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-left">
 			<c:forEach var="pro" items="${ proData }">
 			<div class="col mb-5">
-			<a href="http://localhost/shopping_mall_prj/views/board/prod_detail.jsp?pro_cd=${ pro.pro_cd }" id="pro">
+			<a href="http://211.63.89.152/views/board/prod_detail.jsp?pro_cd=${ pro.pro_cd }" id="pro">
 				<div class="card h-100">
 					<!-- Product image-->
 					<img class="card-img-top"
-						src="http://localhost/shopping_mall_prj/common/uploadImg/pro_img/${ pro.pro_img }" style="width:100%; height:300px;" />
+						src="http://211.63.89.152/common/uploadImg/pro_img/${ pro.pro_img }" style="width:100%; height:300px;" />
 						<!-- src="http://placehold.it/550X500" alt="..." /> -->
 					<!-- Product details-->
 					<div class="card-body p-4">

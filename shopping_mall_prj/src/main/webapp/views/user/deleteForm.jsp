@@ -12,7 +12,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>회원</title>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
+<link rel="icon" type="image/x-icon" href="http://211.63.89.152/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -116,7 +116,7 @@ $(function(){
 	
 });//ready
 function goBack(){
-	location.href="http://localhost/shopping_mall_prj/views/user/infoUpdateForm.jsp";
+	location.href="http://211.63.89.152/views/user/infoUpdateForm.jsp";
 }
 
 </script>
@@ -128,7 +128,7 @@ String user_id=(String)session.getAttribute("user_id");
 if(user_id==null){ %>
 	<script>
 	alert("로그인이 필요한 페이지입니다.");
-	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
+	location.href="http://211.63.89.152/views/user/loginForm.jsp";
 	</script>
 <%}//end if %>  
 <% 
@@ -138,11 +138,11 @@ request.setCharacterEncoding("UTF-8");
 <jsp:useBean id="uVO" class="kr.co.shopping_mall.model.UserVO" scope="page"/>
 <jsp:setProperty property="*" name="uVO"/>
      &nbsp;<div class="dl" >
-        	<a href="http://localhost/shopping_mall_prj/views/user/myOrder.jsp"><div class="dt" id="order"><h3 id="dt">주문내역</h3></div></a>
-        	<a href="http://localhost/shopping_mall_prj/views/user/myInfo.jsp"><div class="dt" id="info"><h3 id="dt">개인정보</h3></div></a>
+        	<a href="http://211.63.89.152/views/user/myOrder.jsp"><div class="dt" id="order"><h3 id="dt">주문내역</h3></div></a>
+        	<a href="http://211.63.89.152/views/user/myInfo.jsp"><div class="dt" id="info"><h3 id="dt">개인정보</h3></div></a>
         </div>
 
-     <form id="delFrm" name="delFrm" action="http://localhost/shopping_mall_prj/views/user/delete_proc.jsp" method="post">
+     <form id="delFrm" name="delFrm" action="http://211.63.89.152/views/user/delete_proc.jsp" method="post">
 		<div align="center" style="color: #D09869; margin-bottom: 5%;">
 			<h2 id="title">회원 탈퇴</h2>
 			<div style="width: 30%;">

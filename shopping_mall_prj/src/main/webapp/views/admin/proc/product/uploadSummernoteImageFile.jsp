@@ -33,5 +33,5 @@ MultipartRequest mrequest
 
 		String filesystemName = mrequest.getFilesystemName("file");
 		
-		out.print("http://localhost/shopping_mall_prj/common/uploadImg/pro_detail/"+filesystemName);
+		out.print("http://211.63.89.152/common/uploadImg/pro_detail/"+filesystemName);
 %>

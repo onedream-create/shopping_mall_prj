@@ -11,7 +11,7 @@ String user_id=(String)session.getAttribute("user_id");
 if(user_id==null){ %>
 	<script>
 	alert("로그인이 필요한 페이지입니다.");
-	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
+	location.href="http://211.63.89.152/views/user/loginForm.jsp";
 	</script>
 <%}//end if
 
@@ -60,7 +60,7 @@ pageContext.setAttribute("dataCnt", list.size());
 <title>마이페이지_주문내역</title>
 
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
+<link rel="icon" type="image/x-icon" href="http://211.63.89.152/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -210,7 +210,7 @@ $(function(){
 </script>
 <body>   
 <jsp:include page="../layout/header.jsp"/>
-	<form id="OrderFrm" method="post" action="http://localhost/shopping_mall_prj/views/user/myOrder_proc.jsp">
+	<form id="OrderFrm" method="post" action="http://211.63.89.152/views/user/myOrder_proc.jsp">
         <div class="container">
         &nbsp;<div class="dl">
         	<a href="myOrder.jsp"><div class="dt"><h3 id="dt">주문내역</h3></div></a>

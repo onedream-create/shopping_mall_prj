@@ -18,7 +18,7 @@ String user_id=(String)session.getAttribute("user_id");
 if(user_id==null){ %>
 	<script>
 	alert("로그인이 필요한 페이지입니다.");
-	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
+	location.href="http://211.63.89.152/views/user/loginForm.jsp";
 	</script>
 <%}//end if
 String ord_cd=request.getParameter("ord_cd");
@@ -45,7 +45,7 @@ pageContext.setAttribute("dataCnt", list.size()); */
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>주문내역상세</title>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
+<link rel="icon" type="image/x-icon" href="http://211.63.89.152/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -119,7 +119,7 @@ pageContext.setAttribute("dataCnt", list.size()); */
 	             ProductVO pv=pVO.get(i);
 	             %>
 	             <tr>
-				<td><img src="http://localhost/shopping_mall_prj/common/uploadImg/pro_img/<%=pv.getPro_img() %>" width='100' height='100'></td>
+				<td><img src="http://211.63.89.152/common/uploadImg/pro_img/<%=pv.getPro_img() %>" width='100' height='100'></td>
 				<td><%=pv.getPro_name() %></td>
 				<td><%= ov.getOrdd_qty() %></td>
 				<% total = pv.getPro_price() * ov.getOrdd_qty(); %>
@@ -161,7 +161,7 @@ pageContext.setAttribute("dataCnt", list.size()); */
 	        </table>
         </div>
         <p style="text-align:center">
-		  <button type="button" class="btn btn-default btn-lg btn1" onclick="location.href='http://localhost/shopping_mall_prj/views/user/myOrder.jsp'">돌아가기</button>
+		  <button type="button" class="btn btn-default btn-lg btn1" onclick="location.href='http://211.63.89.152/views/user/myOrder.jsp'">돌아가기</button>
 		</p>
 	</div>
         </form>
@@ -172,6 +172,6 @@ pageContext.setAttribute("dataCnt", list.size()); */
 <c:if test="${ not empty e }">
 <script type="text/javascript">
 	alert("Error");
-	location.href="http://localhost/shopping_mall_prj/views/user/myOrder.jsp";
+	location.href="http://211.63.89.152/views/user/myOrder.jsp";
 </script>
 </c:if>

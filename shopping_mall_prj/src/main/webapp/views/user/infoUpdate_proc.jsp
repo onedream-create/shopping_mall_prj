@@ -24,7 +24,7 @@ String inputPw=uVO.getUser_pw();
 if(!curPw.equals(inputPw)){ %>
 	<script>
 	alert("비밀번호를 알맞게 입력해주세요.");
-	location.href="http://localhost/shopping_mall_prj/views/user/infoUpdateForm.jsp";
+	location.href="http://211.63.89.152/views/user/infoUpdateForm.jsp";
 	</script>
 <%}
 
@@ -37,7 +37,7 @@ if(curPw.equals(inputPw)){
 	String addr=uVO.getUser_addr();
 	int cnt=ud.updateInfo(userId, email, addr);	%>
 	<script>
-		location.href="http://localhost/shopping_mall_prj/views/user/infoUpdateCompl.jsp";
+		location.href="http://211.63.89.152/views/user/infoUpdateCompl.jsp";
 	</script>
 	
 <%}//end if

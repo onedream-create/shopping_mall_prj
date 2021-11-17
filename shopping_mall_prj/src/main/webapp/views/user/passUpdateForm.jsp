@@ -7,7 +7,7 @@ String user_id=(String)session.getAttribute("user_id");
 if(user_id==null){ %>
 	<script>
 	alert("로그인이 필요한 페이지입니다.");
-	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
+	location.href="http://211.63.89.152/views/user/loginForm.jsp";
 	</script>
 <%}//end if 
 
@@ -122,8 +122,8 @@ $(function(){
 <body>
 	<jsp:include page="../layout/header.jsp"/>
 	 &nbsp;<div class="dl" >
-        	<a href="http://localhost/shopping_mall_prj/views/user/myOrder.jsp"><div class="dt" id="order"><h3 id="dt">주문내역</h3></div></a>
-        	<a href="http://localhost/shopping_mall_prj/views/user/myInfo.jsp"><div class="dt" id="info"><h3 id="dt">개인정보</h3></div></a>
+        	<a href="http://211.63.89.152/views/user/myOrder.jsp"><div class="dt" id="order"><h3 id="dt">주문내역</h3></div></a>
+        	<a href="http://211.63.89.152/views/user/myInfo.jsp"><div class="dt" id="info"><h3 id="dt">개인정보</h3></div></a>
         </div>
         
 	<form id="passUpdateFrm" action="passUpdate_proc.jsp" method="post">

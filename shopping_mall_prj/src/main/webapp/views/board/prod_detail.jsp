@@ -21,7 +21,7 @@ pv.setPro_price_fmt(fmt.format(pv.getPro_price()));
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
+<link rel="icon" type="image/x-icon" href="http://211.63.89.152/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -158,13 +158,13 @@ $(function(){
 
 
 function moveCart(){
-	location.href="http://localhost/shopping_mall_prj/views/board/cart_list.jsp"
-	/* location.href="http://localhost/shopping_mall_prj/views/board/test.jsp" */
+	location.href="http://211.63.89.152/views/board/cart_list.jsp"
+	/* location.href="http://211.63.89.152/views/board/test.jsp" */
 }
 
 function addCart(){
 	if(confirm("장바구니에 담으시겠습니까?")){
-		location.href="http://localhost/shopping_mall_prj/views/board/cart_proc.jsp?pro_cd=<%=pro_cd%>&cnt=" + document.getElementById("numBox").value;
+		location.href="http://211.63.89.152/views/board/cart_proc.jsp?pro_cd=<%=pro_cd%>&cnt=" + document.getElementById("numBox").value;
 	}//end if
 }
 
@@ -175,7 +175,7 @@ function addCart(){
 	<form id="frm">
 	<div class="row" style="padding: 3%;">
 		<div class="col-md-6" style="text-align: center;">
-			<img src="http://localhost/shopping_mall_prj/common/uploadImg/pro_img/<%= pv.getPro_img() %>" id="imgSize">
+			<img src="http://211.63.89.152/common/uploadImg/pro_img/<%= pv.getPro_img() %>" id="imgSize">
 			<!-- <img src="http://placehold.it/400" id="imgSize"> -->
 		</div>
 		<div class="col-md-6">
@@ -214,7 +214,7 @@ function addCart(){
 	<div class="py-5" id="detailDiv">
 
 		<h2 id="h2Size">배송안내</h2>
-		<img src="http://localhost/shopping_mall_prj/common/image/delivery.png" id="deImgSize">
+		<img src="http://211.63.89.152/common/image/delivery.png" id="deImgSize">
 	</div>
 </div>
 

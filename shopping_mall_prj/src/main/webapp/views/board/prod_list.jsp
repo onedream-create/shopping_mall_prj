@@ -14,7 +14,7 @@
 <title>상품게시판</title>
 
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
+<link rel="icon" type="image/x-icon" href="http://211.63.89.152/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -150,11 +150,11 @@ if(endPage>totalPages){
 			<c:forEach var="pro" items="${ proData }">
 			<c:set var="i" value="${ i+1 }"/>
 			<div class="col mb-5">
-			<a href="http://localhost/shopping_mall_prj/views/board/prod_detail.jsp?pro_cd=${ pro.pro_cd }" id="pro">
+			<a href="http://211.63.89.152/views/board/prod_detail.jsp?pro_cd=${ pro.pro_cd }" id="pro">
 				<div class="card h-100" id="pro">
 					<!-- Product image-->
 					<img class="card-img-top"
-						src="http://localhost/shopping_mall_prj/common/uploadImg/pro_img/${ pro.pro_img }" style="width:100%; height:300px;"/>
+						src="http://211.63.89.152/common/uploadImg/pro_img/${ pro.pro_img }" style="width:100%; height:300px;"/>
 					<!-- Product details-->
 					<div class="card-body p-4">
 						<div class="text-center">
@@ -183,7 +183,7 @@ if(endPage>totalPages){
 			<%
 				}else{
 			%>
-			<li class="page-item"><a class="page-link" href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?<%if(category_cd!=null) {%>category_cd=<%=category_cd%><%}else{ %>searchValue=<%=searchValue %><%} %>&page=<%=startPage-1 %>"
+			<li class="page-item"><a class="page-link" href="http://211.63.89.152/views/board/prod_list.jsp?<%if(category_cd!=null) {%>category_cd=<%=category_cd%><%}else{ %>searchValue=<%=searchValue %><%} %>&page=<%=startPage-1 %>"
 				 tabindex="-1" aria-disable="true">Previous </a></li>
 			<%
 				}//end else
@@ -192,7 +192,7 @@ if(endPage>totalPages){
 				for(int i=startPage; i <= endPage; i++){
 			%>
 			<li class="page-item <%if( i == cPage){ %>active<%}%>">
-			<a class="page-link my" href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?<%if(category_cd!=null) {%>category_cd=<%=category_cd%><%}else{ %>searchValue=<%=searchValue %><%} %>&page=<%=i%>"><%= i  %></a></li>
+			<a class="page-link my" href="http://211.63.89.152/views/board/prod_list.jsp?<%if(category_cd!=null) {%>category_cd=<%=category_cd%><%}else{ %>searchValue=<%=searchValue %><%} %>&page=<%=i%>"><%= i  %></a></li>
 			<%
 				}//end for
 			%>
@@ -204,7 +204,7 @@ if(endPage>totalPages){
 				}else{
 			%>
 			<li class="page-item"><a class="page-link" 
-			href="http://localhost/shopping_mall_prj/views/board/prod_list.jsp?<%if(category_cd!=null) {%>category_cd=<%=category_cd%><%}else{ %>searchValue=<%=searchValue %><%} %>&page=<%=endPage+1%>">Next</a></li>
+			href="http://211.63.89.152/views/board/prod_list.jsp?<%if(category_cd!=null) {%>category_cd=<%=category_cd%><%}else{ %>searchValue=<%=searchValue %><%} %>&page=<%=endPage+1%>">Next</a></li>
 			<%
 				}//end else
 			%>

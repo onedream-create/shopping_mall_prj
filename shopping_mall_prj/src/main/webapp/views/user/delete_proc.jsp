@@ -19,18 +19,18 @@ if(check==1){
 	session.invalidate();//삭제했다면 세션 정보를 삭제%>
 <script>
 	alert("회원탈퇴가 완료되었습니다.");
-	location.href="http://localhost/shopping_mall_prj/views/index.jsp";
+	location.href="http://211.63.89.152/views/index.jsp";
 </script>
 <%} else{%>
 <script>
 	alert("비밀번호가 일치하지 않습니다.");
-	location.href="http://localhost/shopping_mall_prj/views/user/deleteForm.jsp";
+	location.href="http://211.63.89.152/views/user/deleteForm.jsp";
 </script>
 <%} %>
 </c:catch> 
 <c:if test="${ not empty e }">
 <script type="text/javascript">
 	alert("탈퇴에 실패 하였습니다.");
-	location.href="http://localhost/shopping_mall_prj/views/user/deleteForm.jsp";
+	location.href="http://211.63.89.152/views/user/deleteForm.jsp";
 </script>
 </c:if>

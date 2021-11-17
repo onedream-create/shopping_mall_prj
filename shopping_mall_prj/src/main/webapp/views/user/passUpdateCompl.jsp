@@ -33,7 +33,7 @@ hr{margin:0 auto; width:50%; border: 1px solid #000000; width : 800px; margin-bo
 </style>
 <script type="text/javascript">
 function moveMain(){
-	location.href="http://localhost/shopping_mall_prj/views/index.jsp";
+	location.href="http://211.63.89.152/views/index.jsp";
 }
 </script>
 <body>
