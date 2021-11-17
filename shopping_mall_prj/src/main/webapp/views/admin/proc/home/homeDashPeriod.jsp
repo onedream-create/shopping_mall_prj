@@ -9,7 +9,7 @@ AdminDAO aDAO = new AdminDAO();
 String date1 = request.getParameter("date1");
 String date2 = request.getParameter("date2");
 
-String countPrice = aDAO.countHomeDashPrice(date1,date2);
+int countPrice = aDAO.countHomeDashPrice(date1,date2);
 String countOrder = aDAO.countHomeDashOrder(date1,date2);
 
 HashMap<String, Object> hm = new HashMap<String, Object>();

@@ -781,7 +781,7 @@ function homeDashPeriod(){
 		success: function(data) {
 			$("#homeDashPeriod").empty();
 			let homeDashPeriod = '';
-			homeDashPeriod += '<div class="period">'+ data.countPrice +'원 ('+ data.countOrder + '건)' + '</div>';
+			homeDashPeriod += '<div class="period">'+ data.countPrice.toLocaleString('ko-KR') +'원 ('+ data.countOrder + '건)' + '</div>';
 			$("#homeDashPeriod").append(homeDashPeriod);
 		},
 		error: function() {
