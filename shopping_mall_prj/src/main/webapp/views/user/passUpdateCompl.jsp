@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>회원비밀번호변경완료</title>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -39,7 +39,7 @@ function moveMain(){
 <body>
 	<jsp:include page="../layout/header.jsp"/>
 		<div id="wrap" style="color:#D09869; font-weight: bold; font-family: 'Sunflower', sans-serif;">                          
-			<img src="https://cdn.icon-icons.com/icons2/1130/PNG/512/checkcircularbutton_80182.png"><br/>
+			<img src="http://localhost/shopping_mall_prj/common/image/check.png"><br/>
 			<div>
 				<h2 class="join">비밀번호가 변경되었습니다.</h2>
 				<div class="msg">다음 로그인시 새로운 비밀번호로 로그인해주세요.</div>

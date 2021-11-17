@@ -159,7 +159,7 @@ function moveInfoUpdate(){
         <!-- 본문 -->
         <div id="infoText"><h2 id="title" style="margin:10% 0 40px 0;">회원정보</h2>
         </div>
-        <div id="gradeText"><h5>회원님은 '<%= uv.getGrade_name() %>'입니다.</h5>
+        <div id="gradeText"><h5>회원님은 '<%= uv.getGrade_name() %>' 등급입니다.</h5>
         </div>
         <div class="table-responsive">
         <table class="table table-borderless" id="tbl-product" style="border-top:1px solid #D09869;">
