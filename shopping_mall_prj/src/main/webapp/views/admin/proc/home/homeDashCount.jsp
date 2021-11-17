@@ -13,10 +13,10 @@ String NowDate = sdf.format(new Date());
 SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMM01");
 String monDate = sdf1.format(new Date());
 
-String countPrice1 = aDAO.countHomeDashPrice(NowDate,NowDate);
+int countPrice1 = aDAO.countHomeDashPrice(NowDate,NowDate);
 String countOrder1 = aDAO.countHomeDashOrder(NowDate,NowDate);
 
-String countPrice2 = aDAO.countHomeDashPrice(monDate,NowDate);
+int countPrice2 = aDAO.countHomeDashPrice(monDate,NowDate);
 String countOrder2 = aDAO.countHomeDashOrder(monDate,NowDate);
 
 HashMap<String, Object> hm = new HashMap<String, Object>();
