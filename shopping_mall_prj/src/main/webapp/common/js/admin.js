@@ -704,7 +704,7 @@ function ordPagenation() {
 }
 
 //==========================================================================================================================
-//검색조건에따라 상품테이블 그리기
+//검색조건에따라 주문테이블 그리기
 function orderSearch(index) {
 	let division = $("#ord_division").val();
 	let searchValue = $("#order_cd_id").val();
