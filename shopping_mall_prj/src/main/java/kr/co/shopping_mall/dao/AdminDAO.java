@@ -694,8 +694,8 @@ public class AdminDAO {
 			return list;
 		}
 		
-		public String countHomeDashPrice(String date1, String date2) throws SQLException {
-			String price = null;
+		public int countHomeDashPrice(String date1, String date2) throws SQLException {
+			int price = 0;
 			
 			//1. Spring Container ¾ò±â
 			GetJdbcTemplate gjt=GetJdbcTemplate.getInstance();
@@ -705,7 +705,7 @@ public class AdminDAO {
 			StringBuilder countOrder = new StringBuilder();
 			countOrder.append(" select nvl(sum(ord_price),0) from orders where ord_stat_cd=? and to_char(ord_date,'YYYYMMDD') between ? and ? ");
 		
-			price=jt.queryForObject(countOrder.toString(), new Object[] {String.valueOf(3),String.valueOf(date1),String.valueOf(date2)},String.class);
+			price=jt.queryForObject(countOrder.toString(), new Object[] {String.valueOf(3),String.valueOf(date1),String.valueOf(date2)},Integer.class);
 		
 			gjt.closeAc();
 			return price;
