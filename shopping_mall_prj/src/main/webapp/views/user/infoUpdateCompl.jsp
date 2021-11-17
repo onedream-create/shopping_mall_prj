@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>회원정보수정완료</title>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -40,7 +40,7 @@ function moveMain(){
 	<jsp:include page="../layout/header.jsp"/>
 	
 		<div id="wrap" style="color:#D09869; font-weight: bold; font-family: 'Sunflower', sans-serif;">                          
-			<img src="https://cdn.icon-icons.com/icons2/1130/PNG/512/checkcircularbutton_80182.png"><br/>
+			<img src="http://localhost/shopping_mall_prj/common/image/check.png"><br/>
 			<div>
 				<h2 class="join">회원정보가 수정되었습니다.</h2>
 				<div class="msg">변경된 사항은 마이페이지에서 확인 하실 수 있습니다.</div>

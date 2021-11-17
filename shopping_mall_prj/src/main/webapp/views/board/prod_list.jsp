@@ -85,7 +85,7 @@ try{
 int totalRows=cnt;
 
 //총 페이지 수 구하기
-int len=12; //한 페이지에 보여줄 데이터 수
+int len=12; //한 페이지에 보여줄 데이터의 수
 int totalPages=(totalRows%len==0?totalRows/len:(totalRows/len)+1);
 if(totalPages==0){
 	totalPages=1;

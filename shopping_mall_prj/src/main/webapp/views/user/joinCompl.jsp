@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>회원가입완료</title>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -33,12 +33,19 @@ hr{margin:0 auto; width:50%; border: 1px solid #000000; width : 800px; margin-bo
 #btn1{width:15%; height:50px; background:#0099FF; ;color:#FFFFFF; font-size:16px; font-weight:bold; margin-bottom: 40px}
 </style>
 <script type="text/javascript">
+function moveMain(){
+	location.href="http://localhost/shopping_mall_prj/views/index.jsp";
+}
+
+function moveLog(){
+	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
+}
 
 </script>
 <body>
 	<jsp:include page="../layout/header.jsp"/>
 		<div id="wrap" style="color:#D09869; font-weight: bold; font-family: 'Sunflower', sans-serif;">                          
-			<img src="https://cdn.icon-icons.com/icons2/1130/PNG/512/checkcircularbutton_80182.png"><br/>
+			<img src="http://localhost/shopping_mall_prj/common/image/check.png"><br/>
 			<div>
 				<h2 class="join">회원가입이 완료되었습니다.</h2>
 				<div>회원가입을 축하드립니다.</div>
@@ -47,8 +54,8 @@ hr{margin:0 auto; width:50%; border: 1px solid #000000; width : 800px; margin-bo
 			</div>
 			<form action="frm">
 		<div>
-			  <button id="btn" type="button" class="btn btn-default btn-lg" style="background-color:#D09869; color : #FFFFFF; font-weight: bold; font-family: 'Sunflower', sans-serif;">홈으로</button>
-			  <button id="btn1" type="button" class="btn btn-default btn-lg" style="background-color:#D09869; color : #FFFFFF; font-weight: bold; font-family: 'Sunflower', sans-serif;">로그인</button>
+			  <button id="btn" type="button" class="btn btn-default btn-lg" style="background-color:#D09869; color : #FFFFFF; font-weight: bold; font-family: 'Sunflower', sans-serif;" onclick="moveMain()">홈으로</button>
+			  <button id="btn1" type="button" class="btn btn-default btn-lg" style="background-color:#D09869; color : #FFFFFF; font-weight: bold; font-family: 'Sunflower', sans-serif;" onclick="moveLog()">로그인</button>
 		</div>
 			</form>
 		</div>
