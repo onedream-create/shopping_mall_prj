@@ -119,7 +119,7 @@ pageContext.setAttribute("dataCnt", list.size()); */
 	             ProductVO pv=pVO.get(i);
 	             %>
 	             <tr>
-				<td><img src="http://localhost/shopping_mall_prj/common/uploadImg/pro_img/<%=pv.getPro_img() %>"></td>
+				<td><img src="http://localhost/shopping_mall_prj/common/uploadImg/pro_img/<%=pv.getPro_img() %>" width='100' height='100'></td>
 				<td><%=pv.getPro_name() %></td>
 				<td><%= ov.getOrdd_qty() %></td>
 				<% total = pv.getPro_price() * ov.getOrdd_qty(); %>
