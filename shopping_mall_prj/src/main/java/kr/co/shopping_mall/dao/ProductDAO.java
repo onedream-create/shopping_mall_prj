@@ -32,9 +32,9 @@ public class ProductDAO {
 		.append("	from(select ROWNUM AS RNUM, P.*		")
 		.append("	from product P	");
 		if(category_cd == 0) {
-			selectPro.append("	where ROWNUM <= ?+?)		");
+			selectPro.append("	where ROWNUM <= ?+? and sell_fl='y')		");
 		}else {
-			selectPro.append("	where ROWNUM <= ?+? and P.category_cd=?)		");
+			selectPro.append("	where ROWNUM <= ?+? and P.category_cd=? and sell_fl='y')		");
 		}//end else
 		selectPro.append("	where RNUM > ?		")
 		.append("	and sell_fl='y'	");
