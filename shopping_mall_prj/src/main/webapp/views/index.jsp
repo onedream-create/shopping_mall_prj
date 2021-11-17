@@ -67,14 +67,14 @@ pageContext.setAttribute("proData", list);
 			</div>
 			<div class="carousel-inner">
 				<div class="carousel-item active">
-					<img src="http://placehold.it/1500X500" class="d-block w-100" alt="..."
+					<img src="http://localhost/shopping_mall_prj/common/image/carousel1.png" class="d-block w-100" alt="..."
 						style="height:500px;">
 				</div>
 				<div class="carousel-item">
-					<img src="http://placehold.it/1500X500" class="d-block w-100" alt="..." style="height:500px;">
+					<img src="http://localhost/shopping_mall_prj/common/image/carousel2.png" class="d-block w-100" alt="..." style="height:500px;">
 				</div>
 				<div class="carousel-item">
-					<img src="http://placehold.it/1500X500" class="d-block w-100" alt="..." style="height:500px;">
+					<img src="http://localhost/shopping_mall_prj/common/image/carousel3.png" class="d-block w-100" alt="..." style="height:500px;">
 				</div>
 			</div>
 			<button class="carousel-control-prev" type="button"
