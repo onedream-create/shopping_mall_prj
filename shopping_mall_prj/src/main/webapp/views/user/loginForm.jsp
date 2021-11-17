@@ -84,6 +84,11 @@ $(function(){
 	$("#login").click(function(){
 		$("#frm").submit();
 	});
+	$("#user_pw").keydown(function(){
+		if(key.keyCode==13){
+			$("#frm").submit();
+		}
+	});
 });//ready
 </script>
 </head>
@@ -94,10 +99,10 @@ $(function(){
       </div>
       <form name="frm" id="frm" action="login_proc.jsp" method="post" >
          <div class="input-group input-group-lg mb-3">
-            <input type="text" name="user_id" value="LG123" class="form-control" placeholder="아이디" required >
+            <input type="text" name="user_id" class="form-control" placeholder="아이디" required >
          </div>
          <div class="input-group input-group-lg mb-4">
-            <input type="password" name="user_pw" value="1234" class="form-control" placeholder="비밀번호" required>
+            <input type="password" name="user_pw" id="user_pw" class="form-control" placeholder="비밀번호" required>
          </div>
          <button type="button" id="login" class="btn btn-default btn-lg">로그인</button>
          <input type="button" id="join"class="btn btn-default btn-lg" value="회원가입" onclick="location.href='joinForm.jsp'"/>

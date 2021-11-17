@@ -176,22 +176,22 @@ function telValidator(args) {
             <input type="button" class="form-control" value="중복확인" id="dupId">
          </div>
          <div class="input-group input-group-lg mb-4">
-            <input type="password" name="user_pw" class="form-control" value="11" id="user_pw1" placeholder="비밀번호">
+            <input type="password" name="user_pw" class="form-control" id="user_pw1" placeholder="비밀번호">
          </div>
          <div class="input-group input-group-lg mb-4">
-            <input type="password" name="user_pw" class="form-control" value="11" id="user_pw2" placeholder="비밀번호 확인">
+            <input type="password" name="user_pw" class="form-control" id="user_pw2" placeholder="비밀번호 확인">
          </div>
          <div class="input-group input-group-lg mb-4">
-            <input type="text" name="user_name" class="form-control" value="이현경" id="user_name" placeholder="이름">
+            <input type="text" name="user_name" class="form-control" id="user_name" placeholder="이름">
          </div>
          <div class="input-group input-group-lg mb-4">
             <input type="text" name="user_tel" class="form-control"  id="user_tel" placeholder="전화번호 ( '-' 제외 하고 입력)">
          </div>
          <div class="input-group input-group-lg mb-4">
-            <input type="email" name="user_email" class="form-control" value="l@naver.com" id="user_email" placeholder="이메일">
+            <input type="email" name="user_email" class="form-control" id="user_email" placeholder="이메일">
          </div>
          <div class="input-group input-group-lg mb-4">
-            <input type="text" name="user_addr" class="form-control"  value="서울" id="user_addr" placeholder="주소">
+            <input type="text" name="user_addr" class="form-control"  id="user_addr" placeholder="주소">
          </div>
          <div class="input-group input-group-lg mb-4">
             <ul class="join_box">
@@ -220,7 +220,7 @@ function telValidator(args) {
                     <ul class="clearfix">
                         <li>개인정보 수집 및 이용에 대한 안내(필수)</li>
                         <li class="checkBtn">
-                            <input type="checkbox" name="chk">
+                            <input type="checkbox" name="chk" required>
                         </li>
                     </ul>
  
