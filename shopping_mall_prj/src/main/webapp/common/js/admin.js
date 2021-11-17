@@ -755,8 +755,8 @@ function homeDashCount(){
 			$("#homeDashTbody").empty();
 			let homeDashTbody = '';
 			homeDashTbody += '<tr class="trow">';
-			homeDashTbody += '<td>' + data.countPrice1 +'원 (' + data.countOrder1 + '건)' +'</td>';
-			homeDashTbody += '<td>' + data.countPrice2 +'원 (' + data.countOrder2 + '건)' +'</td>';
+			homeDashTbody += '<td>' + data.countPrice1.toLocaleString('ko-KR') +'원 (' + data.countOrder1 + '건)' +'</td>';
+			homeDashTbody += '<td>' + data.countPrice2.toLocaleString('ko-KR') +'원 (' + data.countOrder2 + '건)' +'</td>';
 			homeDashTbody += '</tr>'
 			$("#homeDashTbody").append(homeDashTbody);
 		},
