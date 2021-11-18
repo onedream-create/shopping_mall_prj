@@ -29,7 +29,6 @@
 <!-- Core theme CSS (includes Bootstrap)-->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-
 <script type="text/javascript">
 $(function(){
 	$("#btn").click(function(){
@@ -77,7 +76,7 @@ function sendId(user_id){
 <h2 style="text-align:center; color:#D09869; margin:30px 0;font-weight: bold; font-family: 'Sunflower', sans-serif;">아이디중복확인</h2>
 <!--  웹 브라우저에 키 입력이 가능한 Form Control이 하나만 제공되나면
 자바스크립트 코드를 정의하지 않아도 엔터를 쳤을 때 back-end로 전송된다. -->
-<div class="input-group mb-3">
+<div class="input-group mb-3" style="align:center !important;">
 	<input type="text" name="user_id" id="user_id" placeholder="아이디" style="width:300px; height:40px; margin:0 5px 10px 30px;"/>
 	<!-- 자동전송을 막기위해 값전달이 되지 않는 form control을 하나 만들고 숨긴다. -->
 	<input class="form-control" type="text" style="display:none;"/>

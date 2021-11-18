@@ -71,6 +71,7 @@ function btnClick(str) {
             data : formData, 
             success: function(data) {
             	alert("성공");
+            	opener.parent.userDashCount();
             	self.close();
             },
 			error: function() {

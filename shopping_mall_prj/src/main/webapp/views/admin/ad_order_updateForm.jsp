@@ -64,6 +64,7 @@ function btnClick(str) {
 	        data : formdata, 
 	     	 success: function(data) {
 	            alert("완료");
+	            opener.parent.orderDashCount();
 	            self.close();
 	          },
 			error: function() {
@@ -126,9 +127,9 @@ List<OrderDetailVO> listOd = aDAO.getOrderDetailInfo(ord_cd);
 					</tr>
 					<%for(int i=0; i<listOd.size(); i++) {%>
 					<tr>
-						<td class="readOnly"><input type="text" class="form-control" name="pro_name" value=<%=listOd.get(i).getPro_name()%> readonly="readonly"/></td>
-						<td class="readOnly"><input type="text" class="form-control" name="ordd_qty" value=<%=listOd.get(i).getOrdd_qty()%> readonly="readonly"/></td>
-						<td class="readOnly"><input type="text" class="form-control" name="pro_price" value=<%=listOd.get(i).getPro_price()%> readonly="readonly"/></td>
+						<td class="readOnly"><input type="text" class="form-control" name="pro_name" value="<%=listOd.get(i).getPro_name()%>" readonly="readonly"/></td>
+						<td class="readOnly"><input type="text" class="form-control" name="ordd_qty" value="<%=listOd.get(i).getOrdd_qty()%>" readonly="readonly"/></td>
+						<td class="readOnly"><input type="text" class="form-control" name="pro_price" value="<%=listOd.get(i).getPro_price()%>" readonly="readonly"/></td>
 					</tr>
 					<%}%>
 					

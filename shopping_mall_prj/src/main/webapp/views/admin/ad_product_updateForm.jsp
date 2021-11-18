@@ -70,6 +70,8 @@ function btnClick(str) {
             data : formData, 
             success: function(data) {
             	alert("완료");
+            	opener.parent.proDashCount();
+            	opener.parent.homeDashCount();
             	self.close();
             },
 			error: function() {

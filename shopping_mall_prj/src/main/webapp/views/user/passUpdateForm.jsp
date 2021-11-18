@@ -132,8 +132,8 @@ function goBack(){
         
 	<form id="passUpdateFrm" action="passUpdate_proc.jsp" method="post">
  		<div align="center" style="color:#D09869; margin-bottom:5%;">
+ 		<div style="width : 30%;">
          <h2 id="title">비밀번호 변경</h2>    
-         <div style="width:30%;">
          	<div class="container3">
          		<label style="padding-right:6.5%;">현재 비밀번호</label>
          		<input type="password" class="passInput" id="curPass" placeholder="비밀번호" name="cur_pass"/>
@@ -146,8 +146,8 @@ function goBack(){
          		<label style="padding-right:3%;">새 비밀번호 확인</label>
          		<input type="password" class="passInput" id="newPassChk" placeholder="비밀번호"/>
          	</div>
+         	</div>
          </div>
-     </div> 
 
 		<p style="text-align:center;"><!-- 56px -->
 		  <button type="button" class="btn btn-default btn-lg" id="updatePassBtn">변경완료</button>

@@ -8,6 +8,7 @@
 <%
 //session을 통해 들어온 로그인 정보가 없으면 회원가입페이지로 이동
 String user_id=(String)session.getAttribute("user_id");
+<<<<<<< HEAD
 if(user_id==null){ %>
 	<script>
 	alert("로그인이 필요한 페이지입니다.");
@@ -15,6 +16,14 @@ if(user_id==null){ %>
 	</script>
 <%}//end if 
 
+=======
+if(user_id==null){ 
+	response.sendRedirect("http://localhost/shopping_mall_prj/views/user/loginForm.jsp?err_flag=1");
+	return;
+}//end if %>
+<%
+	
+>>>>>>> refs/heads/master
 //user_id값을 통한 개인정보조회
 UserDAO ud=new UserDAO();
 UserInfoVO uv=ud.selectInfo(user_id);

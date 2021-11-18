@@ -76,7 +76,7 @@ $(function(){
 	$("#dupId").click(function(){
 		//새 창의 크기
 		cw=500;
-		ch=600;
+		ch=500;
 		//스크린의 크기
 		sw=screen.availWidth;
 		sh=screen.availHeight;
@@ -124,6 +124,14 @@ $(function(){
 		if($("#user_addr").val()==""){
 			alert("주소를 입력해주세요.");
 			$("#user_addr").focus();
+			return;
+		}//end if
+		if(!$("input:checked[id='chkReq1']").is(":checked")){
+			alert("필수 항목에 모두 동의해주세요.");
+			return;
+		}//end if
+		if(!$("input:checked[id='chkReq2']").is(":checked")){
+			alert("필수 항목에 모두 동의해주세요");
 			return;
 		}//end if
 	   $("#frm").submit();
@@ -209,7 +217,7 @@ function telValidator(args) {
                     <ul class="clearfix">
                         <li>이용약관 동의(필수)</li>
                         <li class="checkBtn">
-                            <input type="checkbox" name="chk" required> 
+                            <input type="checkbox" name="chk" id="chkReq1"> 
                         </li>
                     </ul>
                     <div>여러분을 환영합니다.
@@ -220,7 +228,7 @@ function telValidator(args) {
                     <ul class="clearfix">
                         <li>개인정보 수집 및 이용에 대한 안내(필수)</li>
                         <li class="checkBtn">
-                            <input type="checkbox" name="chk" required>
+                            <input type="checkbox" name="chk" id="chkReq2">
                         </li>
                     </ul>
  
