@@ -140,8 +140,8 @@ function goBack(){
 
      <form id="infoUpdateFrm" action="http://localhost/shopping_mall_prj/views/user/infoUpdate_proc.jsp" method="post">
 		<div align="center" style="color: #D09869; margin-bottom: 5%;">
-			<h2 id="title">회원정보 수정</h2>
 			<div style="width: 30%;">
+			<h2 id="title">회원정보 수정</h2>
 				<div class="container3">
 					<label style="padding-right: 7%;">아이디</label> <input
 						type="text" class="passInput" readonly="readonly" placeholder="<%= uv.getUser_id()%>"/>

@@ -44,8 +44,12 @@ for(int i=1; i < list.size(); i++){
 		flagNum=i;
 		cnt=0;
 	}//end else
-		
-}//end for
+	if(i==list.size()-1){
+		if(cnt != 0){
+			list.get(flagNum).setPro_name(list.get(flagNum).getPro_name() + " 외 " + cnt + "건" );
+		}//end if
+	}//end if
+}//end for 
 
 pageContext.setAttribute("orderData", list);
 pageContext.setAttribute("dataCnt", list.size());
