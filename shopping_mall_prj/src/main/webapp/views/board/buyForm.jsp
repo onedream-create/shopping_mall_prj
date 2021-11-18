@@ -151,17 +151,7 @@ function buy(){
 </head>
 <body>   
 <jsp:include page="../layout/header.jsp"/>
-<<<<<<< HEAD
-<%
-//session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
-if(user_id==null){ %>
-	<script>
-	alert("로그인이 필요한 페이지입니다.");
-	location.href="http://211.63.89.152/views/user/loginForm.jsp";
-	</script>
-<%}//end if %> 
-=======
->>>>>>> refs/heads/master
+
 	<form name="frm" id="frm" method="post" action="buyCompl.jsp"><!-- 헐 -->
         <div class="container">
 	        <h2>주문서 작성</h2>         

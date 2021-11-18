@@ -66,7 +66,7 @@ if(user_id==null){
  response.sendRedirect("http://211.63.89.152/views/user/loginForm.jsp?err_flag=1");
  return;
 }//end if %> 
->>>>>>> refs/heads/master
+
 <jsp:include page="../layout/header.jsp"/>
 <jsp:useBean id="dVO" class="kr.co.shopping_mall.model.DeliveryVO" scope="page"/>
 <jsp:setProperty property="*" name="dVO"/>
