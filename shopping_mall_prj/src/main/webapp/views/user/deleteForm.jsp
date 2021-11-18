@@ -80,8 +80,8 @@
     	font-size:15px;
     }
 
-    #title{
-    	text-align:center; 
+    #title2{
+    	//text-align:center; 
     	color:#D09869; 
     	font-weight: bold; 
     	font-family: 'Sunflower', sans-serif; 
@@ -144,8 +144,8 @@ request.setCharacterEncoding("UTF-8");
 
      <form id="delFrm" name="delFrm" action="http://localhost/shopping_mall_prj/views/user/delete_proc.jsp" method="post">
 		<div align="center" style="color: #D09869; margin-bottom: 5%;">
-			<h2 id="title">회원 탈퇴</h2>
-			<div style="width: 30%;">
+			<div style="width: 35%;">
+			<h2 id="title2">회원 탈퇴</h2>
 				<div class="container3">
 					<!-- <label style="padding-right: 7%;">아이디</label> --> <input
 						type="text" class="passInput" readonly="readonly" placeholder="<%= user_id%>"/>
