@@ -10,7 +10,7 @@
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>회원</title>
+<title>회원탈퇴</title>
 <!-- Favicon-->
 <link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
 <!--jQuery CDN-->
@@ -80,8 +80,8 @@
     	font-size:15px;
     }
 
-    #title{
-    	text-align:center; 
+    #title2{
+    	//text-align:center; 
     	color:#D09869; 
     	font-weight: bold; 
     	font-family: 'Sunflower', sans-serif; 
@@ -122,17 +122,15 @@ function goBack(){
 </script>
 <body>
 	<jsp:include page="../layout/header.jsp"/>
-	<%
+<%
 //session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
 String user_id=(String)session.getAttribute("user_id");
-if(user_id==null){ %>
-	<script>
-	alert("로그인이 필요한 페이지입니다.");
-	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
-	</script>
-<%}//end if %>  
+if(user_id==null){ 
+	
+ response.sendRedirect("http://localhost/shopping_mall_prj/views/user/loginForm.jsp?err_flag=1");
+ return;
+}//end if %> 
 <% 
-String userId=(String)session.getAttribute("user_id");
 request.setCharacterEncoding("UTF-8");
 %>
 <jsp:useBean id="uVO" class="kr.co.shopping_mall.model.UserVO" scope="page"/>
@@ -144,8 +142,8 @@ request.setCharacterEncoding("UTF-8");
 
      <form id="delFrm" name="delFrm" action="http://localhost/shopping_mall_prj/views/user/delete_proc.jsp" method="post">
 		<div align="center" style="color: #D09869; margin-bottom: 5%;">
-			<h2 id="title">회원 탈퇴</h2>
-			<div style="width: 30%;">
+			<div style="width: 35%;">
+			<h2 id="title2">회원 탈퇴</h2>
 				<div class="container3">
 					<!-- <label style="padding-right: 7%;">아이디</label> --> <input
 						type="text" class="passInput" readonly="readonly" placeholder="<%= user_id%>"/>
