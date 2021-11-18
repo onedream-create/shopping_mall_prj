@@ -8,12 +8,11 @@
 <%
 //session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
 String user_id=(String)session.getAttribute("user_id");
-if(user_id==null){ %>
-	<script>
-	alert("로그인이 필요한 페이지입니다.");
-	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
-	</script>
-<%}//end if 
+if(user_id==null){ 
+	response.sendRedirect("http://localhost/shopping_mall_prj/views/user/loginForm.jsp?err_flag=1");
+	return;
+}//end if %>
+<%
 
 	//user_id값을 통한 개인정보조회
 	UserDAO ud=new UserDAO();
@@ -140,8 +139,8 @@ function goBack(){
 
      <form id="infoUpdateFrm" action="http://localhost/shopping_mall_prj/views/user/infoUpdate_proc.jsp" method="post">
 		<div align="center" style="color: #D09869; margin-bottom: 5%;">
-			<h2 id="title">회원정보 수정</h2>
 			<div style="width: 30%;">
+			<h2 id="title">회원정보 수정</h2>
 				<div class="container3">
 					<label style="padding-right: 7%;">아이디</label> <input
 						type="text" class="passInput" readonly="readonly" placeholder="<%= uv.getUser_id()%>"/>

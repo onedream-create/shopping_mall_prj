@@ -15,14 +15,15 @@ if(user_id==null){ %>
 	</script>
 <%}//end if
 
+if(user_id!=null){
 //user_id값을 통한 주문정보조회
 OrderDAO od=new OrderDAO();
 List<OrderInfoVO> list=od.selectOrder(user_id);
 
-//pro_name에 ordd_qty 더하기(test1 1개)
+/* //pro_name에 ordd_qty 더하기(test1 1개)
 for(int i=0; i < list.size(); i++){
 	list.get(i).setPro_name(list.get(i).getPro_name() + " " + list.get(i).getOrdd_qty() + "개");
-}//end for
+}//end for */
 
 
 //ord_cd가 같은게 존재하면 pro_name에 += pro_name 
@@ -44,11 +45,16 @@ for(int i=1; i < list.size(); i++){
 		flagNum=i;
 		cnt=0;
 	}//end else
-		
-}//end for
+	if(i==list.size()-1){
+		if(cnt != 0){
+			list.get(flagNum).setPro_name(list.get(flagNum).getPro_name() + " 외 " + cnt + "건" );
+		}//end if
+	}//end if
+}//end for 
 
 pageContext.setAttribute("orderData", list);
 pageContext.setAttribute("dataCnt", list.size());
+}
 %>
 
 <!DOCTYPE html>

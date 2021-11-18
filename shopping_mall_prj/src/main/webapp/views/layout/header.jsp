@@ -31,7 +31,9 @@ function moveCart(){
 		<a href="http://localhost/shopping_mall_prj/views/index.jsp" style="text-decoration:none; color:#D09869;">1조네 농산물</a></h1>
 	<% if(session.getAttribute("user_id")==null){ %>
 	<input type="button" class="btn" value="로그인"
-		style="position: absolute; top: 10px; right: 30px;" onclick="moveLogin()">
+		style="position: absolute; top: 10px; right: 110px;" onclick="moveLogin()">
+	<input type="button" class="btn" value="장바구니"
+		style="position: absolute; top: 10px; right: 30px;" onclick="moveCart()">
 	<%}else{ %>
 	<input type="button" class="btn" value="로그아웃"
 		style="position: absolute; top: 10px; right: 205px;" onclick="moveLogout()">
