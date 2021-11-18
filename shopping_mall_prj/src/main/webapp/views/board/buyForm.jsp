@@ -31,6 +31,14 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 <%
+//session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
+String user_id=(String)session.getAttribute("user_id");
+if(user_id==null){ 
+	
+ response.sendRedirect("http://localhost/shopping_mall_prj/views/user/loginForm.jsp?err_flag=1");
+ return;
+}//end if %> 
+<%
 	request.setCharacterEncoding("UTF-8");
 	ArrayList<ProductVO> cart=null;
 	
@@ -41,7 +49,7 @@
 		cart=(ArrayList<ProductVO>)obj;
 	}
 	ArrayList<DeliveryVO> delivery= new ArrayList<DeliveryVO>();
-	String user_id=(String)session.getAttribute("user_id");
+	//String user_id=(String)session.getAttribute("user_id");
 	UserDAO uDAO= new UserDAO();
 	UserInfoVO uVO = uDAO.selectInfo(user_id);
 	//개인정보 복호화
@@ -143,14 +151,6 @@ function buy(){
 </head>
 <body>   
 <jsp:include page="../layout/header.jsp"/>
-<%
-//session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
-if(user_id==null){ %>
-	<script>
-	alert("로그인이 필요한 페이지입니다.");
-	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
-	</script>
-<%}//end if %> 
 	<form name="frm" id="frm" method="post" action="buyCompl.jsp"><!-- 헐 -->
         <div class="container">
 	        <h2>주문서 작성</h2>         

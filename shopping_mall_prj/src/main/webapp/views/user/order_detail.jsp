@@ -12,15 +12,16 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:catch var="e">
 <%
-request.setCharacterEncoding("UTF-8");
 //session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
 String user_id=(String)session.getAttribute("user_id");
-if(user_id==null){ %>
-	<script>
-	alert("로그인이 필요한 페이지입니다.");
-	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
-	</script>
-<%}//end if
+if(user_id==null){ 
+	
+ response.sendRedirect("http://localhost/shopping_mall_prj/views/user/loginForm.jsp?err_flag=1");
+ return;
+}//end if %> 
+<%
+request.setCharacterEncoding("UTF-8");
+//session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
 String ord_cd=request.getParameter("ord_cd");
 //out.println(ord_cd);
 OrderDAO od=new OrderDAO();
