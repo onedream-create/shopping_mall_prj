@@ -55,17 +55,15 @@ request.setCharacterEncoding("UTF-8");
 <%
 //session을 통해 들어온 로그인 정보가 없으면 로그인페이지로 이동
 String user_id=(String)session.getAttribute("user_id");
-<<<<<<< HEAD
 if(user_id==null){ %>
 	<script>
 	alert("로그인이 필요한 페이지입니다.");
 	location.href="http://211.63.89.152/views/user/loginForm.jsp";
 	</script>
 <%}//end if %> 
-=======
 if(user_id==null){ 
 	
- response.sendRedirect("http://localhost/shopping_mall_prj/views/user/loginForm.jsp?err_flag=1");
+ response.sendRedirect("http://211.63.89.152/views/user/loginForm.jsp?err_flag=1");
  return;
 }//end if %> 
 >>>>>>> refs/heads/master

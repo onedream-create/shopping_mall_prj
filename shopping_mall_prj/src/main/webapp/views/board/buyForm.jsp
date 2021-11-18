@@ -35,7 +35,7 @@
 String user_id=(String)session.getAttribute("user_id");
 if(user_id==null){ 
 	
- response.sendRedirect("http://localhost/shopping_mall_prj/views/user/loginForm.jsp?err_flag=1");
+ response.sendRedirect("http://211.63.89.152/views/user/loginForm.jsp?err_flag=1");
  return;
 }//end if %> 
 <%
