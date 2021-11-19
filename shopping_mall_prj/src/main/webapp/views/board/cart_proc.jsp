@@ -52,5 +52,5 @@ session.setAttribute("cart", cart);
 
 <script>
 alert("장바구니에 담았습니다."); 
-location.href="http://211.63.89.152/views/board/prod_detail.jsp?pro_cd=<%=pro_cd%>";
+location.href="http://localhost/shopping_mall_prj/views/board/prod_detail.jsp?pro_cd=<%=pro_cd%>";
 </script>

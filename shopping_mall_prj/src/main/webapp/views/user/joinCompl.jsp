@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>회원가입완료</title>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="http://211.63.89.152/common/image/favicon.png" />
+<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -34,18 +34,18 @@ hr{margin:0 auto; width:50%; border: 1px solid #000000; width : 800px; margin-bo
 </style>
 <script type="text/javascript">
 function moveMain(){
-	location.href="http://211.63.89.152/views/index.jsp";
+	location.href="http://localhost/shopping_mall_prj/views/index.jsp";
 }
 
 function moveLog(){
-	location.href="http://211.63.89.152/views/user/loginForm.jsp";
+	location.href="http://localhost/shopping_mall_prj/views/user/loginForm.jsp";
 }
 
 </script>
 <body>
 	<jsp:include page="../layout/header.jsp"/>
 		<div id="wrap" style="color:#D09869; font-weight: bold; font-family: 'Sunflower', sans-serif;">                          
-			<img src="http://211.63.89.152/common/image/check.png"><br/>
+			<img src="http://localhost/shopping_mall_prj/common/image/check.png"><br/>
 			<div>
 				<h2 class="join">회원가입이 완료되었습니다.</h2>
 				<div>회원가입을 축하드립니다.</div>

@@ -17,7 +17,7 @@ String user_id=(String)session.getAttribute("user_id");
 
 if(user_id==null){ 
 	
- response.sendRedirect("http://211.63.89.152/views/user/loginForm.jsp?err_flag=1");
+ response.sendRedirect("http://localhost/shopping_mall_prj/views/user/loginForm.jsp?err_flag=1");
  return;
 }//end if %> 
 <%
@@ -44,7 +44,7 @@ dVO.setDv_tel(dd.decryption(dVO.getDv_tel()));
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>주문내역상세</title>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="http://211.63.89.152/common/image/favicon.png" />
+<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -117,7 +117,7 @@ dVO.setDv_tel(dd.decryption(dVO.getDv_tel()));
 	             ProductVO pv=pVO.get(i);
 	             %>
 	             <tr>
-				<td><img src="http://211.63.89.152/common/uploadImg/pro_img/<%=pv.getPro_img() %>" width='100' height='100'></td>
+				<td><img src="http://localhost/shopping_mall_prj/common/uploadImg/pro_img/<%=pv.getPro_img() %>" width='100' height='100'></td>
 				<td><%=pv.getPro_name() %></td>
 				<td><%= ov.getOrdd_qty() %></td>
 				<% total = pv.getPro_price() * ov.getOrdd_qty(); %>
@@ -159,7 +159,7 @@ dVO.setDv_tel(dd.decryption(dVO.getDv_tel()));
 	        </table>
         </div>
         <p style="text-align:center">
-		  <button type="button" class="btn btn-default btn-lg btn1" onclick="location.href='http://211.63.89.152/views/user/myOrder.jsp'">돌아가기</button>
+		  <button type="button" class="btn btn-default btn-lg btn1" onclick="location.href='http://localhost/shopping_mall_prj/views/user/myOrder.jsp'">돌아가기</button>
 		</p>
 	</div>
         </form>
@@ -170,6 +170,6 @@ dVO.setDv_tel(dd.decryption(dVO.getDv_tel()));
 <c:if test="${ not empty e }">
 <script type="text/javascript">
 	alert("Error");
-	location.href="http://211.63.89.152/views/user/myOrder.jsp";
+	location.href="http://localhost/shopping_mall_prj/views/user/myOrder.jsp";
 </script>
 </c:if>

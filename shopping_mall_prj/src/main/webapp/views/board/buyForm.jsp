@@ -16,7 +16,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>구매하기</title>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="http://211.63.89.152/common/image/favicon.png" />
+<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -35,7 +35,7 @@
 String user_id=(String)session.getAttribute("user_id");
 if(user_id==null){ 
 	
- response.sendRedirect("http://211.63.89.152/views/user/loginForm.jsp?err_flag=1");
+ response.sendRedirect("http://localhost/shopping_mall_prj/views/user/loginForm.jsp?err_flag=1");
  return;
 }//end if %> 
 <%
@@ -142,7 +142,7 @@ function telValidator(args) {
     }
 }//telValidator 
 function goCart(){
-	location.href="http://211.63.89.152/views/board/cart_list.jsp";
+	location.href="http://localhost/shopping_mall_prj/views/board/cart_list.jsp";
 }
 function buy(){
 	$("#frm").submit();

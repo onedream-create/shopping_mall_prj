@@ -14,7 +14,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>장바구니</title>
 <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="http://211.63.89.152/common/image/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -145,7 +145,7 @@ function cartRemove( pro_cd, pro_name ){
 		    				ProductVO pv = cart.get(i);
 		    				out.println("<tr>");
 		    					/* out.println("<td><input type='checkbox' name='item' value='"+pv.getPro_cd()+"'></td>"); */
-		    					out.println("<td><img src='http://211.63.89.152/common/uploadImg/pro_img/" + pv.getPro_img() + "' width='100' height='100'></td>");
+		    					out.println("<td><img src='http://localhost/shopping_mall_prj/common/uploadImg/pro_img/" + pv.getPro_img() + "' width='100' height='100'></td>");
 		    					out.println("<td>" + pv.getPro_name() + "</td>");
 		    					out.println("<td>" + pv.getCnt() + "</td>");
 		    					total = pv.getPro_price() * pv.getCnt();

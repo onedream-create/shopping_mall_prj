@@ -26,7 +26,7 @@
    integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF"
    crossorigin="anonymous"></script>
     <!-- Favicon-->
-    <link rel="icon" type="image/x-icon" href="http://211.63.89.152/common/image/favicon.png" />
+    <link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
     <!-- font -->
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -175,7 +175,7 @@ function telValidator(args) {
 <body>
     <div class="container container1">
       <div class="mb-5 container2">
-         <h1><a href="http://211.63.89.152/views/index.jsp" style="text-decoration:none; color:#D09869;">1조네 농산물</a></h1>
+         <h1><a href="http://localhost/shopping_mall_prj/views/index.jsp" style="text-decoration:none; color:#D09869;">1조네 농산물</a></h1>
          <h6>회원정보를 입력해주세요</h6>
       </div>
       <form name="frm" id="frm" action="join_proc.jsp" method="post">

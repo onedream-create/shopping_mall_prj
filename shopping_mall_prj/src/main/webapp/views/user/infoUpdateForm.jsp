@@ -10,7 +10,7 @@
 String user_id=(String)session.getAttribute("user_id");
 
 if(user_id==null){ 
-	response.sendRedirect("http://211.63.89.152/views/user/loginForm.jsp?err_flag=1");
+	response.sendRedirect("http://localhost/shopping_mall_prj/views/user/loginForm.jsp?err_flag=1");
 	return;
 }//end if %>
 <%
@@ -32,7 +32,7 @@ if(user_id==null){
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>회원정보수정</title>
 <!-- Favicon-->
-<link rel="icon" type="image/x-icon" href="http://211.63.89.152/common/image/favicon.png" />
+<link rel="icon" type="image/x-icon" href="http://localhost/shopping_mall_prj/common/image/favicon.png" />
 <!--jQuery CDN-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <!-- font -->
@@ -128,17 +128,17 @@ function userDelete(user_id){
 }
 
 function goBack(){
-	location.href="http://211.63.89.152/views/user/myInfo.jsp";
+	location.href="http://localhost/shopping_mall_prj/views/user/myInfo.jsp";
 }
 </script>
 <body>
 	<jsp:include page="../layout/header.jsp"/>
      &nbsp;<div class="dl" >
-        	<a href="http://211.63.89.152/views/user/myOrder.jsp"><div class="dt" id="order"><h3 id="dt">주문내역</h3></div></a>
-        	<a href="http://211.63.89.152/views/user/myInfo.jsp"><div class="dt" id="info"><h3 id="dt">개인정보</h3></div></a>
+        	<a href="http://localhost/shopping_mall_prj/views/user/myOrder.jsp"><div class="dt" id="order"><h3 id="dt">주문내역</h3></div></a>
+        	<a href="http://localhost/shopping_mall_prj/views/user/myInfo.jsp"><div class="dt" id="info"><h3 id="dt">개인정보</h3></div></a>
         </div>
 
-     <form id="infoUpdateFrm" action="http://211.63.89.152/views/user/infoUpdate_proc.jsp" method="post">
+     <form id="infoUpdateFrm" action="http://localhost/shopping_mall_prj/views/user/infoUpdate_proc.jsp" method="post">
 		<div align="center" style="color: #D09869; margin-bottom: 5%;">
 			<div style="width: 30%;">
 			<h2 id="title">회원정보 수정</h2>
